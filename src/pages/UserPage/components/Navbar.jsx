@@ -1,11 +1,13 @@
 import { NavLink, useNavigate } from "react-router-dom";
 
 const NAV_LINKS = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Doctors", path: "/doctors" },
-  { name: "Contact", path: "/contact" },
+  { name: "Home", path: "/user" },
+  { name: "About", path: "/user/about" },
+  { name: "Services", path: "/user/services" },
+  { name: "Contact", path: "/user/contact" },
+  { name: "Appointment", path: "/user/appointment" },
 ];
+
 
 const Navbar = ({ menuOpen, setMenuOpen }) => {
   const navigate = useNavigate();
@@ -56,10 +58,10 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
         {/* AUTH */}
         <div className="hidden md:flex items-center gap-3">
           {[
-            { name: "Sign In", path: "/login", style: "text-gray-700 hover:text-violet-600" },
-            { name: "Register", path: "/register", style: "bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-full shadow-lg shadow-violet-200" },
+            { name: "Sign In", path: "/", style: "text-gray-700 hover:text-violet-600" },
+            { name: "Register", path: "/", style: "bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-full shadow-lg shadow-violet-200" },
           ].map(({ name, path, style }) => (
-            <NavLink key={name} to={path} className={`text-sm font-bold ${style}`}>
+            <NavLink key={name} to={path} end={path === "/user"} className={`text-sm font-bold ${style}`}>
               {name}
             </NavLink>
           ))}
@@ -83,6 +85,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
             <NavLink
               key={name}
               to={path}
+                end={path === "/user"}
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) => mobileClass(isActive)}
             >
@@ -92,8 +95,8 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
 
           <div className="flex gap-3 mt-2 pt-3 border-t">
             {[
-              { name: "Sign In", path: "/login", style: "border-2 border-violet-300 text-violet-600" },
-              { name: "Register", path: "/register", style: "bg-violet-600 text-white" },
+              { name: "Sign In", path: "/", style: "border-2 border-violet-300 text-violet-600" },
+              { name: "Register", path: "/", style: "bg-violet-600 text-white" },
             ].map(({ name, path, style }) => (
               <NavLink
                 key={name}

@@ -1,15 +1,5 @@
 import { useState } from "react";
 
-const NAV_LINKS = ["Home", "Appointment", "Services", "About Us", "Contact Us"];
-const QUICK_LINKS = ["Home", "Appointment", "Services", "About Us", "Contact Us"];
-const HOURS = [
-  { day: "Monday", time: "9:00 – 18:00" },
-  { day: "Tuesday", time: "9:00 – 19:00" },
-  { day: "Wednesday", time: "9:00 – 18:00" },
-  { day: "Thursday", time: "9:00 – 20:00" },
-  { day: "Friday", time: "9:00 – 18:00" },
-];
-
 const DOCTORS = [
   { name: "Dr. Priya Sharma",   specialty: "Cardiologist",    exp: "12 yrs", bio: "Trained at AIIMS Delhi, Dr. Sharma specialises in interventional cardiology and heart failure management.", icon: "👩‍⚕️" },
   { name: "Dr. Arjun Mehta",    specialty: "Neurologist",     exp: "9 yrs",  bio: "A fellow of the American Academy of Neurology with expertise in epilepsy, stroke, and movement disorders.", icon: "👨‍⚕️" },
@@ -41,51 +31,6 @@ export default function AboutPage() {
 
   return (
     <div className="font-sans bg-gray-50 min-h-screen">
-
-      {/* ── NAVBAR ── */}
-      <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer">
-            <div className="w-9 h-9 rounded-xl bg-violet-600 flex items-center justify-center shrink-0">
-              <span className="text-white font-extrabold text-base">M</span>
-            </div>
-            <span className="font-extrabold text-lg text-gray-900">
-              MedLab <span className="text-violet-600">Hospital</span>
-            </span>
-          </div>
-          <div className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map(link => (
-              <button key={link} onClick={() => setActivePage(link)}
-                className={`text-sm font-medium pb-0.5 border-b-2 transition-colors ${activePage === link ? "text-violet-600 border-violet-600 font-bold" : "text-gray-500 border-transparent hover:text-violet-600"}`}>
-                {link}
-              </button>
-            ))}
-          </div>
-          <div className="hidden md:flex items-center gap-3">
-            <button className="text-sm font-semibold text-gray-700 hover:text-violet-600 transition-colors">Sign In</button>
-            <button className="bg-violet-600 hover:bg-violet-700 text-white text-sm font-bold px-5 py-2 rounded-full shadow-lg shadow-violet-200 transition-all">Register</button>
-          </div>
-          <button className="md:hidden flex flex-col gap-1.5 p-1" onClick={() => setMenuOpen(o => !o)}>
-            <span className={`block w-6 h-0.5 bg-gray-800 rounded transition-transform duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-6 h-0.5 bg-gray-800 rounded transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-6 h-0.5 bg-gray-800 rounded transition-transform duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
-          </button>
-        </div>
-        {menuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100 px-6 pb-4 pt-2 flex flex-col gap-1">
-            {NAV_LINKS.map(link => (
-              <button key={link} onClick={() => { setActivePage(link); setMenuOpen(false); }}
-                className={`text-left text-sm font-medium py-3 px-2 rounded-lg transition-colors ${activePage === link ? "text-violet-600 bg-violet-50 font-bold" : "text-gray-600 hover:text-violet-600"}`}>
-                {link}
-              </button>
-            ))}
-            <div className="flex gap-3 mt-2 pt-3 border-t border-gray-100">
-              <button className="flex-1 border-2 border-violet-300 text-violet-600 font-bold py-2 rounded-full text-sm">Sign In</button>
-              <button className="flex-1 bg-violet-600 text-white font-bold py-2 rounded-full text-sm">Register</button>
-            </div>
-          </div>
-        )}
-      </nav>
 
       {/* ── PAGE HERO ── */}
       <div className="bg-gradient-to-br from-violet-50 via-white to-purple-50 py-16 px-6 text-center">
@@ -254,53 +199,7 @@ export default function AboutPage() {
           Get Started Today →
         </button>
       </section>
-
-      {/* ── FOOTER ── */}
-      <footer className="bg-gray-950 text-gray-400 pt-16 pb-8 px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-violet-600 flex items-center justify-center">
-                <span className="text-white font-extrabold">M</span>
-              </div>
-              <span className="text-white font-extrabold text-base">MedLab Hospital</span>
-            </div>
-            <p className="text-sm text-gray-500 leading-relaxed">Providing compassionate, world-class healthcare in Chennai, Tamil Nadu since 2010.</p>
-          </div>
-          <div>
-            <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-5">Quick Links</h4>
-            <div className="flex flex-col gap-2.5">
-              {QUICK_LINKS.map(l => <a key={l} href="#" className="text-gray-500 hover:text-violet-400 text-sm transition-colors">{l}</a>)}
-            </div>
-          </div>
-          <div>
-            <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-5">Hours</h4>
-            <div className="flex flex-col gap-2.5">
-              {HOURS.map(h => (
-                <div key={h.day} className="flex justify-between text-sm">
-                  <span className="text-gray-400">{h.day}</span>
-                  <span className="text-gray-500">{h.time}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div>
-            <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-5">Contact</h4>
-            <div className="flex flex-col gap-3">
-              {[{ i: "📞", t: "044-2345-6789" }, { i: "✉️", t: "info@medlab.com" }, { i: "📍", t: "Anna Nagar, Chennai, TN" }].map(c => (
-                <div key={c.t} className="flex gap-2 items-start">
-                  <span className="text-sm">{c.i}</span>
-                  <span className="text-gray-500 text-sm">{c.t}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between gap-2 text-xs text-gray-600">
-          <span>© 2026 MedLab Hospital. All rights reserved.</span>
-          <span>Privacy Policy · Terms of Service</span>
-        </div>
-      </footer>
+    
     </div>
   );
 }
