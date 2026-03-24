@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar";
-import AppointmentTable from "./components/PatientModal";
-import RightPanel from "./components/RightPanel";
-import PatientModal from "./components/PatientModal";
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
+import AppointmentTable from "../components/PatientModal";
+import RightPanel from "../components/RightPanel";
+import PatientModal from "../components/PatientModal";
 
 const ReceptionDashboard = () => {
   const [open, setOpen] = useState(false);

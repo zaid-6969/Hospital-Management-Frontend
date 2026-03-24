@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import DoctorCard from "../components/DoctorCard";
 import { getDoctors } from "../services/api";
 
-const AppointmentPage = () => {
+const ReceptionAppointmentPage = () => {
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
 
@@ -42,4 +42,4 @@ const AppointmentPage = () => {
   );
 };
 
-export default AppointmentPage;
+export default ReceptionAppointmentPage;

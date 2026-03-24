@@ -1,18 +1,31 @@
 import { Routes, Route } from "react-router-dom";
 import AuthPage from "./pages/AuthPage/AuthPage";
-import AdminPage from "./pages/AdminPage/AdminPage";
-import DoctorPage from "./pages/DoctorPage/DoctorPage";
-import ReceptionPage from "./pages/ReceptionPage/ReceptionDashboard"
-
+// import AdminPage from "./pages/AdminPage/Dashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 // USER PAGES
-import MainLayout from "./pages/UserPage/layout/MainLayout";
+import UserMainLayout from "./pages/UserPage/layout/UserMainLayout";
 import UserPage from "./pages/UserPage/pages/UserPage";
 import ServicePage from "./pages/UserPage/pages/ServicePage";
 import AboutPage from "./pages/UserPage/pages/AboutPage";
 import ContactPage from "./pages/UserPage/pages/ContactPage";
 import AppointmentPage from "./pages/UserPage/pages/AppointmentPage";
+import DoctorDetails from "./pages/UserPage/components/DoctorDetails";
+
+// ADMIN PAGE
+import AdminMainLayout from "./pages/AdminPage/Layout/AdminMainLayout";
+import Dashboard from "./pages/AdminPage/Dashboard";
+import Doctors from "./pages/AdminPage/Doctors";
+import ToolsView from "./pages/AdminPage/Tools";
+
+// RECEPTION PAGE
+import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
+
+//DOCTOR PAGE 
+import DoctorSchedule from "./pages/DoctorPage/pages/DoctorSchedule";
+import DoctorOverview from "./pages/DoctorPage/pages/DoctorOverview";
+import DoctorMainLayout from "./pages/DoctorPage/Layout/DoctorMainLayout";
+
 
 function App() {
   return (
@@ -25,17 +38,33 @@ function App() {
         path="/admin"
         element={
           <ProtectedRoute role="ADMIN">
-            <AdminPage />
+            <AdminMainLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route index path="admin" element={<Dashboard />} />
+        <Route path="doctors" element={<Doctors />} />
+        <Route path="tools" element={<ToolsView />} />
+      </Route>
 
       {/* DOCTOR */}
       <Route
         path="/doctor"
         element={
           <ProtectedRoute role="DOCTOR">
-            <DoctorPage />
+            <DoctorMainLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<DoctorSchedule />} />
+        <Route path="overview" element={<DoctorOverview />} />
+      </Route>
+
+      <Route
+        path="/doctor/overview"
+        element={
+          <ProtectedRoute role="DOCTOR">
+            <DoctorOverview />
           </ProtectedRoute>
         }
       />
@@ -50,12 +79,12 @@ function App() {
         }
       />
 
-      {/* ✅ USER ROUTES WITH LAYOUT */}
+      {/* USER ROUTES*/}
       <Route
         path="/user"
         element={
           <ProtectedRoute role="PATIENT">
-            <MainLayout />
+            <UserMainLayout />
           </ProtectedRoute>
         }
       >
@@ -64,6 +93,7 @@ function App() {
         <Route path="about" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="appointment" element={<AppointmentPage />} />
+        <Route path="doctor/:id" element={<DoctorDetails />} />
       </Route>
     </Routes>
   );
