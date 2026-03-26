@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import AuthPage from "./pages/AuthPage/AuthPage";
-// import AdminPage from "./pages/AdminPage/Dashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 // USER PAGES
@@ -13,19 +12,19 @@ import AppointmentPage from "./pages/UserPage/pages/AppointmentPage";
 import DoctorDetails from "./pages/UserPage/components/DoctorDetails";
 
 // ADMIN PAGE
+// import AdminPage from "./pages/AdminPage/Dashboard";
 import AdminMainLayout from "./pages/AdminPage/Layout/AdminMainLayout";
-import Dashboard from "./pages/AdminPage/Dashboard";
-import Doctors from "./pages/AdminPage/Doctors";
-import ToolsView from "./pages/AdminPage/Tools";
+import Dashboard from "./pages/AdminPage/page/Dashboard";
+import Doctors from "./pages/AdminPage/page/Doctors";
+import ToolsView from "./pages/AdminPage/page/Tools";
 
 // RECEPTION PAGE
 import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
 
-//DOCTOR PAGE 
+//DOCTOR PAGE
 import DoctorSchedule from "./pages/DoctorPage/pages/DoctorSchedule";
 import DoctorOverview from "./pages/DoctorPage/pages/DoctorOverview";
 import DoctorMainLayout from "./pages/DoctorPage/Layout/DoctorMainLayout";
-
 
 function App() {
   return (
@@ -43,7 +42,8 @@ function App() {
         }
       >
         <Route index path="admin" element={<Dashboard />} />
-        <Route path="doctors" element={<Doctors />} />
+        <Route path="/admin/doctor/:id" element={<Doctors />} />
+        {/* <Route path="doctors" element={<Doctors />} /> */}
         <Route path="tools" element={<ToolsView />} />
       </Route>
 

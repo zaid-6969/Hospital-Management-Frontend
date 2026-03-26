@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
-import AppointmentTable from "../components/PatientModal";
-import RightPanel from "../components/RightPanel";
+import AppointmentTable from "../components/AppointmentTable";
 import PatientModal from "../components/PatientModal";
+import RightPanel from "../components/RightPanel";
 
 const ReceptionDashboard = () => {
   const [open, setOpen] = useState(false);
@@ -17,6 +17,7 @@ const ReceptionDashboard = () => {
 
         <div className="p-6 grid grid-cols-12 gap-6">
           <div className="col-span-9">
+            <AppointmentTable />
           </div>
 
           <div className="col-span-3">

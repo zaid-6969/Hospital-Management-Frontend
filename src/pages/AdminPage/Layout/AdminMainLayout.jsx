@@ -7,7 +7,7 @@ const MainLayout = ({ children, active, title }) => {
     <div className="flex min-h-screen bg-[#f8f9fb]">
       <Sidebar active={active} />
       <div className="flex-1 flex flex-col min-w-0">
-        <Topbar title={title} />
+        {/* <Topbar title={title} /> */}
         <main className="flex-1 p-6 overflow-y-auto">
          <Outlet />
         </main>

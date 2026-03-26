@@ -25,9 +25,8 @@ const DoctorDetails = () => {
     try {
       await createAppointment({
         doctorId: doctor._id,
-        day: selectedDay.day,
-        start: selectedSlot.start,
-        end: selectedSlot.end,
+        date: selectedDay.day, // ✅ correct field
+        time: `${selectedSlot.start} - ${selectedSlot.end}`, // ✅ combine
       });
 
       alert("Appointment booked ✅");

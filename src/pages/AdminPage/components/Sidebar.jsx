@@ -1,12 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { Icon, icons } from "./Icon";
 
 const navItems = [
-  { id: "dashboard", label: "Dashboard", icon: "dashboard", path: "/admin/admin" },
-  { id: "doctors", label: "Doctors", icon: "doctors", path: "/admin/doctors" },
-  { id: "tools", label: "Medical Tools", icon: "tools", path: "/admin/tools" },
-  { id: "appointments", label: "Appointments", icon: "appointments", path: "/admin/appointments" },
-  { id: "settings", label: "Settings", icon: "settings", path: "/admin/settings" },
+  { id: "dashboard", label: "Dashboard",  path: "/admin/admin" },
+  { id: "doctors", label: "Doctors",  path: "/admin/doctors" },
+  { id: "tools", label: "Medical Tools",  path: "/admin/tools" },
+  { id: "appointments", label: "Appointments",  path: "/admin/appointments" },
+  { id: "settings", label: "Settings",  path: "/admin/settings" },
 ];
 
 const Sidebar = () => {
@@ -46,7 +45,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <Icon d={icons[item.icon]} size={17} />
+            
             {item.label}
           </NavLink>
         ))}
@@ -68,7 +67,6 @@ const Sidebar = () => {
               }`
             }
           >
-            <Icon d={icons[item.icon]} size={17} />
             {item.label}
           </NavLink>
         ))}
