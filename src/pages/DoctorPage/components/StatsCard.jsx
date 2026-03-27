@@ -2,7 +2,7 @@ const StatsCard = () => {
   const bars = [40, 65, 55, 85, 92, 70, 60, 75];
 
   return (
-    <div className="bg-white p-6 rounded-3xl shadow">
+    <div className="bg-card p-6 rounded-3xl shadow">
       <h3 className="text-lg font-bold mb-4">
         Efficiency Index
       </h3>

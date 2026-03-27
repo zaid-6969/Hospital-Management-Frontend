@@ -66,7 +66,7 @@ const ToolsView = ({ tools, setTools }) => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search tools..."
-              className="pl-9 pr-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] w-52 transition-all"
+              className="pl-9 pr-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm bg-card focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] w-52 transition-all"
             />
           </div>
           <button
@@ -85,7 +85,7 @@ const ToolsView = ({ tools, setTools }) => {
         {filtered.map((t) => (
           <div
             key={t.id}
-            className="bg-white rounded-2xl border border-[#e0e0e0]/60 shadow-sm p-5 hover:shadow-md transition-shadow group"
+            className="bg-card rounded-2xl border border-[#e0e0e0]/60 shadow-sm p-5 hover:shadow-md transition-shadow group"
           >
             <div className="flex items-start justify-between mb-4">
               <div className="w-11 h-11 rounded-xl bg-[#ede9ff] flex items-center justify-center">

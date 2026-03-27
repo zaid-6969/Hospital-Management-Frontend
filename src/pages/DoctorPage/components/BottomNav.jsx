@@ -4,7 +4,7 @@ const BottomNav = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed bottom-0 w-full bg-white flex justify-around py-3 md:hidden shadow">
+    <nav className="fixed bottom-0 w-full bg-card flex justify-around py-3 md:hidden shadow">
       <button onClick={() => navigate("/doctor")}>
         📅 Schedule
       </button>

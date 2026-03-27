@@ -42,7 +42,7 @@ const Sidebar = () => {
               `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
                 isActive
                   ? "bg-[#6a5acd] text-white shadow-lg"
-                  : "text-white/50 hover:text-white hover:bg-white/5"
+                  : "text-white/50 hover:text-white hover:bg-card/5"
               }`
             }
           >
@@ -64,7 +64,7 @@ const Sidebar = () => {
               `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
                 isActive
                   ? "bg-[#6a5acd] text-white shadow-lg"
-                  : "text-white/50 hover:text-white hover:bg-white/5"
+                  : "text-white/50 hover:text-white hover:bg-card/5"
               }`
             }
           >
@@ -76,7 +76,7 @@ const Sidebar = () => {
       </nav>
 
       {/* PROFILE (same UI) */}
-      <div className="mx-3 mb-4 p-3 rounded-xl bg-white/5 flex items-center gap-3">
+      <div className="mx-3 mb-4 p-3 rounded-xl bg-card/5 flex items-center gap-3">
         <div className="w-9 h-9 rounded-xl bg-[#6a5acd] flex items-center justify-center text-white text-sm">
           AD
         </div>

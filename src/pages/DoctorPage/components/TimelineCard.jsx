@@ -45,7 +45,7 @@ const TimelineCard = ({ data, refresh }) => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-xl shadow relative">
+    <div className="p-4 bg-card rounded-xl shadow relative">
       <h3 className="font-bold">
         {data.patientId?.name || "Patient"}
       </h3>
@@ -87,7 +87,7 @@ const TimelineCard = ({ data, refresh }) => {
       {/* 🔥 MODAL */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-xl w-[350px] shadow-lg">
+          <div className="bg-card p-6 rounded-xl w-[350px] shadow-lg">
             <h2 className="text-lg font-semibold mb-3">
               Enter Rejection Reason
             </h2>

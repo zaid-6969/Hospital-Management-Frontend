@@ -60,7 +60,7 @@ const Dashboard = () => {
       </div>
 
       {/* 📋 APPOINTMENTS */}
-      <div className="bg-white p-4 rounded-xl shadow">
+      <div className="bg-card p-4 rounded-xl shadow">
         <h2 className="text-xl font-bold mb-4">
           All Appointments
         </h2>
@@ -87,7 +87,7 @@ const Dashboard = () => {
               onClick={() =>
                 navigate(`/admin/doctor/${doc._id}`)
               }
-              className="p-4 bg-white rounded-xl shadow cursor-pointer hover:bg-indigo-50"
+              className="p-4 bg-card rounded-xl shadow cursor-pointer hover:bg-indigo-50"
             >
               <h3 className="font-bold">{doc.name}</h3>
               <p className="text-sm text-gray-500">

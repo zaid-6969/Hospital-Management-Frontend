@@ -9,18 +9,17 @@ const ReceptionDashboard = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex bg-[#f8f9fb] min-h-screen">
+    <div className="flex bg-bg min-h-screen">
       <Sidebar />
 
-      <div className="flex-1">
+      <div className="flex-1 min-w-0">
         <Navbar onOpen={() => setOpen(true)} />
 
-        <div className="p-6 grid grid-cols-12 gap-6">
-          <div className="col-span-9">
+        <div className="p-4 sm:p-6 grid grid-cols-1 xl:grid-cols-12 gap-4 sm:gap-6">
+          <div className="xl:col-span-9">
             <AppointmentTable />
           </div>
-
-          <div className="col-span-3">
+          <div className="xl:col-span-3">
             <RightPanel />
           </div>
         </div>

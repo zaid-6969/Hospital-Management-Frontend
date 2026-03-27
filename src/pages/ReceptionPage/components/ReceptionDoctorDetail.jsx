@@ -49,7 +49,7 @@ const ReceptionDoctorDetails = () => {
         </div>
 
         {/* RIGHT (BOOKING CARD) */}
-        <div className="bg-white p-6 rounded-2xl shadow space-y-4">
+        <div className="bg-card p-6 rounded-2xl shadow space-y-4">
           <h3 className="font-semibold">Reserve a Session</h3>
 
           {/* 🔥 DAYS */}
@@ -67,7 +67,7 @@ const ReceptionDoctorDetails = () => {
                   className={`px-3 py-2 rounded-lg text-sm ${
                     selectedDay?.day === dayObj.day
                       ? "bg-indigo-600 text-white"
-                      : "bg-gray-100"
+                      : "bg-bg"
                   }`}
                 >
                   {dayObj.day}
@@ -89,7 +89,7 @@ const ReceptionDoctorDetails = () => {
                     className={`px-3 py-2 rounded-lg text-sm ${
                       selectedSlot === slot
                         ? "bg-indigo-600 text-white"
-                        : "bg-gray-100"
+                        : "bg-bg"
                     }`}
                   >
                     {slot.start} - {slot.end}

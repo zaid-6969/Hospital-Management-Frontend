@@ -63,35 +63,35 @@ export default function ContactPage() {
   };
 
   const inputCls =
-    "w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all bg-gray-50 focus:bg-white";
+    "w-full border-2 border-secondary  rounded-xl px-4 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all bg-bg focus:bg-card";
   const labelCls =
-    "block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5";
+    "block text-xs font-bold  text-text/50 uppercase tracking-wider mb-1.5";
 
   return (
-    <div className="font-sans bg-gray-50 min-h-screen">
+    <div className="font-sans bg-bg min-h-screen">
       {/* ── PAGE HERO ── */}
-      <div className="bg-gradient-to-br from-violet-50 via-white to-purple-50 py-16 px-6 text-center">
+      <div className="bg-bg py-16 px-6 text-center">
         <p className="text-violet-400 text-sm mb-3">
           Home ›{" "}
           <span className="text-violet-600 font-semibold">Contact Us</span>
         </p>
-        <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4">
+        <h1 className="text-4xl sm:text-5xl font-black text-text   mb-4">
           Get in Touch
         </h1>
-        <p className="text-gray-500 text-base max-w-xl mx-auto leading-relaxed">
+        <p className="text-text/700 text-base max-w-xl mx-auto leading-relaxed">
           Have a question, want to book an appointment, or just need directions?
           We're here to help 24 hours a day, 7 days a week.
         </p>
       </div>
 
       {/* ── INFO CARDS ── */}
-      <section className="py-14 px-6 bg-white">
+      <section className="py-14 px-6 bg-card">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
             {INFO_CARDS.map((c) => (
               <div
                 key={c.title}
-                className="bg-white border border-gray-200 rounded-2xl p-6 text-center hover:shadow-xl hover:shadow-violet-100 hover:-translate-y-1 transition-all"
+                className="bg-card border border-secondary  rounded-2xl p-6 text-center hover:shadow-xl hover:shadow-violet-100 hover:-translate-y-1 transition-all"
               >
                 <div
                   className={`w-14 h-14 ${c.bg} rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4`}
@@ -103,10 +103,10 @@ export default function ContactPage() {
                 >
                   {c.title}
                 </p>
-                <p className="font-extrabold text-gray-900 text-sm mb-1">
+                <p className="font-extrabold text-text   text-sm mb-1">
                   {c.value}
                 </p>
-                <p className="text-gray-400 text-xs">{c.sub}</p>
+                <p className=" text-text/50 text-xs">{c.sub}</p>
               </div>
             ))}
           </div>
@@ -118,10 +118,10 @@ export default function ContactPage() {
               <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
                 Send a Message
               </span>
-              <h2 className="text-3xl font-black text-gray-900 mb-2">
+              <h2 className="text-3xl font-black text-text   mb-2">
                 We'd love to hear from you
               </h2>
-              <p className="text-gray-400 text-sm mb-8 leading-relaxed">
+              <p className=" text-text/50 text-sm mb-8 leading-relaxed">
                 Fill out the form and our team will get back to you within 2
                 business hours.
               </p>
@@ -215,7 +215,7 @@ export default function ContactPage() {
               <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
                 Find Us
               </span>
-              <h2 className="text-3xl font-black text-gray-900 mb-6">
+              <h2 className="text-3xl font-black text-text   mb-6">
                 Our Location
               </h2>
 
@@ -231,7 +231,7 @@ export default function ContactPage() {
               </div>
 
               {/* Hours table */}
-              <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+              <div className="bg-card border border-secondary  rounded-2xl overflow-hidden">
                 <div className="bg-violet-600 px-5 py-3.5">
                   <h4 className="text-white font-bold text-sm">
                     🕐 Opening Hours
@@ -241,7 +241,7 @@ export default function ContactPage() {
                   {HOURS.map((h, i) => (
                     <div
                       key={h.day}
-                      className={`flex justify-between px-5 py-3 text-sm ${i % 2 === 0 ? "bg-gray-50" : "bg-white"}`}
+                      className={`flex justify-between px-5 py-3 text-sm ${i % 2 === 0 ? "bg-bg" : "bg-card"}`}
                     >
                       <span className="text-gray-700 font-medium">{h.day}</span>
                       <span
@@ -259,7 +259,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── SOCIAL + EMERGENCY + APP ── */}
-      <section className="py-16 px-6 bg-gray-50">
+      <section className="py-16 px-6 bg-bg">
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Emergency */}
           <div className="bg-red-50 border border-red-200 rounded-2xl p-7">
@@ -277,12 +277,12 @@ export default function ContactPage() {
           </div>
 
           {/* Social */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-7">
+          <div className="bg-card border border-secondary  rounded-2xl p-7">
             <div className="text-4xl mb-4">📲</div>
-            <h3 className="font-extrabold text-gray-900 text-xl mb-3">
+            <h3 className="font-extrabold text-text   text-xl mb-3">
               Follow Us
             </h3>
-            <p className="text-gray-500 text-sm leading-relaxed mb-5">
+            <p className="text-text/700 text-sm leading-relaxed mb-5">
               Stay updated with health tips, news, and announcements from MedLab
               Hospital.
             </p>
@@ -335,7 +335,7 @@ export default function ContactPage() {
           Join over 12,000 patients who trust MedLab Hospital for their
           healthcare needs.
         </p>
-        <button className="bg-white text-violet-600 font-black px-8 py-4 rounded-full text-base shadow-xl hover:-translate-y-0.5 transition-all">
+        <button className="bg-card text-violet-600 font-black px-8 py-4 rounded-full text-base shadow-xl hover:-translate-y-0.5 transition-all">
           Get Started Today →
         </button>
       </section>

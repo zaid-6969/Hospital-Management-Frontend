@@ -30,20 +30,20 @@ export default function AboutPage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="font-sans bg-gray-50 min-h-screen">
+    <div className="font-sans bg-bg min-h-screen">
 
       {/* ── PAGE HERO ── */}
-      <div className="bg-gradient-to-br from-violet-50 via-white to-purple-50 py-16 px-6 text-center">
+      <div className="bg-bg py-16 px-6 text-center">
         <p className="text-violet-400 text-sm mb-3">Home › <span className="text-violet-600 font-semibold">About Us</span></p>
-        <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4">About MedLab Hospital</h1>
-        <p className="text-gray-500 text-base max-w-xl mx-auto leading-relaxed">
+        <h1 className="text-4xl sm:text-5xl font-black text-text mb-4">About MedLab Hospital</h1>
+        <p className="text-text/70 text-base max-w-xl mx-auto leading-relaxed">
           Since 2010, we've been Chennai's most trusted healthcare partner —
           combining compassionate care with cutting-edge medicine.
         </p>
       </div>
 
       {/* ── WHO WE ARE ── */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-card">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
           {/* Image grid */}
           <div className="w-full lg:flex-1 grid grid-cols-2 gap-4">
@@ -64,14 +64,14 @@ export default function AboutPage() {
           {/* Text */}
           <div className="w-full lg:flex-1">
             <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">Our Story</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-5">Who We Are</h2>
-            <p className="text-gray-500 text-sm leading-relaxed mb-4">
+            <h2 className="text-3xl sm:text-4xl font-black text-text mb-5">Who We Are</h2>
+            <p className="text-text/70 text-sm leading-relaxed mb-4">
               Founded in 2010 by Dr. R. Venkatesh, MedLab Hospital started as a small diagnostic
               centre in Anna Nagar with a vision to make quality healthcare accessible to all.
               Over the years, we've grown into a full-service, multi-specialty hospital trusted by
               over 12,000 patients across Tamil Nadu.
             </p>
-            <p className="text-gray-500 text-sm leading-relaxed mb-8">
+            <p className="text-text/70 text-sm leading-relaxed mb-8">
               Our team of 50+ specialists, 200+ support staff, and state-of-the-art infrastructure
               make us one of the leading healthcare institutions in the region. We combine empathy,
               expertise, and technology to deliver outcomes that transform lives.
@@ -91,18 +91,18 @@ export default function AboutPage() {
       </section>
 
       {/* ── OUR VALUES ── */}
-      <section className="py-20 px-6 bg-gray-50">
+      <section className="py-20 px-6 bg-bg">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">What Drives Us</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900">Our Core Values</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-text">Our Core Values</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {VALUES.map(v => (
-              <div key={v.t} className="bg-white border border-gray-200 rounded-2xl p-7 text-center hover:shadow-lg hover:shadow-violet-100 hover:-translate-y-1 transition-all">
+              <div key={v.t} className="bg-card border border-secondary rounded-2xl p-7 text-center hover:shadow-lg hover:shadow-violet-100 hover:-translate-y-1 transition-all">
                 <div className="text-4xl mb-4">{v.i}</div>
-                <h3 className="font-extrabold text-gray-900 text-lg mb-2">{v.t}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{v.d}</p>
+                <h3 className="font-extrabold text-text text-lg mb-2">{v.t}</h3>
+                <p className="text-text/70 text-sm leading-relaxed">{v.d}</p>
               </div>
             ))}
           </div>
@@ -110,11 +110,11 @@ export default function AboutPage() {
       </section>
 
       {/* ── TIMELINE ── */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-card">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-14">
             <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">Our Journey</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900">Milestones</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-text">Milestones</h2>
           </div>
           <div className="relative">
             <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-violet-200" />
@@ -126,9 +126,9 @@ export default function AboutPage() {
                       {m.year.slice(2)}
                     </div>
                   </div>
-                  <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5 flex-1 hover:border-violet-200 hover:shadow-md transition-all">
+                  <div className="bg-bg border border-secondary rounded-2xl p-5 flex-1 hover:border-violet-200 hover:shadow-md transition-all">
                     <span className="text-violet-600 font-extrabold text-sm">{m.year}</span>
-                    <p className="text-gray-700 text-sm leading-relaxed mt-1">{m.event}</p>
+                    <p className="text-text/80 text-sm leading-relaxed mt-1">{m.event}</p>
                   </div>
                 </div>
               ))}
@@ -138,24 +138,24 @@ export default function AboutPage() {
       </section>
 
       {/* ── DOCTORS ── */}
-      <section className="py-20 px-6 bg-gray-50">
+      <section className="py-20 px-6 bg-bg">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">Leadership</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900">Our Specialist Doctors</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-text">Our Specialist Doctors</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {DOCTORS.map(doc => (
-              <div key={doc.name} className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-violet-100 hover:-translate-y-1 transition-all">
+              <div key={doc.name} className="bg-card border border-secondary rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-violet-100 hover:-translate-y-1 transition-all">
                 <div className="bg-gradient-to-br from-violet-100 to-purple-100 border-b-2 border-dashed border-violet-200 h-44 flex flex-col items-center justify-center">
                   <span className="text-5xl">{doc.icon}</span>
                   <span className="text-xs text-violet-400 mt-2">Doctor Photo</span>
                 </div>
                 <div className="p-6">
-                  <h3 className="font-extrabold text-gray-900 text-lg">{doc.name}</h3>
+                  <h3 className="font-extrabold text-text text-lg">{doc.name}</h3>
                   <p className="text-violet-600 font-semibold text-sm mt-0.5">{doc.specialty}</p>
                   <p className="text-gray-400 text-xs mt-0.5 mb-3">{doc.exp} experience</p>
-                  <p className="text-gray-500 text-xs leading-relaxed mb-5">{doc.bio}</p>
+                  <p className="text-text/70 text-xs leading-relaxed mb-5">{doc.bio}</p>
                   <button className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-2.5 rounded-xl text-sm transition-all">
                     Book Appointment
                   </button>
@@ -167,11 +167,11 @@ export default function AboutPage() {
       </section>
 
       {/* ── ACCREDITATIONS ── */}
-      <section className="py-14 px-6 bg-white border-t border-gray-100">
+      <section className="py-14 px-6 bg-card border-t border-secondary">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">Certifications</span>
-            <h2 className="text-2xl font-black text-gray-900">Accreditations & Awards</h2>
+            <h2 className="text-2xl font-black text-text">Accreditations & Awards</h2>
           </div>
           <div className="flex flex-wrap justify-center gap-6">
             {[
@@ -195,7 +195,7 @@ export default function AboutPage() {
       <section className="bg-gradient-to-r from-violet-600 to-purple-500 py-20 px-6 text-center">
         <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">Ready to Book Your Appointment?</h2>
         <p className="text-violet-200 text-base mb-8 max-w-md mx-auto">Join over 12,000 patients who trust MedLab Hospital for their healthcare needs.</p>
-        <button className="bg-white text-violet-600 font-black px-8 py-4 rounded-full text-base shadow-xl hover:-translate-y-0.5 transition-all">
+        <button className="bg-card text-violet-600 font-black px-8 py-4 rounded-full text-base shadow-xl hover:-translate-y-0.5 transition-all">
           Get Started Today →
         </button>
       </section>

@@ -1,6 +1,6 @@
 const Navbar = ({ onOpen }) => {
   return (
-    <div className="flex justify-between items-center px-8 py-4 bg-white shadow-sm">
+    <div className="flex justify-between items-center px-8 py-4 bg-card shadow-sm">
       <h1 className="text-xl font-bold text-[#5140b3]">
         Clinical Sanctuary Reception
       </h1>

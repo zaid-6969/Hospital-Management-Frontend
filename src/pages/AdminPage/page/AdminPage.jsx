@@ -83,7 +83,7 @@
 // // ── Modal ────────────────────────────────────────────────────────────────────
 // const Modal = ({ title, onClose, children }) => (
 //   <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ backdropFilter: "blur(4px)", background: "rgba(26,22,48,0.45)" }}>
-//     <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg animate-fade-in">
+//     <div className="bg-card rounded-2xl shadow-2xl w-full max-w-lg animate-fade-in">
 //       <div className="flex items-center justify-between px-6 py-5 border-b border-[#e0e0e0]">
 //         <h2 className="text-base font-semibold text-[#222]" style={{ fontFamily: "'Syne', sans-serif" }}>{title}</h2>
 //         <button onClick={onClose} className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[#f8f9fb] text-[#777] transition-colors">
@@ -147,7 +147,7 @@
 //           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-left
 //             ${active === item.id
 //               ? "bg-[#6a5acd] text-white shadow-lg shadow-[#6a5acd]/30"
-//               : "text-white/50 hover:text-white hover:bg-white/5"}`}>
+//               : "text-white/50 hover:text-white hover:bg-card/5"}`}>
 //           <Icon d={icons[item.icon]} size={17} />
 //           {item.label}
 //         </button>
@@ -159,7 +159,7 @@
 //           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-left
 //             ${active === item.id
 //               ? "bg-[#6a5acd] text-white shadow-lg shadow-[#6a5acd]/30"
-//               : "text-white/50 hover:text-white hover:bg-white/5"}`}>
+//               : "text-white/50 hover:text-white hover:bg-card/5"}`}>
 //           <Icon d={icons[item.icon]} size={17} />
 //           {item.label}
 //         </button>
@@ -179,7 +179,7 @@
 
 // // ── Stat Card ────────────────────────────────────────────────────────────────
 // const StatCard = ({ stat }) => (
-//   <div className="bg-white rounded-2xl p-5 flex items-start gap-4 shadow-sm border border-[#e0e0e0]/60 hover:shadow-md transition-shadow">
+//   <div className="bg-card rounded-2xl p-5 flex items-start gap-4 shadow-sm border border-[#e0e0e0]/60 hover:shadow-md transition-shadow">
 //     <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center flex-shrink-0 shadow-sm`}>
 //       <Icon d={icons[stat.icon]} size={20} stroke="white" />
 //     </div>
@@ -202,7 +202,7 @@
 //     {/* Recent doctors + tools */}
 //     <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
 //       {/* Doctors preview */}
-//       <div className="bg-white rounded-2xl border border-[#e0e0e0]/60 shadow-sm overflow-hidden">
+//       <div className="bg-card rounded-2xl border border-[#e0e0e0]/60 shadow-sm overflow-hidden">
 //         <div className="px-5 py-4 border-b border-[#e0e0e0] flex items-center justify-between">
 //           <h3 className="font-semibold text-[#222] text-sm" style={{ fontFamily: "'Syne', sans-serif" }}>Recent Doctors</h3>
 //           <span className="text-xs text-[#6a5acd] font-medium">{doctors.length} total</span>
@@ -222,7 +222,7 @@
 //       </div>
 
 //       {/* Tools preview */}
-//       <div className="bg-white rounded-2xl border border-[#e0e0e0]/60 shadow-sm overflow-hidden">
+//       <div className="bg-card rounded-2xl border border-[#e0e0e0]/60 shadow-sm overflow-hidden">
 //         <div className="px-5 py-4 border-b border-[#e0e0e0] flex items-center justify-between">
 //           <h3 className="font-semibold text-[#222] text-sm" style={{ fontFamily: "'Syne', sans-serif" }}>Medical Tools</h3>
 //           <span className="text-xs text-[#6a5acd] font-medium">{tools.length} devices</span>
@@ -245,7 +245,7 @@
 //     </div>
 
 //     {/* Activity bar chart placeholder */}
-//     <div className="bg-white rounded-2xl border border-[#e0e0e0]/60 shadow-sm p-5">
+//     <div className="bg-card rounded-2xl border border-[#e0e0e0]/60 shadow-sm p-5">
 //       <div className="flex items-center justify-between mb-4">
 //         <h3 className="font-semibold text-[#222] text-sm" style={{ fontFamily: "'Syne', sans-serif" }}>Weekly Appointments</h3>
 //         <span className="text-xs text-[#777]">This week</span>
@@ -299,7 +299,7 @@
 //             </span>
 //             <input value={search} onChange={e => setSearch(e.target.value)}
 //               placeholder="Search doctors..."
-//               className="pl-9 pr-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] w-52 transition-all" />
+//               className="pl-9 pr-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm bg-card focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] w-52 transition-all" />
 //           </div>
 //           <button onClick={() => setShowModal(true)}
 //             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white transition-all hover:opacity-90 shadow-sm"
@@ -311,7 +311,7 @@
 //       </div>
 
 //       {/* Table */}
-//       <div className="bg-white rounded-2xl border border-[#e0e0e0]/60 shadow-sm overflow-hidden">
+//       <div className="bg-card rounded-2xl border border-[#e0e0e0]/60 shadow-sm overflow-hidden">
 //         <div className="grid text-xs font-semibold text-[#777] uppercase tracking-wide px-5 py-3 border-b border-[#f0f0f0]"
 //           style={{ gridTemplateColumns: "2fr 1.5fr 1fr 1fr auto" }}>
 //           <span>Doctor</span><span>Specialization</span><span>Experience</span><span>Status</span><span>Actions</span>
@@ -424,7 +424,7 @@
 //             </span>
 //             <input value={search} onChange={e => setSearch(e.target.value)}
 //               placeholder="Search tools..."
-//               className="pl-9 pr-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] w-52 transition-all" />
+//               className="pl-9 pr-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm bg-card focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] w-52 transition-all" />
 //           </div>
 //           <button onClick={() => setShowModal(true)}
 //             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white transition-all hover:opacity-90 shadow-sm"
@@ -438,7 +438,7 @@
 //       {/* Cards grid */}
 //       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
 //         {filtered.map(t => (
-//           <div key={t.id} className="bg-white rounded-2xl border border-[#e0e0e0]/60 shadow-sm p-5 hover:shadow-md transition-shadow group">
+//           <div key={t.id} className="bg-card rounded-2xl border border-[#e0e0e0]/60 shadow-sm p-5 hover:shadow-md transition-shadow group">
 //             <div className="flex items-start justify-between mb-4">
 //               <div className="w-11 h-11 rounded-xl bg-[#ede9ff] flex items-center justify-center">
 //                 <Icon d={icons[t.icon] || icons.tools} size={20} stroke="#6a5acd" />
@@ -531,7 +531,7 @@
 //         {/* Main */}
 //         <div className="flex-1 flex flex-col min-w-0">
 //           {/* Topbar */}
-//           <header className="h-16 bg-white border-b border-[#e0e0e0] px-6 flex items-center justify-between flex-shrink-0 sticky top-0 z-10">
+//           <header className="h-16 bg-card border-b border-[#e0e0e0] px-6 flex items-center justify-between flex-shrink-0 sticky top-0 z-10">
 //             <div>
 //               <h1 className="text-base font-semibold text-[#222] capitalize" style={{ fontFamily: "'Syne', sans-serif" }}>
 //                 {active === "dashboard" ? "Overview" : active.replace("-", " ")}

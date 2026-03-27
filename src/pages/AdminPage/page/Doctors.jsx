@@ -38,7 +38,7 @@ const Doctor = () => {
   return (
     <div className="p-6 space-y-6">
       {/* 👨‍⚕️ DOCTOR INFO */}
-      <div className="bg-white p-6 rounded-xl shadow">
+      <div className="bg-card p-6 rounded-xl shadow">
         <h1 className="text-2xl font-bold">
           {doctor.name}
         </h1>
@@ -63,7 +63,7 @@ const Doctor = () => {
       </div>
 
       {/* 📋 APPOINTMENTS */}
-      <div className="bg-white p-4 rounded-xl shadow">
+      <div className="bg-card p-4 rounded-xl shadow">
         <h2 className="font-bold mb-3">
           Doctor Appointments
         </h2>

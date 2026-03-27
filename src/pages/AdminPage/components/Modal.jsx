@@ -3,7 +3,7 @@ import { Icon, icons } from "./Icon";
 const Modal = ({ title, onClose, children }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-      <div className="bg-white rounded-2xl w-full max-w-lg">
+      <div className="bg-card rounded-2xl w-full max-w-lg">
         
         <div className="flex justify-between p-5 border-b">
           <h2 className="font-semibold">{title}</h2>

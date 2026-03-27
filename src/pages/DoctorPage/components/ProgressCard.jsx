@@ -1,6 +1,6 @@
 const ProgressCard = () => {
   return (
-    <div className="bg-white p-6 rounded-3xl shadow">
+    <div className="bg-card p-6 rounded-3xl shadow">
       <h3 className="font-bold mb-4">
         Development Goals
       </h3>

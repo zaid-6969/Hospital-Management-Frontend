@@ -95,7 +95,7 @@ const AuthPage = () => {
       </div>
 
       {/* RIGHT PANEL */}
-      <div className="flex flex-1 items-center justify-center bg-white px-6 py-8 order-2 lg:order-none">
+      <div className="flex flex-1 items-center justify-center bg-card px-6 py-8 order-2 lg:order-none">
         <div className="w-full max-w-[420px] flex flex-col">
           {/* LOGO */}
           <div className="flex justify-end mb-6">
@@ -107,7 +107,7 @@ const AuthPage = () => {
           </p>
 
           {/* TOGGLE (PURPLE THEME SAME AS BEFORE) */}
-          <div className="relative flex bg-gray-100 rounded-full p-1 mb-6 w-full">
+          <div className="relative flex bg-bg rounded-full p-1 mb-6 w-full">
             <div
               className={`absolute top-1 left-1 h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full bg-gradient-to-r from-[#6a5acd] to-[#8e84c6] transition ${
                 !isLogin ? "translate-x-full" : ""

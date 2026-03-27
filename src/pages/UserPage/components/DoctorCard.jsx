@@ -6,7 +6,7 @@ const DoctorCard = ({ doctor, onBook }) => {
    const navigate = useNavigate();
 
   return (
-    <div onClick={()=>navigate(`/user/doctor/${doctor._id}`)} className="bg-white rounded-2xl p-5 flex gap-4 shadow hover:-translate-y-1 transition">
+    <div onClick={()=>navigate(`/user/doctor/${doctor._id}`)} className="bg-card rounded-2xl p-5 flex gap-4 shadow hover:-translate-y-1 transition">
       <img
         src={doctor.image?.url}
         alt=""

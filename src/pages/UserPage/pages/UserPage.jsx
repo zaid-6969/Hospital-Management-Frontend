@@ -72,21 +72,21 @@ export default function HomePage() {
   };
 
   return (
-    <div className="font-sans bg-gray-50 min-h-screen">
+    <div className="font-sans bg-bgmin-h-screen">
         {/* ── HERO ── */}
-        <section className="bg-gradient-to-br from-violet-50 via-white to-purple-50 py-10 px-6">
+        <section className="bg-bg py-10 px-6">
           <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-14">
             {/* Text */}
             <div className="flex-1 text-center lg:text-left">
               <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
                 ✦ Trusted Healthcare
               </span>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-text leading-tight mb-6">
                 We help people to{" "}
                 <span className="text-violet-600">get appointment</span> in
                 online
               </h1>
-              <p className="text-gray-500 text-base lg:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
+              <p className="text-text/70 text-base lg:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
                 MedLab Hospital is a full-service healthcare provider offering
                 innovative solutions that deliver the right level of care. We
                 strive to build a trusted community around your health, refining
@@ -102,7 +102,7 @@ export default function HomePage() {
               </div>
 
               {/* Stats */}
-              <div className="flex flex-wrap justify-center lg:justify-start gap-8 mt-10 pt-8 border-t border-gray-200">
+              <div className="flex flex-wrap justify-center lg:justify-start gap-8 mt-10 pt-8 border-t border-secondary">
                 {[
                   { v: "12K+", l: "Happy Patients" },
                   { v: "95%", l: "Success Rate" },
@@ -113,7 +113,7 @@ export default function HomePage() {
                     <div className="text-2xl font-black text-violet-600">
                       {s.v}
                     </div>
-                    <div className="text-xs text-gray-400 mt-0.5">{s.l}</div>
+                    <div className="text-xs text-text/50 mt-0.5">{s.l}</div>
                   </div>
                 ))}
               </div>
@@ -140,9 +140,9 @@ export default function HomePage() {
             <p className="text-violet-200 text-center text-xs font-bold uppercase tracking-widest mb-5">
               ✦ Quick Appointment Booking
             </p>
-            <div className="bg-white rounded-2xl p-6 shadow-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+            <div className="bg-card rounded-2xl p-6 shadow-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
               <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-text/50 uppercase tracking-wider mb-1.5">
                   Full Name
                 </label>
                 <input
@@ -150,11 +150,11 @@ export default function HomePage() {
                   placeholder="Your full name"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full border-2 border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all bg-gray-50 focus:bg-white"
+                  className="w-full border-2 border-secondary rounded-xl px-3 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all bg-bgfocus:bg-card"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-text/50 uppercase tracking-wider mb-1.5">
                   Phone Number
                 </label>
                 <input
@@ -162,28 +162,28 @@ export default function HomePage() {
                   placeholder="+91 98765 43210"
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  className="w-full border-2 border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all bg-gray-50 focus:bg-white"
+                  className="w-full border-2 border-secondary rounded-xl px-3 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all bg-bgfocus:bg-card"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-text/50 uppercase tracking-wider mb-1.5">
                   Preferred Date
                 </label>
                 <input
                   type="date"
                   value={form.date}
                   onChange={(e) => setForm({ ...form, date: e.target.value })}
-                  className="w-full border-2 border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all bg-gray-50 focus:bg-white"
+                  className="w-full border-2 border-secondary rounded-xl px-3 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all bg-bgfocus:bg-card"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-text/50 uppercase tracking-wider mb-1.5">
                   Department
                 </label>
                 <select
                   value={form.dept}
                   onChange={(e) => setForm({ ...form, dept: e.target.value })}
-                  className="w-full border-2 border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all bg-gray-50 focus:bg-white text-gray-600"
+                  className="w-full border-2 border-secondary rounded-xl px-3 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all bg-bgfocus:bg-card text-text/70 "
                 >
                   <option value="">Select dept.</option>
                   {[
@@ -208,16 +208,16 @@ export default function HomePage() {
         </section>
 
         {/* ── SERVICES ── */}
-        <section className="py-20 px-6 bg-white">
+        <section className="py-20 px-6 bg-card">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-14">
               <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
                 What We Offer
               </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
+              <h2 className="text-3xl sm:text-4xl font-black text-text">
                 Our Core Services
               </h2>
-              <p className="text-gray-400 mt-3 max-w-md mx-auto text-sm">
+              <p className="text-text/50 mt-3 max-w-md mx-auto text-sm">
                 From diagnostics to surgery, we cover all your healthcare needs
                 under one roof.
               </p>
@@ -226,15 +226,15 @@ export default function HomePage() {
               {SERVICES.map((s) => (
                 <div
                   key={s.title}
-                  className="bg-white border border-gray-200 rounded-2xl p-7 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-100 transition-all hover:-translate-y-1 group"
+                  className="bg-card border border-secondary rounded-2xl p-7 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-100 transition-all hover:-translate-y-1 group"
                 >
                   <div className="w-14 h-14 bg-violet-100 rounded-2xl flex items-center justify-center text-2xl mb-5">
                     {s.icon}
                   </div>
-                  <h3 className="text-lg font-extrabold text-gray-900 mb-2">
+                  <h3 className="text-lg font-extrabold text-text mb-2">
                     {s.title}
                   </h3>
-                  <p className="text-gray-500 text-sm leading-relaxed mb-5">
+                  <p className="text-text/70 text-sm leading-relaxed mb-5">
                     {s.desc}
                   </p>
                   <button className="text-violet-600 font-bold text-sm group-hover:underline">
@@ -252,7 +252,7 @@ export default function HomePage() {
         </section>
 
         {/* ── WHO WE ARE ── */}
-        <section className="py-20 px-6 bg-gray-50">
+        <section className="py-20 px-6 bg-bg">
           <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
             {/* Image grid */}
             <div className="w-full lg:flex-1 grid grid-cols-2 gap-4">
@@ -281,17 +281,17 @@ export default function HomePage() {
               <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
                 Biography
               </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-5">
+              <h2 className="text-3xl sm:text-4xl font-black text-text mb-5">
                 Who We Are
               </h2>
-              <p className="text-gray-500 text-sm leading-relaxed mb-4">
+              <p className="text-text/70 text-sm leading-relaxed mb-4">
                 MedLab Hospital is a full-service healthcare provider offering
                 innovative medical solutions that deliver the right level of
                 care. We strive to build a caring community around your health,
                 polishing your treatment plan and improving your long-term
                 wellbeing.
               </p>
-              <p className="text-gray-500 text-sm leading-relaxed mb-4">
+              <p className="text-text/70 text-sm leading-relaxed mb-4">
                 Our hospital is one of the most trusted healthcare institutions
                 in the region, with the ability to connect patients with top
                 specialists in real time.
@@ -299,7 +299,7 @@ export default function HomePage() {
               <p className="text-violet-600 font-bold text-sm mb-1">
                 Since 2010: time to heal and thrive.
               </p>
-              <p className="text-gray-400 text-xs italic mb-8">
+              <p className="text-text/50 text-xs italic mb-8">
                 We are your Social Healthcare Partner.
               </p>
               <div className="flex flex-wrap gap-3">
@@ -322,13 +322,13 @@ export default function HomePage() {
         </section>
 
         {/* ── DOCTORS ── */}
-        <section className="py-20 px-6 bg-white">
+        <section className="py-20 px-6 bg-card">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-14">
               <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
                 Meet the Team
               </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
+              <h2 className="text-3xl sm:text-4xl font-black text-text">
                 Our Specialist Doctors
               </h2>
             </div>
@@ -336,7 +336,7 @@ export default function HomePage() {
               {DOCTORS.map((doc) => (
                 <div
                   key={doc.name}
-                  className="border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-violet-100 hover:-translate-y-1 transition-all"
+                  className="border border-secondary rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-violet-100 hover:-translate-y-1 transition-all"
                 >
                   <div className="bg-gradient-to-br from-violet-100 to-purple-100 border-b-2 border-dashed border-violet-200 h-52 flex flex-col items-center justify-center">
                     <span className="text-5xl">{doc.icon}</span>
@@ -345,13 +345,13 @@ export default function HomePage() {
                     </span>
                   </div>
                   <div className="p-6">
-                    <h3 className="font-extrabold text-gray-900 text-lg">
+                    <h3 className="font-extrabold text-text text-lg">
                       {doc.name}
                     </h3>
                     <p className="text-violet-600 font-semibold text-sm mt-0.5">
                       {doc.specialty}
                     </p>
-                    <p className="text-gray-400 text-xs mt-1 mb-5">{doc.exp}</p>
+                    <p className="text-text/50 text-xs mt-1 mb-5">{doc.exp}</p>
                     <button className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-2.5 rounded-xl text-sm transition-all">
                       Book Appointment
                     </button>
@@ -363,13 +363,13 @@ export default function HomePage() {
         </section>
 
         {/* ── TESTIMONIALS ── */}
-        <section className="py-20 px-6 bg-gray-50">
+        <section className="py-20 px-6 bg-bg">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-14">
               <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
                 Patient Stories
               </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
+              <h2 className="text-3xl sm:text-4xl font-black text-text">
                 What Our Patients Say
               </h2>
             </div>
@@ -377,12 +377,12 @@ export default function HomePage() {
               {TESTIMONIALS.map((t) => (
                 <div
                   key={t.name}
-                  className="bg-white border border-gray-200 rounded-2xl p-7 hover:shadow-lg hover:shadow-violet-50 transition-all"
+                  className="bg-card border border-secondary rounded-2xl p-7 hover:shadow-lg hover:shadow-violet-50 transition-all"
                 >
                   <div className="text-yellow-400 text-sm mb-3">
                     {"★".repeat(t.rating)}
                   </div>
-                  <p className="text-gray-500 text-sm leading-relaxed italic mb-5">
+                  <p className="text-text/70 text-sm leading-relaxed italic mb-5">
                     "{t.text}"
                   </p>
                   <div className="flex items-center gap-3">
@@ -408,7 +408,7 @@ export default function HomePage() {
             Join over 12,000 patients who trust MedLab Hospital for their
             healthcare needs.
           </p>
-          <button className="bg-white text-violet-600 font-black px-8 py-4 rounded-full text-base shadow-xl hover:shadow-2xl transition-all hover:-translate-y-0.5">
+          <button className="bg-card text-violet-600 font-black px-8 py-4 rounded-full text-base shadow-xl hover:shadow-2xl transition-all hover:-translate-y-0.5">
             Get Started Today →
           </button>
         </section>

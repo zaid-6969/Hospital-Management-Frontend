@@ -30,7 +30,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
     }`;
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-card border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* LOGO */}
@@ -80,7 +80,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
 
       {/* MOBILE MENU */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t px-6 pb-4 pt-2 flex flex-col gap-1">
+        <div className="md:hidden bg-card border-t px-6 pb-4 pt-2 flex flex-col gap-1">
           {NAV_LINKS.map(({ name, path }) => (
             <NavLink
               key={name}
