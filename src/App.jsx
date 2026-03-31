@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import AuthPage from "./pages/AuthPage/AuthPage";
-import ProtectedRoute from "./routes/ProtectedRoute";
+// import ProtectedRoute from "./routes/ProtectedRoute";
 
 // USER PAGES
 import UserMainLayout from "./pages/UserPage/layout/UserMainLayout";
@@ -13,6 +13,8 @@ import AboutPage from "./pages/UserPage/pages/AboutPage";
 import ContactPage from "./pages/UserPage/pages/ContactPage";
 import AppointmentPage from "./pages/UserPage/pages/AppointmentPage";
 import DoctorDetails from "./pages/UserPage/components/DoctorDetails";
+import PatientDetailsPage from "./pages/UserPage/pages/PatientDetailsPage";
+import BookingSuccessPage from "./pages/UserPage/pages/BookingSuccessPage"
 
 // ADMIN PAGE
 import AdminMainLayout from "./pages/AdminPage/Layout/AdminMainLayout";
@@ -27,6 +29,7 @@ import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
 import DoctorSchedule from "./pages/DoctorPage/pages/DoctorSchedule";
 import DoctorOverview from "./pages/DoctorPage/pages/DoctorOverview";
 import DoctorMainLayout from "./pages/DoctorPage/Layout/DoctorMainLayout";
+
 
 function App() {
   const mode = useSelector((state) => state.theme.mode);
@@ -50,9 +53,9 @@ function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute role="ADMIN">
-              <AdminMainLayout />
-            </ProtectedRoute>
+            // <ProtectedRoute role="ADMIN">
+            <AdminMainLayout />
+            // </ProtectedRoute>
           }
         >
           <Route index path="admin" element={<Dashboard />} />
@@ -64,9 +67,9 @@ function App() {
         <Route
           path="/doctor"
           element={
-            <ProtectedRoute role="DOCTOR">
-              <DoctorMainLayout />
-            </ProtectedRoute>
+            // <ProtectedRoute role="DOCTOR">
+            <DoctorMainLayout />
+            // </ProtectedRoute>
           }
         >
           <Route index element={<DoctorSchedule />} />
@@ -76,9 +79,9 @@ function App() {
         <Route
           path="/doctor/overview"
           element={
-            <ProtectedRoute role="DOCTOR">
-              <DoctorOverview />
-            </ProtectedRoute>
+            // <ProtectedRoute role="DOCTOR">
+            <DoctorOverview />
+            // </ProtectedRoute>
           }
         />
 
@@ -86,9 +89,9 @@ function App() {
         <Route
           path="/reception"
           element={
-            <ProtectedRoute role="RECEPTIONIST">
-              <ReceptionPage />
-            </ProtectedRoute>
+            // <ProtectedRoute role="RECEPTIONIST">
+            <ReceptionPage />
+            // </ProtectedRoute>
           }
         />
 
@@ -96,9 +99,9 @@ function App() {
         <Route
           path="/user"
           element={
-            <ProtectedRoute role="PATIENT">
-              <UserMainLayout />
-            </ProtectedRoute>
+            // <ProtectedRoute role="PATIENT">
+            <UserMainLayout />
+            // </ProtectedRoute>
           }
         >
           <Route index element={<UserPage />} />
@@ -107,6 +110,8 @@ function App() {
           <Route path="contact" element={<ContactPage />} />
           <Route path="appointment" element={<AppointmentPage />} />
           <Route path="doctor/:id" element={<DoctorDetails />} />
+          <Route path="patient-details" element={<PatientDetailsPage />} />     {/* ✅ NEW */}
+          <Route path="booking-success" element={<BookingSuccessPage />} />
         </Route>
       </Routes>
     </div>
