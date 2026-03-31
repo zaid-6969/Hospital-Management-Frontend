@@ -19,8 +19,9 @@ import BookingSuccessPage from "./pages/UserPage/pages/BookingSuccessPage";
 // ADMIN PAGE
 import AdminMainLayout from "./pages/AdminPage/Layout/AdminMainLayout";
 import Dashboard from "./pages/AdminPage/page/Dashboard";
-import Doctors from "./pages/AdminPage/page/Doctors";
+import AdminDoctors from "./pages/AdminPage/page/AdminDoctors";
 import ToolsView from "./pages/AdminPage/page/Tools";
+import Doctors from "./pages/AdminPage/page/Doctors";
 
 // RECEPTION PAGE
 import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
@@ -61,6 +62,7 @@ function App() {
           <Route index path="admin" element={<Dashboard />} />
           <Route path="/admin/doctor/:id" element={<Doctors />} />
           <Route path="tools" element={<ToolsView />} />
+          <Route path="doctors" element={<AdminDoctors />} />
         </Route>
 
         {/* DOCTOR */}
@@ -111,7 +113,6 @@ function App() {
           <Route path="appointment" element={<AppointmentPage />} />
           <Route path="doctor/:id" element={<DoctorDetails />} />
           <Route path="patient-details" element={<PatientDetailsPage />} />{" "}
-          {/* ✅ NEW */}
           <Route path="booking-success" element={<BookingSuccessPage />} />
         </Route>
       </Routes>

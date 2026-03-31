@@ -7,6 +7,7 @@ const API = axios.create({
 
 // Doctors
 export const getDoctors = () => API.get("/doctors");
+
 export const getDoctorById = (id) => API.get(`/doctors/${id}`);
 
 // Appointments
@@ -18,5 +19,8 @@ export const savePatientDetails = (appointmentId, data) =>
 
 export const getPatientDetails = (appointmentId) =>
   API.get(`/patient-details/appointment/${appointmentId}`);
+
+
+export const logout = () => API.post("/auth/logout");
 
 export default API;

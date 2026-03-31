@@ -166,39 +166,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── ACCREDITATIONS ── */}
-      <section className="py-14 px-6 bg-card border-t border-secondary">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">Certifications</span>
-            <h2 className="text-2xl font-black text-text">Accreditations & Awards</h2>
-          </div>
-          <div className="flex flex-wrap justify-center gap-6">
-            {[
-              { i: "🏥", t: "NABH Accredited" },
-              { i: "🏅", t: "ISO 9001:2015" },
-              { i: "⭐", t: "4.9 / 5 Rating" },
-              { i: "🔬", t: "JCI Certified Lab" },
-              { i: "🤝", t: "PMJAY Partner" },
-              { i: "🎖️", t: "Best Hospital 2023" },
-            ].map(b => (
-              <div key={b.t} className="flex items-center gap-3 bg-violet-50 border border-violet-100 px-5 py-3 rounded-full">
-                <span className="text-xl">{b.i}</span>
-                <span className="font-bold text-sm text-violet-700">{b.t}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="bg-gradient-to-r from-violet-600 to-purple-500 py-20 px-6 text-center">
-        <h2 className="text-3xl sm:text-4xl font-black bg-card border-r border border-border border border-border mb-4">Ready to Book Your Appointment?</h2>
-        <p className="text-violet-200 text-base mb-8 max-w-md mx-auto">Join over 12,000 patients who trust MedLab Hospital for their healthcare needs.</p>
-        <button className="bg-card text-violet-600 font-black px-8 py-4 rounded-full text-base shadow-xl hover:-translate-y-0.5 transition-all">
-          Get Started Today →
-        </button>
-      </section>
+   
     
     </div>
   );

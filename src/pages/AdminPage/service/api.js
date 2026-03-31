@@ -27,3 +27,12 @@ export const getDoctorStats = (id) =>
 // 🔥 DOCTOR PANEL
 export const getMyAppointments = () =>
   API.get("/appointments/my");
+
+export const createDoctor = (data) =>
+  API.post("/doctors", data);
+
+export const updateDoctor = (id, data) =>
+  API.put(`/doctors/${id}`, data);
+
+export const deleteDoctor = (id) =>
+  API.delete(`/doctors/${id}`);

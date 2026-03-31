@@ -233,7 +233,7 @@ export default function ContactPage() {
               {/* Hours table */}
               <div className="bg-card border border-secondary  rounded-2xl overflow-hidden">
                 <div className="bg-violet-600 px-5 py-3.5">
-                  <h4 className="bg-card border-r border border-border border border-border font-bold text-sm">
+                  <h4 className="font-bold text-sm">
                     🕐 Opening Hours
                   </h4>
                 </div>
@@ -304,7 +304,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* App Download */}
           <div className="bg-gradient-to-br from-violet-100 to-purple-100 border border-violet-200 rounded-2xl p-7">
             <div className="text-4xl mb-4">📱</div>
             <h3 className="font-extrabold text-violet-700 text-xl mb-3">
@@ -324,20 +323,6 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="bg-gradient-to-r from-violet-600 to-purple-500 py-20 px-6 text-center">
-        <h2 className="text-3xl sm:text-4xl font-black bg-card border-r border border-border border border-border mb-4">
-          Ready to Book Your Appointment?
-        </h2>
-        <p className="text-violet-200 text-base mb-8 max-w-md mx-auto">
-          Join over 12,000 patients who trust MedLab Hospital for their
-          healthcare needs.
-        </p>
-        <button className="bg-card text-violet-600 font-black px-8 py-4 rounded-full text-base shadow-xl hover:-translate-y-0.5 transition-all">
-          Get Started Today →
-        </button>
       </section>
     </div>
   );

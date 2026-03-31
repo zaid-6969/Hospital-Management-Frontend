@@ -45,7 +45,7 @@ const AppointmentPage = () => {
   */
 
   return (
-    <div className="bg-bg min-h-screen">
+    <div className="bg-bg">
       <main className="max-w-7xl mx-auto px-8 py-12">
         <h1 className="text-3xl font-bold mb-8">
           Available Specialists

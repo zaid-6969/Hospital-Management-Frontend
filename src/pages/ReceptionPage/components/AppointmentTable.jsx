@@ -266,7 +266,7 @@ const AppointmentTable = () => {
 
   const [viewData, setViewData] = useState(null);
   const [editData, setEditData] = useState(null);
-  const [deleteData, setDeleteData] = useState(null); // ✅ NEW
+  const [deleteData, setDeleteData] = useState(null);
 
   const limit = 8;
 

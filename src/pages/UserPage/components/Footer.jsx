@@ -25,9 +25,9 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="w-9 h-9 rounded-xl bg-violet-600 flex items-center justify-center">
-                <span className="bg-card border-r border border-border border border-border font-extrabold">M</span>
+                <span className=" font-extrabold">M</span>
               </div>
-              <span className="bg-card border-r border border-border border border-border font-extrabold text-base">
+              <span className=" font-extrabold text-base">
                 MedLab Hospital
               </span>
             </div>
@@ -37,7 +37,7 @@ const Footer = () => {
             </p>
           </div>
           <div>
-            <h4 className="bg-card border-r border border-border border border-border font-bold text-xs uppercase tracking-widest mb-5">
+            <h4 className="bg-card  font-bold text-xs uppercase tracking-widest mb-5">
               Quick Links
             </h4>
             <div className="flex flex-col gap-2.5">
@@ -53,7 +53,7 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <h4 className="bg-card border-r border border-border border border-border font-bold text-xs uppercase tracking-widest mb-5">
+            <h4 className=" font-bold text-xs uppercase tracking-widest mb-5">
               Hours
             </h4>
             <div className="flex flex-col gap-2.5">
@@ -66,7 +66,7 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <h4 className="bg-card border-r border border-border border border-border font-bold text-xs uppercase tracking-widest mb-5">
+            <h4 className=" font-bold text-xs uppercase tracking-widest mb-5">
               Contact
             </h4>
             <div className="flex flex-col gap-3">
