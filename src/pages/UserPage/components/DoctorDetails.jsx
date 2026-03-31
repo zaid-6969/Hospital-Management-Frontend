@@ -114,7 +114,7 @@ const DoctorDetails = () => {
   };
 
   return (
-    <div className="bg-[#f8f9fb] dark:bg-gray-900 min-h-screen">
+    <div className="bg-bg dark:bg-bg-bg min-h-screen">
       <style>{`
         /* Available weekday highlight */
         .react-calendar .available-day abbr {
@@ -190,7 +190,7 @@ const DoctorDetails = () => {
       <main className="max-w-6xl mx-auto px-6 py-10">
 
         {/* Doctor Profile */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow p-6 flex flex-col md:flex-row gap-6 mb-8">
+        <div className="bg-card border border-border border border-border dark:bg-gray-800 rounded-2xl shadow p-6 flex flex-col md:flex-row gap-6 mb-8">
           {doctor.image?.url ? (
             <img
               src={doctor.image.url}
@@ -204,13 +204,13 @@ const DoctorDetails = () => {
           )}
 
           <div className="flex flex-col justify-center gap-2">
-            <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-800 dark:bg-card border-r border border-border border border-border">
               {doctor.name}
             </h1>
             <p className="text-indigo-600 font-medium text-lg">
               {doctor.specialization}
             </p>
-            <p className="text-gray-500 text-sm">
+            <p className="text-text/60 text-sm">
               {doctor.experience} years of experience
             </p>
 
@@ -231,13 +231,13 @@ const DoctorDetails = () => {
         <div className="grid md:grid-cols-2 gap-6">
 
           {/* Calendar */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow p-6">
+          <div className="bg-card border border-border border border-border dark:bg-gray-800 rounded-2xl shadow p-6">
             <h2 className="text-base font-semibold text-gray-700 dark:text-gray-200 mb-3 flex items-center gap-2">
               📅 Select Appointment Date
             </h2>
 
             {/* Legend */}
-            <div className="flex gap-4 text-xs text-gray-500 mb-4">
+            <div className="flex gap-4 text-xs text-text/60 mb-4">
               <span className="flex items-center gap-1.5">
                 <span className="inline-block w-3 h-3 rounded-full bg-indigo-200" />
                 Available
@@ -264,7 +264,7 @@ const DoctorDetails = () => {
             />
 
             {selectedDate && (
-              <p className="mt-3 text-center text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-3 text-center text-sm text-text/60 dark:text-gray-400">
                 Selected:{" "}
                 <span className="font-semibold text-indigo-600">
                   {selectedDate.toDateString()}
@@ -274,7 +274,7 @@ const DoctorDetails = () => {
           </div>
 
           {/* Time Slots */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow p-6">
+          <div className="bg-card border border-border border border-border dark:bg-gray-800 rounded-2xl shadow p-6">
             <h2 className="text-base font-semibold text-gray-700 dark:text-gray-200 mb-4 flex items-center gap-2">
               🕐 Available Time Slots
             </h2>
@@ -294,7 +294,7 @@ const DoctorDetails = () => {
               </div>
             ) : (
               <>
-                <p className="text-xs text-gray-400 dark:text-gray-500 mb-3">
+                <p className="text-xs text-gray-400 dark:text-text/60 mb-3">
                   {slots.length} slot{slots.length !== 1 ? "s" : ""} available
                 </p>
                 <div className="grid grid-cols-2 gap-3">
@@ -308,8 +308,8 @@ const DoctorDetails = () => {
                         onClick={() => setSelectedSlot(slot)}
                         className={`px-4 py-3 rounded-xl text-sm font-medium border-2 transition-all duration-150 ${
                           isSelected
-                            ? "bg-indigo-600 border-indigo-600 text-white shadow-md scale-105"
-                            : "bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
+                            ? "bg-indigo-600 border-indigo-600 bg-card border-r border border-border border border-border shadow-md scale-105"
+                            : "bg-card border border-border border border-border dark:bg-gray-700 bg-card border border-border border border-border dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
                         }`}
                       >
                         {slot.start} – {slot.end}
@@ -339,7 +339,7 @@ const DoctorDetails = () => {
                 </p>
                 <button
                   onClick={handleNext}
-                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-500 text-white py-3 rounded-xl font-semibold hover:opacity-90 transition"
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-500 bg-card border-r border border-border border border-border py-3 rounded-xl font-semibold hover:opacity-90 transition"
                 >
                   Continue to Patient Details →
                 </button>

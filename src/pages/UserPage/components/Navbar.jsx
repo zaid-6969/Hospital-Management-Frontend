@@ -19,7 +19,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
     `${baseClass} ${
       isActive
         ? "text-violet-600 border-violet-600 font-bold"
-        : "text-gray-500 border-transparent hover:text-violet-600"
+        : "text-text/60 border-transparent hover:text-violet-600"
     }`;
 
   const mobileClass = (isActive) =>
@@ -30,7 +30,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
     }`;
 
   return (
-    <nav className="bg-card border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-card border-b bg-card border border-border border border-border sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* LOGO */}
@@ -39,9 +39,9 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
           className="flex items-center gap-2 cursor-pointer"
         >
           <div className="w-9 h-9 rounded-xl bg-violet-600 flex items-center justify-center">
-            <span className="text-white font-extrabold text-base">M</span>
+            <span className="bg-card border-r border border-border border border-border font-extrabold text-base">M</span>
           </div>
-          <span className="font-extrabold text-lg text-gray-900">
+          <span className="font-extrabold text-lg text-bg-bg">
             MedLab <span className="text-violet-600">Hospital</span>
           </span>
         </div>
@@ -59,7 +59,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
         <div className="hidden md:flex items-center gap-3">
           {[
             { name: "Sign In", path: "/", style: "text-gray-700 hover:text-violet-600" },
-            { name: "Register", path: "/", style: "bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-full shadow-lg shadow-violet-200" },
+            { name: "Register", path: "/", style: "bg-violet-600 hover:bg-violet-700 bg-card border-r border border-border border border-border px-5 py-2 rounded-full shadow-lg shadow-violet-200" },
           ].map(({ name, path, style }) => (
             <NavLink key={name} to={path} end={path === "/user"} className={`text-sm font-bold ${style}`}>
               {name}
@@ -96,7 +96,7 @@ const Navbar = ({ menuOpen, setMenuOpen }) => {
           <div className="flex gap-3 mt-2 pt-3 border-t">
             {[
               { name: "Sign In", path: "/", style: "border-2 border-violet-300 text-violet-600" },
-              { name: "Register", path: "/", style: "bg-violet-600 text-white" },
+              { name: "Register", path: "/", style: "bg-violet-600 bg-card border-r border border-border border border-border" },
             ].map(({ name, path, style }) => (
               <NavLink
                 key={name}

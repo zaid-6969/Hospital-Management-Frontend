@@ -19,22 +19,26 @@ const DoctorSchedule = () => {
   };
 
   return (
-    <main className="pt-24 px-6 md:px-12 grid grid-cols-12 gap-8">
-      <section className="col-span-12 lg:col-span-9 space-y-6">
-        <h2 className="text-3xl font-bold">My Schedule</h2>
+    <main className="space-y-6">
 
-        {appointments.length === 0 ? (
-          <p>No appointments</p>
-        ) : (
-          appointments.map((item) => (
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold">My Schedule</h2>
+      </div>
+
+      {appointments.length === 0 ? (
+        <p className="text-text/60">No appointments</p>
+      ) : (
+        <div className="grid gap-4">
+          {appointments.map((item) => (
             <TimelineCard
               key={item._id}
               data={item}
-              refresh={fetchAppointments} // 🔥 important
+              refresh={fetchAppointments}
             />
-          ))
-        )}
-      </section>
+          ))}
+        </div>
+      )}
+
     </main>
   );
 };

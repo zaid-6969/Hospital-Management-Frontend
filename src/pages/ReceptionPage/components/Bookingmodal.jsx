@@ -68,7 +68,7 @@ const StepIndicator = ({ step }) => {
             <div className="flex flex-col items-center gap-1">
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300
-                  ${done ? "bg-violet-600 text-white" : active ? "bg-violet-600 text-white ring-4 ring-violet-100" : "bg-violet-100 text-violet-400"}`}
+                  ${done ? "bg-violet-600 bg-card border-r border border-border border border-border" : active ? "bg-violet-600 bg-card border-r border border-border border border-border ring-4 ring-violet-100" : "bg-violet-100 text-violet-400"}`}
               >
                 {done ? <CheckCircle size={14} /> : num}
               </div>
@@ -191,7 +191,7 @@ const Step1 = ({ onNext }) => {
                   onClick={() => handleDaySelect(dayObj)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200
                     ${active
-                      ? "bg-violet-600 text-white border-violet-600 shadow-md shadow-violet-200"
+                      ? "bg-violet-600 bg-card border-r border border-border border border-border border-violet-600 shadow-md shadow-violet-200"
                       : "bg-violet-50 text-violet-600 border-violet-200 hover:bg-violet-100"}`}
                 >
                   {dayName.slice(0, 3)}
@@ -219,9 +219,9 @@ const Step1 = ({ onNext }) => {
                   onClick={() => handleDateSelect(date)}
                   className={`flex flex-col items-center py-2 px-1 rounded-xl border text-xs font-semibold transition-all duration-200
                     ${isPast
-                      ? "opacity-30 cursor-not-allowed bg-gray-50 border-gray-200 text-gray-400"
+                      ? "opacity-30 cursor-not-allowed bg-gray-50 bg-card border border-border border border-border text-gray-400"
                       : isSelected
-                      ? "bg-violet-600 text-white border-violet-600 shadow-md shadow-violet-200"
+                      ? "bg-violet-600 bg-card border-r border border-border border border-border border-violet-600 shadow-md shadow-violet-200"
                       : "bg-violet-50 text-violet-700 border-violet-200 hover:bg-violet-100"}`}
                 >
                   <span className="text-[10px] font-normal opacity-70">
@@ -259,14 +259,14 @@ const Step1 = ({ onNext }) => {
                     ${booked
                       ? "bg-red-50 text-red-300 border-red-100 cursor-not-allowed line-through opacity-60"
                       : active
-                      ? "bg-violet-600 text-white border-violet-600 shadow-md shadow-violet-200"
+                      ? "bg-violet-600 bg-card border-r border border-border border border-border border-violet-600 shadow-md shadow-violet-200"
                       : "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"}`}
                 >
                   {slot.start}
                   <span className="opacity-60"> – </span>
                   {slot.end}
                   {booked && (
-                    <span className="absolute -top-1.5 -right-1.5 text-[9px] bg-red-400 text-white px-1 rounded-full">
+                    <span className="absolute -top-1.5 -right-1.5 text-[9px] bg-red-400 bg-card border-r border border-border border border-border px-1 rounded-full">
                       Full
                     </span>
                   )}
@@ -386,7 +386,7 @@ const Step2 = ({ schedule, onNext, onBack }) => {
                 onClick={() => set("gender", g)}
                 className={`flex-1 py-2 rounded-xl text-xs font-semibold border transition-all
                   ${form.gender === g
-                    ? "bg-violet-600 text-white border-violet-600"
+                    ? "bg-violet-600 bg-card border-r border border-border border border-border border-violet-600"
                     : "bg-violet-50 text-violet-600 border-violet-200 hover:bg-violet-100"}`}
               >
                 {g}
@@ -468,7 +468,7 @@ const Step3 = ({ data, onBack, onClose, onSuccess }) => {
         </div>
         <div>
           <h3 className="text-lg font-bold text-gray-800">Appointment Booked!</h3>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-text/60 mt-1">
             {data.patient.name}'s appointment has been confirmed.
           </p>
         </div>
@@ -617,7 +617,7 @@ const BookingModal = ({ onClose, onSuccess }) => {
 
       <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-50 px-4">
         <div
-          className="bg-white rounded-2xl w-full shadow-2xl shadow-violet-100 border border-violet-100 overflow-hidden flex flex-col"
+          className="bg-card border border-border border border-border rounded-2xl w-full shadow-2xl shadow-violet-100 border border-violet-100 overflow-hidden flex flex-col"
           style={{ maxWidth: 520, maxHeight: "90vh" }}
         >
           {/* Header */}

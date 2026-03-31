@@ -2,8 +2,8 @@ const StatsCard = () => {
   const bars = [40, 65, 55, 85, 92, 70, 60, 75];
 
   return (
-    <div className="bg-card p-6 rounded-3xl shadow">
-      <h3 className="text-lg font-bold mb-4">
+    <div className="bg-card p-6 rounded-2xl shadow-sm">
+      <h3 className="text-lg font-semibold mb-4">
         Efficiency Index
       </h3>
 
@@ -14,7 +14,7 @@ const StatsCard = () => {
           <div
             key={i}
             className={`flex-1 rounded-t ${
-              i === 4 ? "bg-indigo-600" : "bg-gray-200"
+              i === 4 ? "bg-primary" : "bg-primary/20"
             }`}
             style={{ height: `${h}%` }}
           ></div>

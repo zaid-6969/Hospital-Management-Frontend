@@ -122,7 +122,7 @@ export default function AboutPage() {
               {MILESTONES.map((m, i) => (
                 <div key={m.year} className="flex gap-6 items-start">
                   <div className="relative z-10 flex flex-col items-center shrink-0">
-                    <div className="w-12 h-12 bg-violet-600 rounded-full flex items-center justify-center text-white text-xs font-extrabold shadow-lg shadow-violet-300">
+                    <div className="w-12 h-12 bg-violet-600 rounded-full flex items-center justify-center bg-card border-r border border-border border border-border text-xs font-extrabold shadow-lg shadow-violet-300">
                       {m.year.slice(2)}
                     </div>
                   </div>
@@ -156,7 +156,7 @@ export default function AboutPage() {
                   <p className="text-violet-600 font-semibold text-sm mt-0.5">{doc.specialty}</p>
                   <p className="text-gray-400 text-xs mt-0.5 mb-3">{doc.exp} experience</p>
                   <p className="text-text/70 text-xs leading-relaxed mb-5">{doc.bio}</p>
-                  <button className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-2.5 rounded-xl text-sm transition-all">
+                  <button className="w-full bg-violet-600 hover:bg-violet-700 bg-card border-r border border-border border border-border font-bold py-2.5 rounded-xl text-sm transition-all">
                     Book Appointment
                   </button>
                 </div>
@@ -193,7 +193,7 @@ export default function AboutPage() {
 
       {/* ── CTA ── */}
       <section className="bg-gradient-to-r from-violet-600 to-purple-500 py-20 px-6 text-center">
-        <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">Ready to Book Your Appointment?</h2>
+        <h2 className="text-3xl sm:text-4xl font-black bg-card border-r border border-border border border-border mb-4">Ready to Book Your Appointment?</h2>
         <p className="text-violet-200 text-base mb-8 max-w-md mx-auto">Join over 12,000 patients who trust MedLab Hospital for their healthcare needs.</p>
         <button className="bg-card text-violet-600 font-black px-8 py-4 rounded-full text-base shadow-xl hover:-translate-y-0.5 transition-all">
           Get Started Today →

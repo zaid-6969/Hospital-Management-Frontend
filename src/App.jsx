@@ -14,7 +14,7 @@ import ContactPage from "./pages/UserPage/pages/ContactPage";
 import AppointmentPage from "./pages/UserPage/pages/AppointmentPage";
 import DoctorDetails from "./pages/UserPage/components/DoctorDetails";
 import PatientDetailsPage from "./pages/UserPage/pages/PatientDetailsPage";
-import BookingSuccessPage from "./pages/UserPage/pages/BookingSuccessPage"
+import BookingSuccessPage from "./pages/UserPage/pages/BookingSuccessPage";
 
 // ADMIN PAGE
 import AdminMainLayout from "./pages/AdminPage/Layout/AdminMainLayout";
@@ -30,7 +30,6 @@ import DoctorSchedule from "./pages/DoctorPage/pages/DoctorSchedule";
 import DoctorOverview from "./pages/DoctorPage/pages/DoctorOverview";
 import DoctorMainLayout from "./pages/DoctorPage/Layout/DoctorMainLayout";
 
-
 function App() {
   const mode = useSelector((state) => state.theme.mode);
 
@@ -43,6 +42,7 @@ function App() {
       root.classList.remove("dark");
     }
   }, [mode]);
+
   return (
     <div className="bg-bg text-text min-h-screen">
       <Routes>
@@ -110,7 +110,8 @@ function App() {
           <Route path="contact" element={<ContactPage />} />
           <Route path="appointment" element={<AppointmentPage />} />
           <Route path="doctor/:id" element={<DoctorDetails />} />
-          <Route path="patient-details" element={<PatientDetailsPage />} />     {/* ✅ NEW */}
+          <Route path="patient-details" element={<PatientDetailsPage />} />{" "}
+          {/* ✅ NEW */}
           <Route path="booking-success" element={<BookingSuccessPage />} />
         </Route>
       </Routes>

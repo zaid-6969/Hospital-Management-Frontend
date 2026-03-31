@@ -20,7 +20,7 @@ const DoctorCard = ({ doctor, onBook }) => {
             {doctor.specialization}
           </p>
 
-          <div className="text-xs mt-2 text-gray-500">
+          <div className="text-xs mt-2 text-text/60">
             {doctor.experience}
           </div>
         </div>
@@ -35,7 +35,7 @@ const DoctorCard = ({ doctor, onBook }) => {
 
           <button
             onClick={onBook}
-            className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white px-4 py-2 rounded-lg text-sm"
+            className="bg-gradient-to-r from-indigo-600 to-purple-500 bg-card border-r border border-border border border-border px-4 py-2 rounded-lg text-sm"
           >
             Book Now
           </button>

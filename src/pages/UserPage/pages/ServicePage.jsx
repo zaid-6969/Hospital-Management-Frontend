@@ -93,7 +93,7 @@ export default function HomePage() {
                 your treatment plan and improving your long-term wellbeing.
               </p>
               <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-                <button className="bg-violet-600 hover:bg-violet-700 text-white font-bold px-7 py-3.5 rounded-full shadow-lg shadow-violet-300 transition-all hover:-translate-y-0.5">
+                <button className="bg-violet-600 hover:bg-violet-700 bg-card border-r border border-border border border-border font-bold px-7 py-3.5 rounded-full shadow-lg shadow-violet-300 transition-all hover:-translate-y-0.5">
                   Book Appointment
                 </button>
                 <button className="border-2 border-violet-300 text-violet-600 font-bold px-7 py-3.5 rounded-full hover:bg-violet-50 transition-colors">
@@ -199,7 +199,7 @@ export default function HomePage() {
               </div>
               <button
                 onClick={handleBook}
-                className={`${booked ? "bg-green-500" : "bg-violet-600 hover:bg-violet-700"} text-white font-bold py-2.5 px-5 rounded-xl transition-all text-sm shadow-lg shadow-violet-200 sm:col-span-2 lg:col-span-1`}
+                className={`${booked ? "bg-green-500" : "bg-violet-600 hover:bg-violet-700"} bg-card border-r border border-border border border-border font-bold py-2.5 px-5 rounded-xl transition-all text-sm shadow-lg shadow-violet-200 sm:col-span-2 lg:col-span-1`}
               >
                 {booked ? "✓ Booked!" : "Book Now →"}
               </button>
@@ -352,7 +352,7 @@ export default function HomePage() {
                       {doc.specialty}
                     </p>
                     <p className="text-text/50 text-xs mt-1 mb-5">{doc.exp}</p>
-                    <button className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-2.5 rounded-xl text-sm transition-all">
+                    <button className="w-full bg-violet-600 hover:bg-violet-700 bg-card border-r border border-border border border-border font-bold py-2.5 rounded-xl text-sm transition-all">
                       Book Appointment
                     </button>
                   </div>
@@ -401,7 +401,7 @@ export default function HomePage() {
 
         {/* ── CTA BANNER ── */}
         <section className="bg-gradient-to-r from-violet-600 to-purple-500 py-20 px-6 text-center">
-          <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl font-black bg-card border-r border border-border border border-border mb-4">
             Ready to Book Your Appointment?
           </h2>
           <p className="text-violet-200 text-base mb-8 max-w-md mx-auto">

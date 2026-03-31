@@ -201,7 +201,7 @@ export default function ContactPage() {
                 </div>
                 <button
                   onClick={handleSend}
-                  className={`${sent ? "bg-green-500" : "bg-violet-600 hover:bg-violet-700"} text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-violet-200`}
+                  className={`${sent ? "bg-green-500" : "bg-violet-600 hover:bg-violet-700"} bg-card border-r border border-border border border-border font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-violet-200`}
                 >
                   {sent
                     ? "✓ Message Sent! We'll be in touch soon."
@@ -233,7 +233,7 @@ export default function ContactPage() {
               {/* Hours table */}
               <div className="bg-card border border-secondary  rounded-2xl overflow-hidden">
                 <div className="bg-violet-600 px-5 py-3.5">
-                  <h4 className="text-white font-bold text-sm">
+                  <h4 className="bg-card border-r border border-border border border-border font-bold text-sm">
                     🕐 Opening Hours
                   </h4>
                 </div>
@@ -290,13 +290,13 @@ export default function ContactPage() {
               {[
                 { n: "F", bg: "bg-blue-600", label: "Facebook" },
                 { n: "IG", bg: "bg-pink-500", label: "Instagram" },
-                { n: "X", bg: "bg-gray-900", label: "Twitter / X" },
+                { n: "X", bg: "bg-bg-bg", label: "Twitter / X" },
                 { n: "YT", bg: "bg-red-600", label: "YouTube" },
               ].map((s) => (
                 <button
                   key={s.n}
                   title={s.label}
-                  className={`w-10 h-10 ${s.bg} rounded-xl flex items-center justify-center text-white text-xs font-extrabold hover:opacity-80 transition-opacity`}
+                  className={`w-10 h-10 ${s.bg} rounded-xl flex items-center justify-center bg-card border-r border border-border border border-border text-xs font-extrabold hover:opacity-80 transition-opacity`}
                 >
                   {s.n}
                 </button>
@@ -315,7 +315,7 @@ export default function ContactPage() {
               manage prescriptions — all from your phone.
             </p>
             <div className="flex flex-wrap gap-3">
-              <button className="bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs px-4 py-2.5 rounded-full transition-all">
+              <button className="bg-violet-600 hover:bg-violet-700 bg-card border-r border border-border border border-border font-bold text-xs px-4 py-2.5 rounded-full transition-all">
                 📥 App Store
               </button>
               <button className="border-2 border-violet-400 text-violet-600 font-bold text-xs px-4 py-2.5 rounded-full hover:bg-violet-50 transition-colors">
@@ -328,7 +328,7 @@ export default function ContactPage() {
 
       {/* ── CTA ── */}
       <section className="bg-gradient-to-r from-violet-600 to-purple-500 py-20 px-6 text-center">
-        <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
+        <h2 className="text-3xl sm:text-4xl font-black bg-card border-r border border-border border border-border mb-4">
           Ready to Book Your Appointment?
         </h2>
         <p className="text-violet-200 text-base mb-8 max-w-md mx-auto">

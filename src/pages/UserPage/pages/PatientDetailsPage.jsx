@@ -60,10 +60,10 @@ const PatientDetailsPage = () => {
   if (!doctor || !date || !time) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <p className="text-gray-500">No appointment info found.</p>
+        <p className="text-text/60">No appointment info found.</p>
         <button
           onClick={() => navigate("/user/appointment")}
-          className="bg-indigo-600 text-white px-6 py-2 rounded-lg"
+          className="bg-indigo-600 bg-card border-r border border-border border border-border px-6 py-2 rounded-lg"
         >
           Go back to Appointments
         </button>
@@ -128,7 +128,7 @@ const PatientDetailsPage = () => {
     const baseInputClass = `w-full px-4 py-2.5 rounded-xl border text-sm transition focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
       err
         ? "border-red-400 bg-red-50 dark:bg-red-900/10"
-        : "border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100"
+        : "bg-card border border-border border border-border dark:border-gray-600 bg-card border border-border border border-border dark:bg-gray-700 text-gray-800 dark:text-gray-100"
     }`;
 
     if (field.type === "select") {
@@ -177,7 +177,7 @@ const PatientDetailsPage = () => {
   };
 
   return (
-    <div className="bg-[#f8f9fb] dark:bg-gray-900 min-h-screen">
+    <div className="bg-bg dark:bg-bg-bg min-h-screen">
       <main className="max-w-3xl mx-auto px-6 py-10">
 
         {/* Header */}
@@ -188,16 +188,16 @@ const PatientDetailsPage = () => {
           >
             ← Back
           </button>
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+          <h1 className="text-2xl font-bold text-gray-800 dark:bg-card border-r border border-border border border-border">
             Patient Details
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-text/60 mt-1">
             Please fill in the details before confirming your appointment
           </p>
         </div>
 
         {/* Appointment Summary Card */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-500 text-white rounded-2xl p-5 mb-6 shadow-lg">
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-500 bg-card border-r border border-border border border-border rounded-2xl p-5 mb-6 shadow-lg">
           <p className="text-xs uppercase tracking-wider opacity-80 mb-2">Appointment Summary</p>
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <img
@@ -221,7 +221,7 @@ const PatientDetailsPage = () => {
           {FIELDS.map((section) => (
             <div
               key={section.section}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow p-6"
+              className="bg-card border border-border border border-border dark:bg-gray-800 rounded-2xl shadow p-6"
             >
               <h2 className="text-base font-semibold text-gray-700 dark:text-gray-200 mb-4 flex items-center gap-2">
                 <span>{section.icon}</span>
@@ -238,7 +238,7 @@ const PatientDetailsPage = () => {
                         : ""
                     }
                   >
-                    <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
+                    <label className="block text-xs font-medium text-text/60 dark:text-gray-400 mb-1">
                       {field.label}
                       {field.required && (
                         <span className="text-red-500 ml-0.5">*</span>
@@ -262,7 +262,7 @@ const PatientDetailsPage = () => {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="w-full bg-gradient-to-r from-indigo-600 to-purple-500 text-white py-4 rounded-2xl font-semibold text-base hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+            className="w-full bg-gradient-to-r from-indigo-600 to-purple-500 bg-card border-r border border-border border border-border py-4 rounded-2xl font-semibold text-base hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">

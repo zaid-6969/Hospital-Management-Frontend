@@ -71,7 +71,7 @@ const ToolsView = ({ tools, setTools }) => {
           </div>
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white transition-all hover:opacity-90 shadow-sm"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-card border-r border border-border border border-border transition-all hover:opacity-90 shadow-sm"
             style={{ background: "#6a5acd" }}
           >
             <Icon d={icons.plus} size={15} />
@@ -190,13 +190,13 @@ const ToolsView = ({ tools, setTools }) => {
             <div className="flex gap-3 pt-1">
               <button
                 onClick={() => setShowModal(false)}
-                className="flex-1 px-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm font-medium text-[#777] hover:bg-[#f8f9fb] transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm font-medium text-[#777] hover:bg-bg transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleAdd}
-                className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white transition-all hover:opacity-90"
+                className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium bg-card border-r border border-border border border-border transition-all hover:opacity-90"
                 style={{ background: "#6a5acd" }}
               >
                 Add Tool

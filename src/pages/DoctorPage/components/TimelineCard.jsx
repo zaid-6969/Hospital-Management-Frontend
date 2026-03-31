@@ -110,7 +110,7 @@ const TimelineCard = ({ data, refresh }) => {
 
               <button
                 onClick={handleRejectSubmit}
-                className="px-4 py-1 bg-red-500 text-white rounded-lg"
+                className="px-4 py-1 bg-red-500 bg-card border-r border border-border border border-border rounded-lg"
               >
                 Submit
               </button>

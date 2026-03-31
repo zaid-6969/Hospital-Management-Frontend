@@ -74,7 +74,7 @@
 //     Maintenance: "bg-red-50 text-red-500 border-red-200",
 //   };
 //   return (
-//     <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full border ${map[status] || "bg-gray-50 text-gray-500 border-gray-200"}`}>
+//     <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full border ${map[status] || "bg-gray-50 text-text/60 bg-card border border-border border border-border"}`}>
 //       {status}
 //     </span>
 //   );
@@ -86,7 +86,7 @@
 //     <div className="bg-card rounded-2xl shadow-2xl w-full max-w-lg animate-fade-in">
 //       <div className="flex items-center justify-between px-6 py-5 border-b border-[#e0e0e0]">
 //         <h2 className="text-base font-semibold text-[#222]" style={{ fontFamily: "'Syne', sans-serif" }}>{title}</h2>
-//         <button onClick={onClose} className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[#f8f9fb] text-[#777] transition-colors">
+//         <button onClick={onClose} className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-bg text-[#777] transition-colors">
 //           <Icon d={icons.close} size={16} />
 //         </button>
 //       </div>
@@ -104,11 +104,11 @@
 // );
 
 // const Input = (props) => (
-//   <input {...props} className="w-full px-3.5 py-2.5 rounded-xl border border-[#e0e0e0] text-sm text-[#222] bg-[#f8f9fb] focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] transition-all placeholder:text-[#bbb]" />
+//   <input {...props} className="w-full px-3.5 py-2.5 rounded-xl border border-[#e0e0e0] text-sm text-[#222] bg-bg focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] transition-all placeholder:text-[#bbb]" />
 // );
 
 // const Select = ({ children, ...props }) => (
-//   <select {...props} className="w-full px-3.5 py-2.5 rounded-xl border border-[#e0e0e0] text-sm text-[#222] bg-[#f8f9fb] focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] transition-all appearance-none cursor-pointer">
+//   <select {...props} className="w-full px-3.5 py-2.5 rounded-xl border border-[#e0e0e0] text-sm text-[#222] bg-bg focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] transition-all appearance-none cursor-pointer">
 //     {children}
 //   </select>
 // );
@@ -133,7 +133,7 @@
 //           </svg>
 //         </div>
 //         <div>
-//           <div className="text-white font-bold text-base leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>MedAdmin</div>
+//           <div className="bg-card border-r border border-border border border-border font-bold text-base leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>MedAdmin</div>
 //           <div className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>Healthcare Portal</div>
 //         </div>
 //       </div>
@@ -146,8 +146,8 @@
 //         <button key={item.id} onClick={() => setActive(item.id)}
 //           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-left
 //             ${active === item.id
-//               ? "bg-[#6a5acd] text-white shadow-lg shadow-[#6a5acd]/30"
-//               : "text-white/50 hover:text-white hover:bg-card/5"}`}>
+//               ? "bg-[#6a5acd] bg-card border-r border border-border border border-border shadow-lg shadow-[#6a5acd]/30"
+//               : "bg-card border-r border border-border border border-border/50 hover:bg-card border-r border border-border border border-border hover:bg-card/5"}`}>
 //           <Icon d={icons[item.icon]} size={17} />
 //           {item.label}
 //         </button>
@@ -158,8 +158,8 @@
 //         <button key={item.id} onClick={() => setActive(item.id)}
 //           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-left
 //             ${active === item.id
-//               ? "bg-[#6a5acd] text-white shadow-lg shadow-[#6a5acd]/30"
-//               : "text-white/50 hover:text-white hover:bg-card/5"}`}>
+//               ? "bg-[#6a5acd] bg-card border-r border border-border border border-border shadow-lg shadow-[#6a5acd]/30"
+//               : "bg-card border-r border border-border border border-border/50 hover:bg-card border-r border border-border border border-border hover:bg-card/5"}`}>
 //           <Icon d={icons[item.icon]} size={17} />
 //           {item.label}
 //         </button>
@@ -168,9 +168,9 @@
 
 //     {/* Admin profile */}
 //     <div className="mx-3 mb-4 p-3 rounded-xl flex items-center gap-3" style={{ background: "rgba(255,255,255,0.05)" }}>
-//       <div className="w-9 h-9 rounded-xl bg-[#6a5acd] flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">AD</div>
+//       <div className="w-9 h-9 rounded-xl bg-[#6a5acd] flex items-center justify-center bg-card border-r border border-border border border-border text-sm font-semibold flex-shrink-0">AD</div>
 //       <div className="min-w-0">
-//         <div className="text-white text-sm font-medium leading-tight truncate">Admin User</div>
+//         <div className="bg-card border-r border border-border border border-border text-sm font-medium leading-tight truncate">Admin User</div>
 //         <div className="text-xs truncate" style={{ color: "rgba(255,255,255,0.35)" }}>admin@medportal.io</div>
 //       </div>
 //     </div>
@@ -209,7 +209,7 @@
 //         </div>
 //         <div className="divide-y divide-[#f0f0f0]">
 //           {doctors.slice(0, 4).map(d => (
-//             <div key={d.id} className="px-5 py-3 flex items-center gap-3 hover:bg-[#f8f9fb] transition-colors">
+//             <div key={d.id} className="px-5 py-3 flex items-center gap-3 hover:bg-bg transition-colors">
 //               <Avatar initials={d.image} size="sm" />
 //               <div className="flex-1 min-w-0">
 //                 <div className="text-sm font-medium text-[#222] truncate">{d.name}</div>
@@ -229,7 +229,7 @@
 //         </div>
 //         <div className="divide-y divide-[#f0f0f0]">
 //           {tools.slice(0, 4).map(t => (
-//             <div key={t.id} className="px-5 py-3 flex items-center gap-3 hover:bg-[#f8f9fb] transition-colors">
+//             <div key={t.id} className="px-5 py-3 flex items-center gap-3 hover:bg-bg transition-colors">
 //               <div className="w-8 h-8 rounded-lg bg-[#ede9ff] flex items-center justify-center flex-shrink-0">
 //                 <Icon d={icons[t.icon] || icons.tools} size={15} stroke="#6a5acd" />
 //               </div>
@@ -302,7 +302,7 @@
 //               className="pl-9 pr-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm bg-card focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] w-52 transition-all" />
 //           </div>
 //           <button onClick={() => setShowModal(true)}
-//             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white transition-all hover:opacity-90 shadow-sm"
+//             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-card border-r border border-border border border-border transition-all hover:opacity-90 shadow-sm"
 //             style={{ background: "#6a5acd" }}>
 //             <Icon d={icons.plus} size={15} />
 //             Add Doctor
@@ -321,7 +321,7 @@
 //         )}
 //         {filtered.map((d, i) => (
 //           <div key={d.id}
-//             className={`grid items-center px-5 py-3.5 gap-4 hover:bg-[#f8f9fb] transition-colors ${i !== filtered.length - 1 ? "border-b border-[#f0f0f0]" : ""}`}
+//             className={`grid items-center px-5 py-3.5 gap-4 hover:bg-bg transition-colors ${i !== filtered.length - 1 ? "border-b border-[#f0f0f0]" : ""}`}
 //             style={{ gridTemplateColumns: "2fr 1.5fr 1fr 1fr auto" }}>
 //             <div className="flex items-center gap-3">
 //               <Avatar initials={d.image} size="sm" />
@@ -371,11 +371,11 @@
 //             </div>
 //             <div className="flex gap-3 pt-1">
 //               <button onClick={() => setShowModal(false)}
-//                 className="flex-1 px-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm font-medium text-[#777] hover:bg-[#f8f9fb] transition-colors">
+//                 className="flex-1 px-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm font-medium text-[#777] hover:bg-bg transition-colors">
 //                 Cancel
 //               </button>
 //               <button onClick={handleAdd}
-//                 className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white transition-all hover:opacity-90"
+//                 className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium bg-card border-r border border-border border border-border transition-all hover:opacity-90"
 //                 style={{ background: "#6a5acd" }}>
 //                 Add Doctor
 //               </button>
@@ -427,7 +427,7 @@
 //               className="pl-9 pr-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm bg-card focus:outline-none focus:ring-2 focus:ring-[#6a5acd]/30 focus:border-[#6a5acd] w-52 transition-all" />
 //           </div>
 //           <button onClick={() => setShowModal(true)}
-//             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white transition-all hover:opacity-90 shadow-sm"
+//             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-card border-r border border-border border border-border transition-all hover:opacity-90 shadow-sm"
 //             style={{ background: "#6a5acd" }}>
 //             <Icon d={icons.plus} size={15} />
 //             Add Tool
@@ -495,11 +495,11 @@
 //             </Field>
 //             <div className="flex gap-3 pt-1">
 //               <button onClick={() => setShowModal(false)}
-//                 className="flex-1 px-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm font-medium text-[#777] hover:bg-[#f8f9fb] transition-colors">
+//                 className="flex-1 px-4 py-2.5 rounded-xl border border-[#e0e0e0] text-sm font-medium text-[#777] hover:bg-bg transition-colors">
 //                 Cancel
 //               </button>
 //               <button onClick={handleAdd}
-//                 className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white transition-all hover:opacity-90"
+//                 className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium bg-card border-r border border-border border border-border transition-all hover:opacity-90"
 //                 style={{ background: "#6a5acd" }}>
 //                 Add Tool
 //               </button>
@@ -525,7 +525,7 @@
 //         @keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 //         .animate-fade-in { animation: fade-in 0.2s ease; }
 //       `}</style>
-//       <div className="flex min-h-screen bg-[#f8f9fb]">
+//       <div className="flex min-h-screen bg-bg">
 //         <Sidebar active={active} setActive={setActive} />
 
 //         {/* Main */}
@@ -541,11 +541,11 @@
 //               </p>
 //             </div>
 //             <div className="flex items-center gap-3">
-//               <button className="relative w-9 h-9 rounded-xl flex items-center justify-center border border-[#e0e0e0] text-[#777] hover:bg-[#f8f9fb] transition-colors">
+//               <button className="relative w-9 h-9 rounded-xl flex items-center justify-center border border-[#e0e0e0] text-[#777] hover:bg-bg transition-colors">
 //                 <Icon d={icons.bell} size={17} />
 //                 <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#6a5acd]" />
 //               </button>
-//               <div className="w-9 h-9 rounded-xl bg-[#6a5acd] flex items-center justify-center text-white text-xs font-semibold">AD</div>
+//               <div className="w-9 h-9 rounded-xl bg-[#6a5acd] flex items-center justify-center bg-card border-r border border-border border border-border text-xs font-semibold">AD</div>
 //             </div>
 //           </header>
 

@@ -59,7 +59,7 @@ const PatientModal = ({ onClose }) => {
           >
             Cancel
           </button>
-          <button className="px-5 py-2 text-sm font-bold rounded-xl bg-violet-600 hover:bg-violet-700 text-white transition-colors shadow-md shadow-violet-200">
+          <button className="px-5 py-2 text-sm font-bold rounded-xl bg-violet-600 hover:bg-violet-700 bg-card border-r border border-border border border-border transition-colors shadow-md shadow-violet-200">
             Save Patient
           </button>
         </div>

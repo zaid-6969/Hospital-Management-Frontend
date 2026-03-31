@@ -25,19 +25,19 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="w-9 h-9 rounded-xl bg-violet-600 flex items-center justify-center">
-                <span className="text-white font-extrabold">M</span>
+                <span className="bg-card border-r border border-border border border-border font-extrabold">M</span>
               </div>
-              <span className="text-white font-extrabold text-base">
+              <span className="bg-card border-r border border-border border border-border font-extrabold text-base">
                 MedLab Hospital
               </span>
             </div>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <p className="text-sm text-text/60 leading-relaxed">
               Providing compassionate, world-class healthcare in Chennai, Tamil
               Nadu since 2010.
             </p>
           </div>
           <div>
-            <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-5">
+            <h4 className="bg-card border-r border border-border border border-border font-bold text-xs uppercase tracking-widest mb-5">
               Quick Links
             </h4>
             <div className="flex flex-col gap-2.5">
@@ -45,7 +45,7 @@ const Footer = () => {
                 <a
                   key={l}
                   href="#"
-                  className="text-gray-500 hover:text-violet-400 text-sm transition-colors"
+                  className="text-text/60 hover:text-violet-400 text-sm transition-colors"
                 >
                   {l}
                 </a>
@@ -53,20 +53,20 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-5">
+            <h4 className="bg-card border-r border border-border border border-border font-bold text-xs uppercase tracking-widest mb-5">
               Hours
             </h4>
             <div className="flex flex-col gap-2.5">
               {HOURS.map((h) => (
                 <div key={h.day} className="flex justify-between text-sm">
                   <span className="text-gray-400">{h.day}</span>
-                  <span className="text-gray-500">{h.time}</span>
+                  <span className="text-text/60">{h.time}</span>
                 </div>
               ))}
             </div>
           </div>
           <div>
-            <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-5">
+            <h4 className="bg-card border-r border border-border border border-border font-bold text-xs uppercase tracking-widest mb-5">
               Contact
             </h4>
             <div className="flex flex-col gap-3">
@@ -77,7 +77,7 @@ const Footer = () => {
               ].map((c) => (
                 <div key={c.t} className="flex gap-2 items-start">
                   <span className="text-sm">{c.i}</span>
-                  <span className="text-gray-500 text-sm">{c.t}</span>
+                  <span className="text-text/60 text-sm">{c.t}</span>
                 </div>
               ))}
             </div>

@@ -20,7 +20,6 @@ export const assignDoctor = (id, doctorId) =>
 export const updateAppointmentStatus = (id, data) =>
   API.put(`/appointments/status/${id}`, data);
 
-// ✅ NEW
 export const deleteAppointment = (id) =>
   API.delete(`/appointments/${id}`);
 

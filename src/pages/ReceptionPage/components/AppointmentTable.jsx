@@ -26,7 +26,7 @@ const STATUS_STYLES = {
 /* ─── Reusable Modal Shell ─── */
 const Modal = ({ onClose, children }) => (
   <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-50 px-4">
-    <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl shadow-violet-100 border border-violet-100 overflow-hidden">
+    <div className="bg-card border border-border border border-border rounded-2xl w-full max-w-md shadow-2xl shadow-violet-100 border border-violet-100 overflow-hidden">
       {children}
     </div>
   </div>
@@ -78,7 +78,7 @@ const ViewModal = ({ data, onClose }) => (
     <div className="px-6 py-4 border-t border-violet-100 bg-violet-50/30 flex justify-end">
       <button
         onClick={onClose}
-        className="px-5 py-2 text-sm font-bold rounded-xl bg-violet-600 hover:bg-violet-700 text-white transition-colors"
+        className="px-5 py-2 text-sm font-bold rounded-xl bg-violet-600 hover:bg-violet-700 bg-card border-r border border-border border border-border transition-colors"
       >
         Close
       </button>
@@ -190,7 +190,7 @@ const EditModal = ({ data, doctors, onClose, onSave }) => {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="px-5 py-2 text-sm font-bold rounded-xl bg-violet-600 hover:bg-violet-700 text-white transition-colors shadow-md shadow-violet-200 disabled:opacity-60"
+          className="px-5 py-2 text-sm font-bold rounded-xl bg-violet-600 hover:bg-violet-700 bg-card border-r border border-border border border-border transition-colors shadow-md shadow-violet-200 disabled:opacity-60"
         >
           {saving ? "Saving…" : "Save Changes"}
         </button>
@@ -224,7 +224,7 @@ const DeleteModal = ({ data, onClose, onConfirm }) => {
         </div>
         <div>
           <h2 className="text-base font-bold text-gray-800">Delete Appointment?</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-text/60 mt-1">
             You're about to delete the appointment for{" "}
             <span className="font-semibold text-gray-700">
               {data.patientId?.name || "this patient"}
@@ -236,14 +236,14 @@ const DeleteModal = ({ data, onClose, onConfirm }) => {
       <div className="flex justify-center gap-3 px-6 py-4 border-t border-gray-100 bg-gray-50/60">
         <button
           onClick={onClose}
-          className="px-5 py-2 text-sm font-semibold rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-100 transition-colors"
+          className="px-5 py-2 text-sm font-semibold rounded-xl border bg-card border border-border border border-border text-text/60 hover:bg-secondary/10 transition-colors"
         >
           Cancel
         </button>
         <button
           onClick={handleDelete}
           disabled={deleting}
-          className="px-5 py-2 text-sm font-bold rounded-xl bg-red-500 hover:bg-red-600 text-white transition-colors shadow-md shadow-red-100 disabled:opacity-60"
+          className="px-5 py-2 text-sm font-bold rounded-xl bg-red-500 hover:bg-red-600 bg-card border-r border border-border border border-border transition-colors shadow-md shadow-red-100 disabled:opacity-60"
         >
           {deleting ? "Deleting…" : "Yes, Delete"}
         </button>
@@ -516,7 +516,7 @@ const AppointmentTable = () => {
                 onClick={() => setPage(num)}
                 className={`w-7 h-7 text-xs rounded-lg font-bold transition-colors ${
                   page === num
-                    ? "bg-violet-600 text-white shadow-sm shadow-violet-200"
+                    ? "bg-violet-600 bg-card border-r border border-border border border-border shadow-sm shadow-violet-200"
                     : "border border-violet-200 bg-card text-violet-500 hover:bg-violet-100"
                 }`}
               >

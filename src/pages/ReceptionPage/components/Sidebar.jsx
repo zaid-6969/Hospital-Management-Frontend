@@ -51,7 +51,7 @@ const Sidebar = () => {
             onClick={() => setActive(label)}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${
               active === label
-                ? "bg-violet-600 text-white shadow-md shadow-violet-200"
+                ? "bg-violet-600 bg-card border-r border border-border border border-border shadow-md shadow-violet-200"
                 : "text-violet-400 hover:bg-violet-50 hover:text-violet-600"
             }`}
           >

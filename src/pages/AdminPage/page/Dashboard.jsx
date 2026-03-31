@@ -1,18 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  getAdminStats,
-  getAllAppointments,
-  getDoctors,
-} from "../service/api";
+import { getAdminStats, getAllAppointments, getDoctors } from "../service/api";
 
 // ✅ Chart imports
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -48,7 +39,7 @@ const Dashboard = () => {
   if (!stats)
     return (
       <div className="flex justify-center items-center h-screen">
-        <p className="text-gray-500 text-lg">Loading Dashboard...</p>
+        <p className="text-text/60 text-lg">Loading Dashboard...</p>
       </div>
     );
 
@@ -73,38 +64,37 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen space-y-6">
+    <div className="p-6 bg-bg min-h-screen space-y-6">
       {/* HEADER */}
-      <h1 className="text-3xl font-bold text-gray-800">
-        Admin Dashboard
-      </h1>
+      <div>
+        <h1 className="text-3xl font-bold text-text">Admin Dashboard</h1>
+        <p className="text-text/60">Overview of system performance</p>
+      </div>
 
       {/* 🔝 STATS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="p-6 bg-indigo-100 rounded-2xl shadow">
-          <p className="text-sm text-gray-600">Total</p>
-          <h2 className="text-2xl font-bold mt-2">
-            {stats.total}
-          </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="p-6 bg-card border border border-border border border-border rounded-2xl shadow-sm hover:shadow-md transition">
+          <p className="text-sm text-text/60">Total</p>
+          <h2 className="text-3xl font-bold mt-2">{stats.total}</h2>
         </div>
 
-        <div className="p-6 bg-green-100 rounded-2xl shadow">
-          <p className="text-sm text-gray-600">Accepted</p>
-          <h2 className="text-2xl font-bold mt-2">
+        <div className="p-6 bg-card border border border-border border border-border rounded-2xl shadow-sm hover:shadow-md transition">
+          <p className="text-sm text-text/60">Accepted</p>
+          <h2 className="text-3xl font-bold mt-2 text-green-500">
             {stats.acceptedPercent}%
           </h2>
         </div>
 
-        <div className="p-6 bg-red-100 rounded-2xl shadow">
-          <p className="text-sm text-gray-600">Rejected</p>
-          <h2 className="text-2xl font-bold mt-2">
+        <div className="p-6 bg-card border border border-border border border-border rounded-2xl shadow-sm hover:shadow-md transition">
+          <p className="text-sm text-text/60">Rejected</p>
+          <h2 className="text-3xl font-bold mt-2 text-red-500">
             {stats.rejectedPercent}%
           </h2>
         </div>
 
-        <div className="p-6 bg-yellow-100 rounded-2xl shadow">
-          <p className="text-sm text-gray-600">Pending</p>
-          <h2 className="text-2xl font-bold mt-2">
+        <div className="p-6 bg-card border border border-border border border-border rounded-2xl shadow-sm hover:shadow-md transition">
+          <p className="text-sm text-text/60">Pending</p>
+          <h2 className="text-3xl font-bold mt-2 text-yellow-500">
             {stats.requestedPercent}%
           </h2>
         </div>
@@ -113,8 +103,8 @@ const Dashboard = () => {
       {/* 📊 ANALYTICS */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* PIE CHART */}
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <h2 className="text-lg font-bold text-gray-800 mb-4">
+        <div className="bg-card border border border-border border border-border p-6 rounded-2xl shadow-sm">
+          <h2 className="text-lg font-semibold text-text mb-4">
             Appointment Overview
           </h2>
 
@@ -124,31 +114,27 @@ const Dashboard = () => {
         </div>
 
         {/* QUICK INFO */}
-        <div className="lg:col-span-2 grid grid-cols-2 gap-6">
-          <div className="bg-indigo-100 p-6 rounded-2xl shadow">
-            <p className="text-sm text-gray-600">Doctors</p>
-            <h2 className="text-2xl font-bold mt-2">
-              {doctors.length}
-            </h2>
+        <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="bg-card border border border-border border border-border p-6 rounded-2xl shadow-sm">
+            <p className="text-sm text-text/60">Doctors</p>
+            <h2 className="text-2xl font-bold mt-2">{doctors.length}</h2>
           </div>
 
-          <div className="bg-green-100 p-6 rounded-2xl shadow">
-            <p className="text-sm text-gray-600">Appointments</p>
-            <h2 className="text-2xl font-bold mt-2">
-              {stats.total}
-            </h2>
+          <div className="bg-card border border border-border border border-border p-6 rounded-2xl shadow-sm">
+            <p className="text-sm text-text/60">Appointments</p>
+            <h2 className="text-2xl font-bold mt-2">{stats.total}</h2>
           </div>
 
-          <div className="bg-yellow-100 p-6 rounded-2xl shadow">
-            <p className="text-sm text-gray-600">Pending</p>
-            <h2 className="text-2xl font-bold mt-2">
+          <div className="bg-card border border border-border border border-border p-6 rounded-2xl shadow-sm">
+            <p className="text-sm text-text/60">Pending</p>
+            <h2 className="text-2xl font-bold mt-2 text-yellow-500">
               {stats.requestedPercent}%
             </h2>
           </div>
 
-          <div className="bg-red-100 p-6 rounded-2xl shadow">
-            <p className="text-sm text-gray-600">Rejected</p>
-            <h2 className="text-2xl font-bold mt-2">
+          <div className="bg-card border border border-border border border-border p-6 rounded-2xl shadow-sm">
+            <p className="text-sm text-text/60">Rejected</p>
+            <h2 className="text-2xl font-bold mt-2 text-red-500">
               {stats.rejectedPercent}%
             </h2>
           </div>
@@ -156,22 +142,22 @@ const Dashboard = () => {
       </div>
 
       {/* 📋 APPOINTMENTS */}
-      <div className="bg-white p-6 rounded-2xl shadow">
-        <h2 className="text-xl font-bold mb-4 text-gray-800">
+      <div className="bg-card border border border-border border border-border p-6 rounded-2xl shadow-sm">
+        <h2 className="text-xl font-semibold mb-4 text-text">
           Recent Appointments
         </h2>
 
-        <div className="space-y-4 max-h-[350px] overflow-y-auto">
+        <div className="space-y-4 max-h-[350px] overflow-y-auto pr-2">
           {appointments.map((item) => (
             <div
               key={item._id}
-              className="p-4 border rounded-xl flex justify-between items-center hover:bg-gray-50"
+              className="p-4 border border-black/5 border border-border rounded-xl flex justify-between items-center hover:bg-primary/5 transition"
             >
               <div>
-                <p className="font-semibold">
+                <p className="font-semibold text-text">
                   👤 {item.patientId?.name}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-text/60">
                   👨‍⚕️ {item.doctorId?.name || "Not Assigned"}
                 </p>
               </div>
@@ -181,8 +167,8 @@ const Dashboard = () => {
                   item.status === "accepted"
                     ? "bg-green-100 text-green-600"
                     : item.status === "rejected"
-                    ? "bg-red-100 text-red-600"
-                    : "bg-yellow-100 text-yellow-600"
+                      ? "bg-red-100 text-red-600"
+                      : "bg-yellow-100 text-yellow-600"
                 }`}
               >
                 {item.status}
@@ -193,24 +179,18 @@ const Dashboard = () => {
       </div>
 
       {/* 👨‍⚕️ DOCTORS */}
-      <div className="bg-white p-6 rounded-2xl shadow">
-        <h2 className="text-xl font-bold mb-4 text-gray-800">
-          Doctors
-        </h2>
+      <div className="bg-card border border border-border border border-border p-6 rounded-2xl shadow-sm">
+        <h2 className="text-xl font-semibold mb-4 text-text">Doctors</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {doctors.map((doc) => (
             <div
               key={doc._id}
-              onClick={() =>
-                navigate(`/admin/doctor/${doc._id}`)
-              }
-              className="p-4 border rounded-xl cursor-pointer hover:bg-indigo-50"
+              onClick={() => navigate(`/admin/doctor/${doc._id}`)}
+              className="p-4 border border-black/5 border border-border rounded-xl cursor-pointer hover:bg-primary/10 transition"
             >
-              <h3 className="font-semibold">{doc.name}</h3>
-              <p className="text-sm text-gray-500">
-                {doc.specialization}
-              </p>
+              <h3 className="font-semibold text-text">{doc.name}</h3>
+              <p className="text-sm text-text/60">{doc.specialization}</p>
             </div>
           ))}
         </div>

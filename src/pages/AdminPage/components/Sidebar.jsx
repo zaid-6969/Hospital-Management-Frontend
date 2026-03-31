@@ -1,89 +1,86 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import {
+  LayoutDashboard,
+  Users,
+  Wrench,
+  CalendarCheck,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
 const navItems = [
-  { id: "dashboard", label: "Dashboard",  path: "/admin/admin" },
-  { id: "doctors", label: "Doctors",  path: "/admin/doctors" },
-  { id: "tools", label: "Medical Tools",  path: "/admin/tools" },
-  { id: "appointments", label: "Appointments",  path: "/admin/appointments" },
-  { id: "settings", label: "Settings",  path: "/admin/settings" },
+  { label: "Dashboard", icon: LayoutDashboard, path: "/admin/admin" },
+  { label: "Doctors", icon: Users, path: "/admin/doctors" },
+  { label: "Medical Tools", icon: Wrench, path: "/admin/tools" },
+  { label: "Appointments", icon: CalendarCheck, path: "/admin/appointments" },
+  { label: "Settings", icon: Settings, path: "/admin/settings" },
 ];
 
 const Sidebar = () => {
-  return (
-    <aside className="w-[240px] min-h-screen flex-shrink-0 flex flex-col bg-[#1a1630]">
+  const [collapsed, setCollapsed] = useState(false);
 
-      {/* LOGO (same UI) */}
-      <div className="px-6 py-7 border-b border-white/10">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-xl bg-[#6a5acd] flex items-center justify-center text-white">
-            M
-          </div>
+  return (
+    <aside
+      className={`${
+        collapsed ? "w-16" : "w-56"
+      } bg-card border-r border-border flex flex-col transition-all duration-300 min-h-screen shrink-0`}
+    >
+      {/* LOGO */}
+      <div className="flex items-center justify-between px-4 py-5 border-b border-border">
+        {!collapsed && (
           <div>
-            <div className="text-white font-bold">MedAdmin</div>
-            <div className="text-xs text-white/40">Healthcare Portal</div>
+            <span className="text-sm font-extrabold text-primary tracking-wide">
+              MedAdmin
+            </span>
+            <p className="text-[10px] text-text/50 font-medium">
+              Admin Panel
+            </p>
           </div>
-        </div>
+        )}
+
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="ml-auto w-7 h-7 flex items-center justify-center rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition"
+        >
+          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+        </button>
       </div>
 
-      {/* NAVIGATION */}
-      <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
-
-        {/* MAIN MENU */}
-        <div className="px-3 text-xs text-white/30 mb-2">
-          MAIN MENU
-        </div>
-
-        {navItems.slice(0, 3).map((item) => (
+      {/* NAV */}
+      <nav className="flex-1 py-4 px-2 space-y-1">
+        {navItems.map(({ label, icon: Icon, path }) => (
           <NavLink
-            key={item.id}
-            to={item.path}
+            key={label}
+            to={path}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
+              `w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                 isActive
-                  ? "bg-[#6a5acd] text-white shadow-lg"
-                  : "text-white/50 hover:text-white hover:bg-card/5"
+                  ? "bg-primary text-white shadow-md"
+                  : "text-text/60 hover:bg-primary/10 hover:text-text"
               }`
             }
           >
-            
-            {item.label}
+            <Icon size={16} className="shrink-0" />
+            {!collapsed && <span>{label}</span>}
           </NavLink>
         ))}
-
-        {/* SYSTEM */}
-        <div className="px-3 text-xs text-white/30 mt-4 mb-2">
-          SYSTEM
-        </div>
-
-        {navItems.slice(3).map((item) => (
-          <NavLink
-            key={item.id}
-            to={item.path}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
-                isActive
-                  ? "bg-[#6a5acd] text-white shadow-lg"
-                  : "text-white/50 hover:text-white hover:bg-card/5"
-              }`
-            }
-          >
-            {item.label}
-          </NavLink>
-        ))}
-
       </nav>
 
-      {/* PROFILE (same UI) */}
-      <div className="mx-3 mb-4 p-3 rounded-xl bg-card/5 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-xl bg-[#6a5acd] flex items-center justify-center text-white text-sm">
-          AD
+      {/* BOTTOM */}
+      {!collapsed && (
+        <div className="px-4 py-4 border-t border-border">
+          <div className="bg-primary/10 rounded-xl px-3 py-2.5">
+            <p className="text-xs font-bold text-primary">
+              Need help?
+            </p>
+            <p className="text-[10px] text-text/60 mt-0.5">
+              Contact support team
+            </p>
+          </div>
         </div>
-        <div>
-          <div className="text-white text-sm">Admin</div>
-          <div className="text-xs text-white/40">admin@mail.com</div>
-        </div>
-      </div>
-
+      )}
     </aside>
   );
 };

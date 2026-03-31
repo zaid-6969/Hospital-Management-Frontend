@@ -82,7 +82,7 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen w-full bg-[#f8f9fb] flex-col lg:flex-row">
+    <div className="flex min-h-screen w-full bg-bg flex-col lg:flex-row">
       {/* LEFT PANEL (UNCHANGED IMAGE SECTION) */}
       <div className="hidden sm:flex lg:flex flex-col items-center justify-center p-6 order-1 lg:order-none flex-1">
         <div className="w-full max-w-[500px] text-center">
@@ -102,7 +102,7 @@ const AuthPage = () => {
             <img src={Logo} alt="Logo" className="h-25 object-contain" />
           </div>
           {/* TITLE */}
-          <p className="text-sm text-gray-500 mb-2">
+          <p className="text-sm text-text/60 mb-2">
             Welcome to your Hospital Management System
           </p>
 
@@ -117,7 +117,7 @@ const AuthPage = () => {
             <button
               onClick={() => setIsLogin(true)}
               className={`flex-1 py-2 rounded-full relative z-10 text-sm ${
-                isLogin ? "text-white" : "text-gray-600"
+                isLogin ? "bg-card border-r border border-border border border-border" : "text-gray-600"
               }`}
             >
               Login
@@ -126,7 +126,7 @@ const AuthPage = () => {
             <button
               onClick={() => setIsLogin(false)}
               className={`flex-1 py-2 rounded-full relative z-10 text-sm ${
-                !isLogin ? "text-white" : "text-gray-600"
+                !isLogin ? "bg-card border-r border border-border border border-border" : "text-gray-600"
               }`}
             >
               Register
@@ -134,7 +134,7 @@ const AuthPage = () => {
           </div>
 
           {/* DESCRIPTION */}
-          <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+          <p className="text-sm text-text/60 mb-6 leading-relaxed">
             Manage appointments, doctors, and patient records seamlessly with
             our secure and efficient hospital management system.
           </p>
@@ -180,7 +180,7 @@ const AuthPage = () => {
                 />
 
                 <div
-                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-text/60"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
@@ -190,7 +190,7 @@ const AuthPage = () => {
 
             {/* OPTIONS */}
             {isLogin && (
-              <div className="flex justify-between text-xs text-gray-500">
+              <div className="flex justify-between text-xs text-text/60">
                 <label className="flex items-center gap-2">
                   <input type="checkbox" />
                   Remember me
@@ -201,7 +201,7 @@ const AuthPage = () => {
             {/* BUTTON */}
             <button
               type="submit"
-              className="mt-4 py-2 rounded-full bg-gradient-to-r from-[#6a5acd] to-[#8e84c6] text-white font-medium hover:opacity-90 transition"
+              className="mt-4 py-2 rounded-full bg-gradient-to-r from-[#6a5acd] to-[#8e84c6] bg-card border-r border border-border border border-border font-medium hover:opacity-90 transition"
             >
               {isLogin ? "Login" : "Register"}
             </button>

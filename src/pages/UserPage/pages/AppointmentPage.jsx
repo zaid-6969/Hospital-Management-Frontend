@@ -45,7 +45,7 @@ const AppointmentPage = () => {
   */
 
   return (
-    <div className="bg-[#f8f9fb] min-h-screen">
+    <div className="bg-bg min-h-screen">
       <main className="max-w-7xl mx-auto px-8 py-12">
         <h1 className="text-3xl font-bold mb-8">
           Available Specialists
@@ -64,7 +64,7 @@ const AppointmentPage = () => {
 
         {/* ✅ SELECTED DOCTOR */}
         {selectedDoctor && (
-          <div className="mt-10 p-4 bg-white rounded-xl shadow">
+          <div className="mt-10 p-4 bg-card border border-border border border-border rounded-xl shadow">
             <h2 className="text-lg font-semibold mb-2">
               Selected Doctor
             </h2>
@@ -76,7 +76,7 @@ const AppointmentPage = () => {
 
         {/* ✅ CALENDAR (FIXED ISSUE HERE) */}
         {selectedDoctor && (
-          <div className="mt-6 p-4 bg-white rounded-xl shadow">
+          <div className="mt-6 p-4 bg-card border border-border border border-border rounded-xl shadow">
             <h2 className="text-lg font-semibold mb-3">
               Select Date
             </h2>
@@ -95,7 +95,7 @@ const AppointmentPage = () => {
 
         {/* ✅ SLOTS (USE YOUR BACKEND DATA) */}
         {selectedDate && (
-          <div className="mt-6 p-4 bg-white rounded-xl shadow">
+          <div className="mt-6 p-4 bg-card border border-border border border-border rounded-xl shadow">
             <h2 className="text-lg font-semibold mb-3">
               Available Slots
             </h2>
@@ -117,8 +117,8 @@ const AppointmentPage = () => {
                         isBooked
                           ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                           : selectedSlot === slotTime
-                          ? "bg-blue-600 text-white"
-                          : "bg-white hover:bg-blue-100"
+                          ? "bg-blue-600 bg-card border-r border border-border border border-border"
+                          : "bg-card border border-border border border-border hover:bg-blue-100"
                       }`}
                     >
                       {slotTime}
@@ -126,7 +126,7 @@ const AppointmentPage = () => {
                   );
                 })
               ) : (
-                <p className="text-gray-500">
+                <p className="text-text/60">
                   No slots available
                 </p>
               )}
@@ -154,7 +154,7 @@ const AppointmentPage = () => {
                   },
                 });
               }}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg"
+              className="bg-blue-600 bg-card border-r border border-border border border-border px-6 py-2 rounded-lg"
             >
               Next
             </button>

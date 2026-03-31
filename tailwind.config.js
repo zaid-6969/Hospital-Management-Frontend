@@ -8,6 +8,7 @@ export default {
         text: "var(--text)",
         primary: "var(--primary)",
         secondary: "var(--secondary)",
+        border: "var(--border)",
       },
     },
   },

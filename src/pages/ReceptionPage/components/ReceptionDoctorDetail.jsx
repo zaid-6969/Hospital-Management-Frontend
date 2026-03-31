@@ -37,7 +37,7 @@ const ReceptionDoctorDetails = () => {
   };
 
   return (
-    <div className="bg-[#f8f9fb] min-h-screen p-10">
+    <div className="bg-bg min-h-screen p-10">
       <div className="grid md:grid-cols-3 gap-10">
         {/* LEFT */}
         <img src={doctor.image?.url} className="rounded-2xl" />
@@ -45,7 +45,7 @@ const ReceptionDoctorDetails = () => {
         {/* CENTER */}
         <div>
           <h1 className="text-3xl font-bold">{doctor.name}</h1>
-          <p className="text-gray-500">{doctor.specialization}</p>
+          <p className="text-text/60">{doctor.specialization}</p>
         </div>
 
         {/* RIGHT (BOOKING CARD) */}
@@ -66,7 +66,7 @@ const ReceptionDoctorDetails = () => {
                   }}
                   className={`px-3 py-2 rounded-lg text-sm ${
                     selectedDay?.day === dayObj.day
-                      ? "bg-indigo-600 text-white"
+                      ? "bg-indigo-600 bg-card border-r border border-border border border-border"
                       : "bg-bg"
                   }`}
                 >
@@ -88,7 +88,7 @@ const ReceptionDoctorDetails = () => {
                     onClick={() => setSelectedSlot(slot)}
                     className={`px-3 py-2 rounded-lg text-sm ${
                       selectedSlot === slot
-                        ? "bg-indigo-600 text-white"
+                        ? "bg-indigo-600 bg-card border-r border border-border border border-border"
                         : "bg-bg"
                     }`}
                   >
@@ -102,7 +102,7 @@ const ReceptionDoctorDetails = () => {
           <button
             onClick={handleBook}
             disabled={!selectedSlot}
-            className="w-full bg-indigo-600 text-white py-3 rounded-xl"
+            className="w-full bg-indigo-600 bg-card border-r border border-border border border-border py-3 rounded-xl"
           >
             Book Appointment
           </button>

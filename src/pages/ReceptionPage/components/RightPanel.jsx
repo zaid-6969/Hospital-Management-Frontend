@@ -69,8 +69,8 @@ const RightPanel = () => {
             { label: "Accepted", value: "13" },
             { label: "Rejected", value: "3" },
           ].map((s) => (
-            <div key={s.label} className="bg-white/15 rounded-xl p-3 text-center">
-              <div className="text-white font-black text-xl">{s.value}</div>
+            <div key={s.label} className="bg-card border border-border border border-border/15 rounded-xl p-3 text-center">
+              <div className="bg-card border-r border border-border border border-border font-black text-xl">{s.value}</div>
               <div className="text-violet-200 text-[10px] font-semibold mt-0.5 uppercase tracking-wide">
                 {s.label}
               </div>
