@@ -1,72 +1,97 @@
-import { useState } from "react";
-import { X } from "lucide-react";
+// import { useState } from "react";
+// import { X, User, Phone } from "lucide-react";
 
-const PatientModal = ({ onClose }) => {
-  const [data, setData] = useState({ name: "", phone: "" });
+// const PatientModal = ({ onClose }) => {
+//   const [data, setData] = useState({ name: "", phone: "" });
 
-  return (
-    <div className="fixed inset-0 bg-violet-950/30 backdrop-blur-sm flex justify-center items-center z-50 px-4">
-      <div className="bg-card border border-violet-100 rounded-2xl w-full max-w-md shadow-2xl shadow-violet-100">
+//   return (
+//     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 px-4">
+//       <div className="w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
+//         style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
 
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-violet-100 bg-violet-50/50 rounded-t-2xl">
-          <div>
-            <h2 className="text-base font-bold text-violet-700">New Patient</h2>
-            <p className="text-xs text-violet-400 mt-0.5">Fill in the patient details below</p>
-          </div>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-lg bg-violet-100 text-violet-400 hover:bg-violet-200 hover:text-violet-600 transition-colors"
-          >
-            <X size={16} />
-          </button>
-        </div>
+//         {/* Purple accent line */}
+//         <div className="h-0.5 w-full"
+//           style={{ background: "linear-gradient(90deg,#6a5acd,#8b5cf6)" }} />
 
-        {/* Body */}
-        <div className="px-6 py-5 space-y-4">
-          <div>
-            <label className="block text-xs font-bold text-violet-500 uppercase tracking-wide mb-1.5">
-              Full Name
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. Arjun Mehta"
-              value={data.name}
-              onChange={(e) => setData({ ...data, name: e.target.value })}
-              className="w-full border border-violet-200 rounded-xl px-3 py-2.5 text-sm bg-violet-50/50 text-text placeholder:text-violet-300 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all"
-            />
-          </div>
+//         {/* Header */}
+//         <div className="flex items-center justify-between px-6 py-4"
+//           style={{ borderBottom: "1px solid var(--border)" }}>
+//           <div>
+//             <h2 className="text-sm font-bold" style={{ color: "var(--text)" }}>New Patient</h2>
+//             <p className="text-xs mt-0.5" style={{ color: "var(--text)", opacity: .4 }}>Fill in the patient details below</p>
+//           </div>
+//           <button onClick={onClose}
+//             className="w-8 h-8 flex items-center justify-center rounded-lg transition"
+//             style={{ background: "rgba(106,90,205,.12)", color: "#6a5acd" }}>
+//             <X size={15} />
+//           </button>
+//         </div>
 
-          <div>
-            <label className="block text-xs font-bold text-violet-500 uppercase tracking-wide mb-1.5">
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              placeholder="+91 98765 43210"
-              value={data.phone}
-              onChange={(e) => setData({ ...data, phone: e.target.value })}
-              className="w-full border border-violet-200 rounded-xl px-3 py-2.5 text-sm bg-violet-50/50 text-text placeholder:text-violet-300 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 transition-all"
-            />
-          </div>
-        </div>
+//         {/* Body */}
+//         <div className="px-6 py-5 space-y-4">
+//           <div>
+//             <label className="block text-[10px] font-bold uppercase tracking-widest mb-1.5"
+//               style={{ color: "var(--text)", opacity: .4 }}>Full Name</label>
+//             <div className="relative">
+//               <User size={13} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#8b5cf6" }} />
+//               <input
+//                 type="text"
+//                 placeholder="e.g. Arjun Mehta"
+//                 value={data.name}
+//                 onChange={(e) => setData({ ...data, name: e.target.value })}
+//                 className="w-full pl-9 pr-3 py-2.5 rounded-xl text-sm outline-none transition-all"
+//                 style={{
+//                   background: "var(--bg)",
+//                   border: "1px solid var(--border)",
+//                   color: "var(--text)"
+//                 }}
+//                 onFocus={e => { e.target.style.borderColor = "#8b5cf6"; e.target.style.boxShadow = "0 0 0 3px rgba(139,92,246,0.08)"; }}
+//                 onBlur={e => { e.target.style.borderColor = "var(--border)"; e.target.style.boxShadow = "none"; }}
+//               />
+//             </div>
+//           </div>
 
-        {/* Footer */}
-        <div className="flex justify-end gap-3 px-6 py-4 border-t border-violet-100 bg-violet-50/30 rounded-b-2xl">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 text-sm font-semibold rounded-xl border border-violet-200 text-violet-500 hover:bg-violet-50 transition-colors"
-          >
-            Cancel
-          </button>
-          <button className="px-5 py-2 text-sm font-bold rounded-xl bg-violet-600 hover:bg-violet-700 bg-card border-r border border-border border border-border transition-colors shadow-md shadow-violet-200">
-            Save Patient
-          </button>
-        </div>
+//           <div>
+//             <label className="block text-[10px] font-bold uppercase tracking-widest mb-1.5"
+//               style={{ color: "var(--text)", opacity: .4 }}>Phone Number</label>
+//             <div className="relative">
+//               <Phone size={13} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#8b5cf6" }} />
+//               <input
+//                 type="tel"
+//                 placeholder="+91 98765 43210"
+//                 value={data.phone}
+//                 onChange={(e) => setData({ ...data, phone: e.target.value })}
+//                 className="w-full pl-9 pr-3 py-2.5 rounded-xl text-sm outline-none transition-all"
+//                 style={{
+//                   background: "var(--bg)",
+//                   border: "1px solid var(--border)",
+//                   color: "var(--text)"
+//                 }}
+//                 onFocus={e => { e.target.style.borderColor = "#8b5cf6"; e.target.style.boxShadow = "0 0 0 3px rgba(139,92,246,0.08)"; }}
+//                 onBlur={e => { e.target.style.borderColor = "var(--border)"; e.target.style.boxShadow = "none"; }}
+//               />
+//             </div>
+//           </div>
+//         </div>
 
-      </div>
-    </div>
-  );
-};
+//         {/* Footer */}
+//         <div className="flex justify-end gap-3 px-6 py-4"
+//           style={{ borderTop: "1px solid var(--border)" }}>
+//           <button onClick={onClose}
+//             className="px-4 py-2 text-xs font-semibold rounded-xl transition"
+//             style={{ background: "var(--bg)", border: "1px solid var(--border)", color: "var(--text)" }}>
+//             Cancel
+//           </button>
+//           <button
+//             className="px-5 py-2 text-xs font-bold rounded-xl text-white transition"
+//             style={{ background: "linear-gradient(135deg,#6a5acd,#8b5cf6)", boxShadow: "0 4px 12px rgba(106,90,205,.30)" }}>
+//             Save Patient
+//           </button>
+//         </div>
 
-export default PatientModal;
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PatientModal;

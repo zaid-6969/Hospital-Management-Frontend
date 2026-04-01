@@ -22,6 +22,7 @@ import Dashboard from "./pages/AdminPage/page/Dashboard";
 import AdminDoctors from "./pages/AdminPage/page/AdminDoctors";
 import ToolsView from "./pages/AdminPage/page/Tools";
 import Doctors from "./pages/AdminPage/page/Doctors";
+import AdminDoctorDetails from "./pages/AdminPage/page/AdminDoctorDetails";
 
 // RECEPTION PAGE
 import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
@@ -63,6 +64,7 @@ function App() {
           <Route path="/admin/doctor/:id" element={<Doctors />} />
           <Route path="tools" element={<ToolsView />} />
           <Route path="doctors" element={<AdminDoctors />} />
+          <Route path="doctor-details" element={<AdminDoctorDetails />} />
         </Route>
 
         {/* DOCTOR */}

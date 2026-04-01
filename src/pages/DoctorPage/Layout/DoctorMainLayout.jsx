@@ -1,23 +1,47 @@
+import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
-import ThemeToggle from "../../../components/ThemeToggle";
 
-const DoctorMainLayout = ({ title }) => {
+const DoctorMainLayout = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setSidebarOpen(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="flex min-h-screen bg-bg">
 
-      <Sidebar />
+      {/* Mobile backdrop overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-      <div className="flex-1 flex flex-col min-w-0">
-        <Topbar title={title} />
+      {/* Sidebar — always visible on desktop, drawer on mobile */}
+      <div className={`
+        fixed inset-y-0 left-0 z-40 lg:relative lg:z-auto
+        transition-transform duration-300 ease-in-out
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+      `}>
+        <Sidebar onClose={() => setSidebarOpen(false)} />
+      </div>
 
-        <main className="flex-1 p-6 overflow-y-auto">
+      {/* Main content */}
+      <div className="flex-1 flex flex-col min-w-0 w-full">
+        <Topbar onMenuClick={() => setSidebarOpen(true)} />
+        <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
           <Outlet />
         </main>
       </div>
 
-      <ThemeToggle />
     </div>
   );
 };

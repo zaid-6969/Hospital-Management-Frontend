@@ -5,7 +5,6 @@ const API = axios.create({
   withCredentials: true,
 });
 
-// 🔥 ADMIN
 export const getAdminStats = () =>
   API.get("/appointments/admin/stats");
 
@@ -15,7 +14,6 @@ export const getAllAppointments = (page = 1, limit = 8) =>
 export const updateAppointmentStatus = (id, data) =>
   API.put(`/appointments/status/${id}`, data);
 
-// 🔥 DOCTORS
 export const getDoctors = () => API.get("/doctors");
 
 export const getDoctorById = (id) =>
@@ -24,7 +22,6 @@ export const getDoctorById = (id) =>
 export const getDoctorStats = (id) =>
   API.get(`/doctors/stats/${id}`);
 
-// 🔥 DOCTOR PANEL
 export const getMyAppointments = () =>
   API.get("/appointments/my");
 

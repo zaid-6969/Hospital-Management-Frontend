@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { updateAppointmentStatus } from "../utils/api";
-// import { acceptAppointment, rejectAppointment } from "../../../utils/api";
+
+const statusConfig = {
+  REQUESTED: { label: "Requested", bg: "rgba(234,179,8,0.12)",  color: "#ca8a04"  },
+  ACCEPTED:  { label: "Accepted",  bg: "rgba(34,197,94,0.12)",  color: "#16a34a"  },
+  REJECTED:  { label: "Rejected",  bg: "rgba(239,68,68,0.12)",  color: "#dc2626"  },
+};
 
 const TimelineCard = ({ data, refresh }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal]       = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("");
-  const [reason, setReason] = useState("");
+  const [reason, setReason]             = useState("");
 
   const handleChange = (e) => {
     const value = e.target.value;
-
     if (value === "REJECTED") {
       setSelectedStatus(value);
-      setShowModal(true); // 🔥 open popup
+      setShowModal(true);
     } else {
       updateStatus(value);
     }
@@ -20,10 +24,7 @@ const TimelineCard = ({ data, refresh }) => {
 
   const updateStatus = async (status, rejectionReason = "") => {
     try {
-      await updateAppointmentStatus(data._id, {
-        status,
-        rejectionReason,
-      });
+      await updateAppointmentStatus(data._id, { status, rejectionReason });
       refresh();
     } catch (err) {
       console.error(err);
@@ -31,94 +32,133 @@ const TimelineCard = ({ data, refresh }) => {
   };
 
   const handleRejectSubmit = () => {
-    if (!reason) return;
+    if (!reason.trim()) return;
     updateStatus("REJECTED", reason);
     setShowModal(false);
     setReason("");
   };
 
-  // 🎨 STATUS COLORS
-  const statusColors = {
-    REQUESTED: "bg-yellow-100 text-yellow-700",
-    ACCEPTED: "bg-green-100 text-green-700",
-    REJECTED: "bg-red-100 text-red-700",
-  };
+  const cfg = statusConfig[data.status] || statusConfig.REQUESTED;
 
   return (
-    <div className="p-4 bg-card rounded-xl shadow relative">
-      <h3 className="font-bold">
-        {data.patientId?.name || "Patient"}
-      </h3>
+    <>
+      <div
+        className="p-4 rounded-2xl hover:shadow-lg transition-shadow"
+        style={{ background: "var(--card)", border: "1px solid var(--border)" }}
+      >
+        <div className="flex items-start justify-between gap-3">
+          {/* Left: avatar + info */}
+          <div className="flex items-center gap-3">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center text-white text-sm font-bold shrink-0"
+              style={{ background: "linear-gradient(135deg,#6a5acd,#8b5cf6)" }}
+            >
+              {(data.patientId?.name?.[0] || "P").toUpperCase()}
+            </div>
+            <div>
+              <p className="text-sm font-bold" style={{ color: "var(--text)" }}>
+                {data.patientId?.name || "Patient"}
+              </p>
+              <p className="text-xs mt-0.5" style={{ color: "var(--text)", opacity: .45 }}>
+                {data.date}  ·  {data.time}
+              </p>
+            </div>
+          </div>
 
-      <p>{data.date} - {data.time}</p>
-
-      {/* STATUS DROPDOWN */}
-      <div className="mt-3">
-        <select
-          value={data.status}
-          onChange={handleChange}
-          className={`px-3 py-1 rounded-full text-sm font-semibold cursor-pointer ${statusColors[data.status]}`}
-        >
-          <option value="REQUESTED">Requested</option>
-
-          <option
-            value="ACCEPTED"
-            disabled={data.status === "ACCEPTED"} // smart disable
+          {/* Right: status badge */}
+          <span
+            className="text-xs font-semibold px-2.5 py-1 rounded-lg shrink-0"
+            style={{ background: cfg.bg, color: cfg.color }}
           >
-            Accept
-          </option>
+            {cfg.label}
+          </span>
+        </div>
 
-          <option
-            value="REJECTED"
-            disabled={data.status === "REJECTED"} // smart disable
+        {/* Rejection reason */}
+        {data.status === "REJECTED" && data.rejectionReason && (
+          <p className="mt-3 text-xs px-3 py-2 rounded-lg"
+            style={{ background: "rgba(239,68,68,0.08)", color: "#dc2626", border: "1px solid rgba(239,68,68,0.15)" }}>
+            Reason: {data.rejectionReason}
+          </p>
+        )}
+
+        {/* Status dropdown */}
+        <div className="mt-3 flex items-center gap-2">
+          <label className="text-xs font-medium" style={{ color: "var(--text)", opacity: .4 }}>
+            Update:
+          </label>
+          <select
+            value={data.status}
+            onChange={handleChange}
+            className="text-xs font-semibold px-3 py-1.5 rounded-lg outline-none cursor-pointer transition"
+            style={{
+              background: "rgba(106,90,205,0.08)",
+              border: "1px solid rgba(106,90,205,0.2)",
+              color: "#6a5acd"
+            }}
           >
-            Reject
-          </option>
-        </select>
+            <option value="REQUESTED">Requested</option>
+            <option value="ACCEPTED" disabled={data.status === "ACCEPTED"}>Accept</option>
+            <option value="REJECTED" disabled={data.status === "REJECTED"}>Reject</option>
+          </select>
+        </div>
       </div>
 
-      {/* REJECTION REASON */}
-      {data.status === "REJECTED" && (
-        <p className="text-sm text-red-500 mt-2">
-          Reason: {data.rejectionReason}
-        </p>
-      )}
-
-      {/* 🔥 MODAL */}
+      {/* Rejection Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
-          <div className="bg-card p-6 rounded-xl w-[350px] shadow-lg">
-            <h2 className="text-lg font-semibold mb-3">
-              Enter Rejection Reason
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
+          <div
+            className="p-6 rounded-2xl w-[340px] shadow-2xl"
+            style={{ background: "var(--card)", border: "1px solid var(--border)" }}
+          >
+            {/* Purple accent line */}
+            <div className="h-0.5 w-full rounded-full mb-5"
+              style={{ background: "linear-gradient(90deg,#6a5acd,#8b5cf6)" }} />
+
+            <h2 className="text-sm font-bold mb-1" style={{ color: "var(--text)" }}>
+              Rejection Reason
             </h2>
+            <p className="text-xs mb-4" style={{ color: "var(--text)", opacity: .45 }}>
+              Please provide a reason for rejecting this appointment.
+            </p>
 
             <textarea
-              className="w-full border rounded-lg p-2 text-sm"
+              className="w-full text-sm rounded-xl px-3 py-2.5 outline-none resize-none"
+              style={{
+                background: "var(--bg)",
+                border: "1px solid var(--border)",
+                color: "var(--text)"
+              }}
               rows="3"
-              placeholder="Type reason..."
+              placeholder="Type reason here…"
               value={reason}
               onChange={(e) => setReason(e.target.value)}
             />
 
-            <div className="flex justify-end gap-3 mt-4">
+            <div className="flex justify-end gap-2 mt-4">
               <button
-                onClick={() => setShowModal(false)}
-                className="px-4 py-1 bg-gray-300 rounded-lg"
+                onClick={() => { setShowModal(false); setReason(""); }}
+                className="px-4 py-2 text-xs font-semibold rounded-xl transition"
+                style={{
+                  background: "var(--bg)",
+                  border: "1px solid var(--border)",
+                  color: "var(--text)"
+                }}
               >
                 Cancel
               </button>
-
               <button
                 onClick={handleRejectSubmit}
-                className="px-4 py-1 bg-red-500 bg-card border-r border border-border border border-border rounded-lg"
+                className="px-4 py-2 text-xs font-semibold rounded-xl text-white transition"
+                style={{ background: "linear-gradient(135deg,#ef4444,#dc2626)" }}
               >
-                Submit
+                Reject
               </button>
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
