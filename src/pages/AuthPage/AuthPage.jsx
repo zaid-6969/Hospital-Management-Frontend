@@ -33,8 +33,8 @@ const AuthPage = () => {
       [e.target.placeholder.toLowerCase().includes("email")
         ? "email"
         : e.target.placeholder.toLowerCase().includes("user")
-          ? "username"
-          : "password"]: e.target.value,
+        ? "username"
+        : "password"]: e.target.value,
     });
   };
 
@@ -52,7 +52,7 @@ const AuthPage = () => {
             email: formData.email || formData.username,
             password: formData.password,
           },
-          { withCredentials: true },
+          { withCredentials: true }
         );
 
         const user = res.data.user;
@@ -83,8 +83,9 @@ const AuthPage = () => {
 
   return (
     <div className="flex min-h-screen w-full bg-bg flex-col lg:flex-row">
-      {/* LEFT PANEL (UNCHANGED IMAGE SECTION) */}
-      <div className="hidden sm:flex lg:flex flex-col items-center justify-center p-6 order-1 lg:order-none flex-1">
+      
+      {/* LEFT IMAGE */}
+      <div className="hidden sm:flex lg:flex flex-col items-center justify-center p-6 flex-1">
         <div className="w-full max-w-[500px] text-center">
           <img
             src={isDesktop ? Image2 : Image1}
@@ -95,29 +96,35 @@ const AuthPage = () => {
       </div>
 
       {/* RIGHT PANEL */}
-      <div className="flex flex-1 items-center justify-center bg-card px-6 py-8 order-2 lg:order-none">
+      <div className="flex flex-1 items-center justify-center bg-card px-6 py-8">
         <div className="w-full max-w-[420px] flex flex-col">
+
           {/* LOGO */}
           <div className="flex justify-end mb-6">
-            <img src={Logo} alt="Logo" className="h-25 object-contain" />
+            <img src={Logo} alt="Logo" className="h-20 object-contain" />
           </div>
+
           {/* TITLE */}
           <p className="text-sm text-text/60 mb-2">
             Welcome to your Hospital Management System
           </p>
 
-          {/* TOGGLE (PURPLE THEME SAME AS BEFORE) */}
-          <div className="relative flex bg-bg rounded-full p-1 mb-6 w-full">
+          {/* TOGGLE */}
+          <div className="relative flex bg-bg rounded-full p-1 mb-6 w-full border border-border">
             <div
-              className={`absolute top-1 left-1 h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full bg-gradient-to-r from-[#6a5acd] to-[#8e84c6] transition ${
+              className={`absolute top-1 left-1 h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full transition ${
                 !isLogin ? "translate-x-full" : ""
               }`}
+              style={{
+                background:
+                  "linear-gradient(135deg,var(--primary),#8b5cf6)",
+              }}
             />
 
             <button
               onClick={() => setIsLogin(true)}
-              className={`flex-1 py-2 rounded-full relative z-10 text-sm ${
-                isLogin ? "bg-card border-r border border-border border border-border" : "text-gray-600"
+              className={`flex-1 py-2 rounded-full relative z-10 text-sm font-medium ${
+                isLogin ? "text-white" : "text-text/60"
               }`}
             >
               Login
@@ -125,8 +132,8 @@ const AuthPage = () => {
 
             <button
               onClick={() => setIsLogin(false)}
-              className={`flex-1 py-2 rounded-full relative z-10 text-sm ${
-                !isLogin ? "bg-card border-r border border-border border border-border" : "text-gray-600"
+              className={`flex-1 py-2 rounded-full relative z-10 text-sm font-medium ${
+                !isLogin ? "text-white" : "text-text/60"
               }`}
             >
               Register
@@ -135,48 +142,54 @@ const AuthPage = () => {
 
           {/* DESCRIPTION */}
           <p className="text-sm text-text/60 mb-6 leading-relaxed">
-            Manage appointments, doctors, and patient records seamlessly with
-            our secure and efficient hospital management system.
+            Manage appointments, doctors, and patient records seamlessly.
           </p>
 
           {/* FORM */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {/* EMAIL (REGISTER ONLY) */}
+
+            {/* EMAIL */}
             {!isLogin && (
               <div>
-                <label className="text-sm text-gray-600">Email Address</label>
+                <label className="text-sm text-text/60">
+                  Email Address
+                </label>
                 <input
                   type="email"
                   placeholder="Enter your Email Address"
                   value={formData.email}
                   onChange={handleChange}
-                  className="mt-1 w-full px-4 py-2 rounded-full border border-gray-300 outline-none focus:border-[#6a5acd] focus:ring-2 focus:ring-[#6a5acd]/20"
+                  className="mt-1 w-full px-4 py-2 rounded-full border border-border bg-bg text-text placeholder:text-text/40 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
               </div>
             )}
 
             {/* USERNAME */}
             <div>
-              <label className="text-sm text-gray-600">User name</label>
+              <label className="text-sm text-text/60">
+                Username
+              </label>
               <input
                 type="text"
-                placeholder="Enter your User name"
+                placeholder="Enter your Username"
                 value={formData.username}
                 onChange={handleChange}
-                className="mt-1 w-full px-4 py-2 rounded-full border border-gray-300 outline-none focus:border-[#6a5acd] focus:ring-2 focus:ring-[#6a5acd]/20"
+                className="mt-1 w-full px-4 py-2 rounded-full border border-border bg-bg text-text placeholder:text-text/40 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             </div>
 
             {/* PASSWORD */}
             <div>
-              <label className="text-sm text-gray-600">Password</label>
+              <label className="text-sm text-text/60">
+                Password
+              </label>
               <div className="relative mt-1">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your Password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 pr-10 rounded-full border border-gray-300 outline-none focus:border-[#6a5acd] focus:ring-2 focus:ring-[#6a5acd]/20 tracking-widest"
+                  className="w-full px-4 py-2 pr-10 rounded-full border border-border bg-bg text-text placeholder:text-text/40 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 tracking-widest"
                 />
 
                 <div
@@ -188,20 +201,14 @@ const AuthPage = () => {
               </div>
             </div>
 
-            {/* OPTIONS */}
-            {isLogin && (
-              <div className="flex justify-between text-xs text-text/60">
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" />
-                  Remember me
-                </label>
-              </div>
-            )}
-
             {/* BUTTON */}
             <button
               type="submit"
-              className="mt-4 py-2 rounded-full bg-gradient-to-r from-[#6a5acd] to-[#8e84c6] bg-card border-r border border-border border border-border font-medium hover:opacity-90 transition"
+              className="mt-4 py-2 rounded-full text-white font-medium hover:opacity-90 transition"
+              style={{
+                background:
+                  "linear-gradient(135deg,var(--primary),#8b5cf6)",
+              }}
             >
               {isLogin ? "Login" : "Register"}
             </button>

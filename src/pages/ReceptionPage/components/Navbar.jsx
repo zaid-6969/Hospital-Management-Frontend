@@ -22,7 +22,7 @@ const Navbar = ({ onMenuClick, onOpen, onBookAppointment }) => {
         {/* Hamburger — mobile only */}
         <button
           onClick={onMenuClick}
-          className="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl transition"
+          className="lg:hidden w-9 h-9 flex items-center justify-center rounded transition"
           style={{ background: "rgba(106,90,205,.12)", color: "#6a5acd" }}
         >
           <Menu size={18} />
@@ -41,7 +41,7 @@ const Navbar = ({ onMenuClick, onOpen, onBookAppointment }) => {
       <div className="flex items-center gap-2">
         {/* Search */}
         <div
-          className="hidden md:flex items-center gap-2 rounded-xl px-3 py-2 w-44"
+          className="hidden md:flex items-center gap-2 rounded px-3 py-2 w-44"
           style={{ background: "var(--bg)", border: "1px solid var(--border)" }}
         >
           <Search size={13} style={{ color: "var(--text)", opacity: .3 }} className="shrink-0" />
@@ -55,7 +55,7 @@ const Navbar = ({ onMenuClick, onOpen, onBookAppointment }) => {
         {/* New Patient button */}
         <button
           onClick={onBookAppointment}
-          className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-white transition"
+          className="hidden sm:flex items-center gap-2 px-3 py-2 rounded text-xs font-bold text-white transition"
           style={{ background: "linear-gradient(135deg,#6a5acd,#8b5cf6)", boxShadow: "0 4px 12px rgba(106,90,205,.30)" }}
         >
           <CalendarPlus size={14} />
@@ -65,7 +65,7 @@ const Navbar = ({ onMenuClick, onOpen, onBookAppointment }) => {
         {/* Refresh */}
         <button
           onClick={() => window.location.reload()}
-          className="hidden sm:flex w-9 h-9 rounded-xl items-center justify-center transition"
+          className="hidden sm:flex w-9 h-9 rounded items-center justify-center transition"
           style={{ background: "var(--bg)", border: "1px solid var(--border)", color: "var(--text)", opacity: .6 }}
           onMouseEnter={e => { e.currentTarget.style.color = "#6a5acd"; e.currentTarget.style.opacity = 1; e.currentTarget.style.borderColor = "rgba(106,90,205,.4)"; }}
           onMouseLeave={e => { e.currentTarget.style.color = "var(--text)"; e.currentTarget.style.opacity = .6; e.currentTarget.style.borderColor = "var(--border)"; }}
@@ -75,7 +75,7 @@ const Navbar = ({ onMenuClick, onOpen, onBookAppointment }) => {
 
         {/* Bell */}
         <button
-          className="relative w-9 h-9 rounded-xl flex items-center justify-center transition"
+          className="relative w-9 h-9 rounded flex items-center justify-center transition"
           style={{ background: "var(--bg)", border: "1px solid var(--border)", color: "var(--text)", opacity: .6 }}
           onMouseEnter={e => { e.currentTarget.style.color = "#6a5acd"; e.currentTarget.style.opacity = 1; e.currentTarget.style.borderColor = "rgba(106,90,205,.4)"; }}
           onMouseLeave={e => { e.currentTarget.style.color = "var(--text)"; e.currentTarget.style.opacity = .6; e.currentTarget.style.borderColor = "var(--border)"; }}
@@ -87,7 +87,7 @@ const Navbar = ({ onMenuClick, onOpen, onBookAppointment }) => {
 
         {/* Avatar */}
         <div
-          className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-xs font-bold cursor-pointer"
+          className="w-9 h-9 rounded flex items-center justify-center text-white text-xs font-bold cursor-pointer"
           style={{ background: "linear-gradient(135deg,#6a5acd,#8b5cf6)", boxShadow: "0 4px 12px rgba(106,90,205,.30)" }}
         >
           RC

@@ -11,12 +11,12 @@ const RightPanel = () => {
     <div className="space-y-4">
 
       {/* Quick Actions */}
-      <div className="rounded-2xl p-4 hover:shadow-lg transition-shadow"
+      <div className="rounded p-4 hover:shadow-lg transition-shadow"
         style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
         <p className="text-xs font-bold uppercase tracking-widest mb-3"
           style={{ color: "var(--text)", opacity: .4 }}>Quick Actions</p>
 
-        <button className="w-full mb-2 flex items-center gap-3 p-3 rounded-xl text-sm font-semibold transition-all"
+        <button className="w-full mb-2 flex items-center gap-3 p-3 rounded text-sm font-semibold transition-all"
           style={{ background: "rgba(106,90,205,0.08)", border: "1px solid rgba(106,90,205,0.18)", color: "#6a5acd" }}
           onMouseEnter={e => { e.currentTarget.style.background = "rgba(106,90,205,0.15)"; }}
           onMouseLeave={e => { e.currentTarget.style.background = "rgba(106,90,205,0.08)"; }}>
@@ -24,7 +24,7 @@ const RightPanel = () => {
           Register Patient
         </button>
 
-        <button className="w-full flex items-center gap-3 p-3 rounded-xl text-sm font-semibold transition-all"
+        <button className="w-full flex items-center gap-3 p-3 rounded text-sm font-semibold transition-all"
           style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.18)", color: "#dc2626" }}
           onMouseEnter={e => { e.currentTarget.style.background = "rgba(239,68,68,0.15)"; }}
           onMouseLeave={e => { e.currentTarget.style.background = "rgba(239,68,68,0.08)"; }}>
@@ -34,14 +34,14 @@ const RightPanel = () => {
       </div>
 
       {/* Doctor Availability */}
-      <div className="rounded-2xl p-4 hover:shadow-lg transition-shadow"
+      <div className="rounded p-4 hover:shadow-lg transition-shadow"
         style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
         <p className="text-xs font-bold uppercase tracking-widest mb-3"
           style={{ color: "var(--text)", opacity: .4 }}>Doctor Availability</p>
 
         <ul className="space-y-2">
           {DOCTORS.map((doc) => (
-            <li key={doc.name} className="flex items-center justify-between px-3 py-2 rounded-xl"
+            <li key={doc.name} className="flex items-center justify-between px-3 py-2 rounded"
               style={{ background: "rgba(106,90,205,0.05)", border: "1px solid rgba(106,90,205,0.08)" }}>
               <div className="flex items-center gap-2">
                 {doc.available
@@ -61,7 +61,7 @@ const RightPanel = () => {
       </div>
 
       {/* Today's Summary */}
-      <div className="rounded-2xl p-4"
+      <div className="rounded p-4"
         style={{ background: "linear-gradient(135deg,#6a5acd,#8b5cf6)", boxShadow: "0 8px 24px rgba(106,90,205,.30)" }}>
         <p className="text-[10px] font-bold uppercase tracking-widest mb-3 text-white opacity-70">
           ✦ Today's Summary
@@ -73,7 +73,7 @@ const RightPanel = () => {
             { label: "Accepted", value: "13" },
             { label: "Rejected", value: "3"  },
           ].map((s) => (
-            <div key={s.label} className="rounded-xl p-3 text-center"
+            <div key={s.label} className="rounded p-3 text-center"
               style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)" }}>
               <div className="text-xl font-extrabold text-white">{s.value}</div>
               <div className="text-[10px] font-semibold mt-0.5 uppercase tracking-wide text-white opacity-70">

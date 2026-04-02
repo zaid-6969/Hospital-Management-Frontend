@@ -138,7 +138,7 @@ const Step1 = ({ onNext }) => {
               const active = selectedDay?.day === dayName;
               return (
                 <button key={dayName} onClick={() => handleDaySelect(dayObj)}
-                  className="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200"
+                  className="px-3 py-1.5 rounded text-xs font-semibold transition-all duration-200"
                   style={active ? pillActive : pillInactive}>
                   {dayName.slice(0,3)}
                 </button>
@@ -157,7 +157,7 @@ const Step1 = ({ onNext }) => {
               const isPast = date < new Date();
               return (
                 <button key={toISO(date)} disabled={isPast} onClick={() => handleDateSelect(date)}
-                  className="flex flex-col items-center py-2 px-1 rounded-xl border text-xs font-semibold transition-all duration-200"
+                  className="flex flex-col items-center py-2 px-1 rounded border text-xs font-semibold transition-all duration-200"
                   style={isPast
                     ? { opacity:.3, cursor:"not-allowed", background:"var(--bg)", border:"1px solid var(--border)", color:"var(--text)" }
                     : isSelected ? pillActive
@@ -180,7 +180,7 @@ const Step1 = ({ onNext }) => {
               const booked = isSlotBooked(slot); const active = selectedSlot === slot;
               return (
                 <button key={i} disabled={booked} onClick={() => setSelectedSlot(slot)}
-                  className="py-2 px-2 rounded-xl text-xs font-semibold border transition-all duration-200 relative"
+                  className="py-2 px-2 rounded text-xs font-semibold border transition-all duration-200 relative"
                   style={booked
                     ? { background:"rgba(239,68,68,0.08)", color:"#dc2626", border:"1px solid rgba(239,68,68,.2)", cursor:"not-allowed", textDecoration:"line-through", opacity:.6 }
                     : active ? pillActive
@@ -195,7 +195,7 @@ const Step1 = ({ onNext }) => {
       )}
 
       {selectedSlot && selectedDate && (
-        <div className="flex items-center gap-3 px-4 py-3 rounded-xl"
+        <div className="flex items-center gap-3 px-4 py-3 rounded"
           style={{ background:"rgba(106,90,205,0.08)", border:"1px solid rgba(106,90,205,.2)" }}>
           <CheckCircle size={15} style={{ color:"#6a5acd", flexShrink:0 }} />
           <p className="text-xs font-medium" style={{ color:"#6a5acd" }}>
@@ -223,7 +223,7 @@ const Step2 = ({ schedule, onNext, onBack }) => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-3 px-4 py-3 rounded-xl"
+      <div className="flex items-center gap-3 px-4 py-3 rounded"
         style={{ background:"rgba(106,90,205,0.08)", border:"1px solid rgba(106,90,205,.2)" }}>
         <Calendar size={13} style={{ color:"#8b5cf6", flexShrink:0 }} />
         <p className="text-xs font-medium" style={{ color:"#6a5acd" }}>
@@ -259,7 +259,7 @@ const Step2 = ({ schedule, onNext, onBack }) => {
           <div className="flex gap-2">
             {["Male","Female","Other"].map((g) => (
               <button key={g} onClick={() => set("gender", g)}
-                className="flex-1 py-2 rounded-xl text-xs font-semibold border transition-all"
+                className="flex-1 py-2 rounded text-xs font-semibold border transition-all"
                 style={form.gender === g ? pillActive : pillInactive}>
                 {g}
               </button>
@@ -332,7 +332,7 @@ const Step3 = ({ data, onBack, onClose, onSuccess }) => {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-2xl overflow-hidden"
+      <div className="rounded overflow-hidden"
         style={{ background:"rgba(106,90,205,0.04)", border:"1px solid rgba(106,90,205,.12)" }}>
         {rows.map(([label, value]) => (
           <div key={label} className="flex justify-between items-start px-4 py-2.5 gap-4"
@@ -365,7 +365,7 @@ const BookingModal = ({ onClose, onSuccess }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 px-4">
-      <div className="w-full rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+      <div className="w-full rounded shadow-2xl overflow-hidden flex flex-col"
         style={{ maxWidth:520, maxHeight:"90vh", background:"var(--card)", border:"1px solid var(--border)" }}>
 
         {/* Purple accent line */}

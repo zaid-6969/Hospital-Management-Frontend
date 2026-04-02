@@ -14,7 +14,7 @@ const STATUS_CFG = {
 /* ─── Modal Shell ─── */
 const Modal = ({ onClose, children }) => (
   <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 px-4">
-    <div className="w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
+    <div className="w-full max-w-md rounded shadow-2xl overflow-hidden"
       style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
       {children}
     </div>
@@ -67,7 +67,7 @@ const ViewModal = ({ data, onClose }) => (
     </div>
     <div className="px-6 py-4 flex justify-end" style={{ borderTop: "1px solid var(--border)" }}>
       <button onClick={onClose}
-        className="px-5 py-2 text-xs font-bold rounded-xl text-white"
+        className="px-5 py-2 text-xs font-bold rounded text-white"
         style={{ background: "linear-gradient(135deg,#6a5acd,#8b5cf6)" }}>
         Close
       </button>
@@ -136,12 +136,12 @@ const EditModal = ({ data, doctors, onClose, onSave }) => {
       </div>
       <div className="flex justify-end gap-3 px-6 py-4" style={{ borderTop: "1px solid var(--border)" }}>
         <button onClick={onClose}
-          className="px-4 py-2 text-xs font-semibold rounded-xl transition"
+          className="px-4 py-2 text-xs font-semibold rounded transition"
           style={{ background: "var(--bg)", border: "1px solid var(--border)", color: "var(--text)" }}>
           Cancel
         </button>
         <button onClick={handleSave} disabled={saving}
-          className="px-5 py-2 text-xs font-bold rounded-xl text-white disabled:opacity-60"
+          className="px-5 py-2 text-xs font-bold rounded text-white disabled:opacity-60"
           style={{ background: "linear-gradient(135deg,#6a5acd,#8b5cf6)" }}>
           {saving ? "Saving…" : "Save Changes"}
         </button>
@@ -179,12 +179,12 @@ const DeleteModal = ({ data, onClose, onConfirm }) => {
       </div>
       <div className="flex justify-center gap-3 px-6 py-4" style={{ borderTop: "1px solid var(--border)" }}>
         <button onClick={onClose}
-          className="px-5 py-2 text-xs font-semibold rounded-xl transition"
+          className="px-5 py-2 text-xs font-semibold rounded transition"
           style={{ background: "var(--bg)", border: "1px solid var(--border)", color: "var(--text)" }}>
           Cancel
         </button>
         <button onClick={handleDelete} disabled={deleting}
-          className="px-5 py-2 text-xs font-bold rounded-xl text-white disabled:opacity-60"
+          className="px-5 py-2 text-xs font-bold rounded text-white disabled:opacity-60"
           style={{ background: "linear-gradient(135deg,#ef4444,#dc2626)" }}>
           {deleting ? "Deleting…" : "Yes, Delete"}
         </button>
@@ -255,7 +255,7 @@ const AppointmentTable = () => {
 
   return (
     <>
-      <div className="rounded-2xl overflow-hidden hover:shadow-lg transition-shadow"
+      <div className="rounded overflow-hidden hover:shadow-lg transition-shadow"
         style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
 
         {/* HEADER */}
@@ -269,7 +269,7 @@ const AppointmentTable = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-2 rounded-xl px-3 py-1.5 w-44"
+            <div className="flex items-center gap-2 rounded px-3 py-1.5 w-44"
               style={{ background: "var(--bg)", border: "1px solid var(--border)" }}>
               <Search size={13} style={{ color: "var(--text)", opacity: .3 }} className="shrink-0" />
               <input type="text" placeholder="Search…" value={search}
@@ -279,7 +279,7 @@ const AppointmentTable = () => {
             </div>
 
             <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}
-              className="rounded-xl px-3 py-1.5 text-xs font-semibold outline-none"
+              className="rounded px-3 py-1.5 text-xs font-semibold outline-none"
               style={{ background: "var(--bg)", border: "1px solid var(--border)", color: "#6a5acd" }}>
               <option value="All">All</option>
               <option value="REQUESTED">Requested</option>
@@ -287,7 +287,7 @@ const AppointmentTable = () => {
               <option value="REJECTED">Rejected</option>
             </select>
 
-            <button className="rounded-xl p-1.5 transition"
+            <button className="rounded p-1.5 transition"
               style={{ background: "var(--bg)", border: "1px solid var(--border)", color: "var(--text)", opacity: .5 }}>
               <SlidersHorizontal size={15} />
             </button>

@@ -20,7 +20,10 @@ export const savePatientDetails = (appointmentId, data) =>
 export const getPatientDetails = (appointmentId) =>
   API.get(`/patient-details/appointment/${appointmentId}`);
 
-
 export const logout = () => API.post("/auth/logout");
+
+export const getMyAppointments = () => API.get("/appointments/my/patient");
+
+export const deleteMyAppointment = (id) => API.delete(`/appointments/my/${id}`);
 
 export default API;

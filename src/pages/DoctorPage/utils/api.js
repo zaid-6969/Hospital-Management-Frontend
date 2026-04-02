@@ -20,4 +20,8 @@ export const rejectAppointment = (id, reason) =>
 export const updateAppointmentStatus = (id, data) =>
   API.put(`/appointments/status/${id}`, data);
 
+export const getMyDoctorStats = () =>
+  API.get("/doctors/stats/me");
+
+
 export default API;

@@ -10,8 +10,8 @@ import { toggleTheme } from "../../../redux/Slices/themeSlice";
 
 const mainNav = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/doctor" },
+  { label: "Schedule",  icon: CalendarCheck,   path: "/doctor/calendar" },
   { label: "Overview",  icon: Stethoscope,     path: "/doctor/overview" },
-  { label: "Schedule",  icon: CalendarCheck,   path: "/doctor/schedule" },
 ];
 const systemNav = [
   { label: "Settings", icon: Settings, path: "/doctor/settings" },

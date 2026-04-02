@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Toaster } from "react-hot-toast";
 
 import AuthPage from "./pages/AuthPage/AuthPage";
-// import ProtectedRoute from "./routes/ProtectedRoute";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 // USER PAGES
 import UserMainLayout from "./pages/UserPage/layout/UserMainLayout";
@@ -19,7 +20,6 @@ import BookingSuccessPage from "./pages/UserPage/pages/BookingSuccessPage";
 // ADMIN PAGE
 import AdminMainLayout from "./pages/AdminPage/Layout/AdminMainLayout";
 import Dashboard from "./pages/AdminPage/page/Dashboard";
-import AdminDoctors from "./pages/AdminPage/page/AdminDoctors";
 import ToolsView from "./pages/AdminPage/page/Tools";
 import Doctors from "./pages/AdminPage/page/Doctors";
 import AdminDoctorDetails from "./pages/AdminPage/page/AdminDoctorDetails";
@@ -31,6 +31,7 @@ import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
 import DoctorSchedule from "./pages/DoctorPage/pages/DoctorSchedule";
 import DoctorOverview from "./pages/DoctorPage/pages/DoctorOverview";
 import DoctorMainLayout from "./pages/DoctorPage/Layout/DoctorMainLayout";
+import DoctorCalendar from "./pages/DoctorPage/pages/DoctorCalendar";
 
 function App() {
   const mode = useSelector((state) => state.theme.mode);
@@ -47,6 +48,17 @@ function App() {
 
   return (
     <div className="bg-bg text-text min-h-screen">
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: "var(--card)",
+            color: "var(--text)",
+            border: "1px solid var(--border)",
+            borderRadius: "12px",
+          },
+        }}
+      />
       <Routes>
         {/* AUTH */}
         <Route path="/" element={<AuthPage />} />
@@ -55,37 +67,37 @@ function App() {
         <Route
           path="/admin"
           element={
-            // <ProtectedRoute role="ADMIN">
-            <AdminMainLayout />
-            // </ProtectedRoute>
+            <ProtectedRoute role="ADMIN">
+              <AdminMainLayout />
+            </ProtectedRoute>
           }
         >
           <Route index path="admin" element={<Dashboard />} />
-          <Route path="/admin/doctor/:id" element={<Doctors />} />
+          <Route path="list" element={<Doctors />} />
           <Route path="tools" element={<ToolsView />} />
-          <Route path="doctors" element={<AdminDoctors />} />
-          <Route path="doctor-details" element={<AdminDoctorDetails />} />
+          <Route path="doctor-details/" element={<AdminDoctorDetails />} />
         </Route>
 
         {/* DOCTOR */}
         <Route
           path="/doctor"
           element={
-            // <ProtectedRoute role="DOCTOR">
-            <DoctorMainLayout />
-            // </ProtectedRoute>
+            <ProtectedRoute role="DOCTOR">
+              <DoctorMainLayout />
+            </ProtectedRoute>
           }
         >
           <Route index element={<DoctorSchedule />} />
           <Route path="overview" element={<DoctorOverview />} />
+          <Route path="calendar" element={<DoctorCalendar />} />
         </Route>
 
         <Route
           path="/doctor/overview"
           element={
-            // <ProtectedRoute role="DOCTOR">
-            <DoctorOverview />
-            // </ProtectedRoute>
+            <ProtectedRoute role="DOCTOR">
+              <DoctorOverview />
+            </ProtectedRoute>
           }
         />
 
@@ -93,9 +105,9 @@ function App() {
         <Route
           path="/reception"
           element={
-            // <ProtectedRoute role="RECEPTIONIST">
-            <ReceptionPage />
-            // </ProtectedRoute>
+            <ProtectedRoute role="RECEPTIONIST">
+              <ReceptionPage />
+            </ProtectedRoute>
           }
         />
 
@@ -103,9 +115,9 @@ function App() {
         <Route
           path="/user"
           element={
-            // <ProtectedRoute role="PATIENT">
-            <UserMainLayout />
-            // </ProtectedRoute>
+            <ProtectedRoute role="PATIENT">
+              <UserMainLayout />
+            </ProtectedRoute>
           }
         >
           <Route index element={<UserPage />} />

@@ -13,7 +13,7 @@ const Topbar = ({ onMenuClick }) => {
 
   return (
     <header
-      className="h-16 flex items-center justify-between px-4 sm:px-6 shrink-0 sticky top-0"
+      className="h-19 flex items-center justify-between px-4 sm:px-6 shrink-0 sticky top-0"
       style={{ background: "var(--card)", borderBottom: "1px solid var(--border)" }}
     >
       <div className="flex items-center gap-3">
