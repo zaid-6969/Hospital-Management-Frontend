@@ -58,7 +58,6 @@ const AuthPage = () => {
         const user = res.data.user;
 
         dispatch(loginSuccess(user));
-        localStorage.setItem("user", JSON.stringify(user));
 
         if (user.role === "ADMIN") navigate("/admin");
         else if (user.role === "DOCTOR") navigate("/doctor");

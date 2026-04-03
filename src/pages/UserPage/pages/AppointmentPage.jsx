@@ -187,10 +187,6 @@ const AppointmentPage = () => {
   useEffect(() => {
     fetchDoctors();
     fetchMyAppointments();
-
-    // ── Poll every 15s for status changes ────────────────────
-    const interval = setInterval(fetchMyAppointments, 15000);
-    return () => clearInterval(interval);
   }, []);
 
   const fetchDoctors = async () => {
@@ -215,8 +211,6 @@ const AppointmentPage = () => {
       const list = Array.isArray(res.data)
         ? res.data
         : (res.data?.appointments ?? res.data?.data ?? []);
-
-      // ── Detect status changes → fire toasts ──────────────
       list.forEach((appt) => {
         const prev = prevStatuses.current[appt._id];
         const current = appt.status;
@@ -827,44 +821,6 @@ const AppointmentPage = () => {
               </div>
             ) : (
               <>
-                {/* Alert banners for accepted/rejected */}
-                {myAppointments.filter(
-                  (a) => a.status === "ACCEPTED" || a.status === "REJECTED",
-                ).length > 0 && (
-                  <div className="space-y-2">
-                    {myAppointments
-                      .filter(
-                        (a) =>
-                          a.status === "ACCEPTED" || a.status === "REJECTED",
-                      )
-                      .slice(0, 3)
-                      .map((a) => {
-                        const cfg = STATUS_CFG[a.status];
-                        const Icon = cfg.icon;
-                        return (
-                          <div
-                            key={a._id + "-alert"}
-                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold"
-                            style={{
-                              background: cfg.bg,
-                              border: `1px solid ${cfg.border}`,
-                              color: cfg.color,
-                            }}
-                          >
-                            <Icon size={16} />
-                            <span>
-                              <b>{a.doctorId?.name ?? "Doctor"}</b>
-                              {a.status === "ACCEPTED"
-                                ? ` accepted your appointment on ${a.date} at ${a.time}`
-                                : ` rejected your appointment on ${a.date} at ${a.time}`}
-                              {a.rejectionReason && ` — "${a.rejectionReason}"`}
-                            </span>
-                          </div>
-                        );
-                      })}
-                  </div>
-                )}
-
                 {/* Appointment cards */}
                 <div className="space-y-3">
                   {myAppointments.map((appt) => {
@@ -950,42 +906,44 @@ const AppointmentPage = () => {
                         </div>
 
                         {/* Status badge */}
-                        <div
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl shrink-0"
-                          style={{
-                            background: cfg.bg,
-                            border: `1px solid ${cfg.border}`,
-                          }}
-                        >
-                          <Icon size={13} style={{ color: cfg.color }} />
-                          <span
-                            className="text-xs font-bold"
-                            style={{ color: cfg.color }}
+                        <div className="flex flex-row flex-wrap gap-2">
+                          <div
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl shrink-0"
+                            style={{
+                              background: cfg.bg,
+                              border: `1px solid ${cfg.border}`,
+                            }}
                           >
-                            {cfg.label}
-                          </span>
-                        </div>
-                        <button
-                          onClick={async () => {
-                            if (!window.confirm("Delete this appointment?"))
-                              return;
+                            <Icon size={13} style={{ color: cfg.color }} />
+                            <span
+                              className="text-xs font-bold"
+                              style={{ color: cfg.color }}
+                            >
+                              {cfg.label}
+                            </span>
+                          </div>
+                          <button
+                            onClick={async () => {
+                              if (!window.confirm("Delete this appointment?"))
+                                return;
 
-                            try {
-                              await deleteMyAppointment(appt._id);
-                              fetchMyAppointments(); // refresh list
-                            } catch (err) {
-                              alert("Failed to delete");
-                            }
-                          }}
-                          className="ml-3 px-3 py-1 text-xs rounded-lg font-semibold"
-                          style={{
-                            background: "rgba(239,68,68,0.1)",
-                            color: "#dc2626",
-                            border: "1px solid rgba(239,68,68,0.3)",
-                          }}
-                        >
-                          Cancel
-                        </button>
+                              try {
+                                await deleteMyAppointment(appt._id);
+                                fetchMyAppointments(); // refresh list
+                              } catch (err) {
+                                alert("Failed to delete");
+                              }
+                            }}
+                            className="ml-3 px-3 py-1 text-xs rounded-lg font-semibold"
+                            style={{
+                              background: "rgba(239,68,68,0.1)",
+                              color: "#dc2626",
+                              border: "1px solid rgba(239,68,68,0.3)",
+                            }}
+                          >
+                            Cancel Appiontment
+                          </button>
+                        </div>
                       </div>
                     );
                   })}

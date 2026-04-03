@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children, role }) => {
+const PublicRoute = ({ children }) => {
   let { user } = useSelector((state) => state.auth);
 
   // ✅ SAFE sessionStorage read
@@ -13,11 +13,8 @@ const ProtectedRoute = ({ children, role }) => {
     }
   }
 
-  // ❌ Not logged in
-  if (!user) return <Navigate to="/" replace />;
-
-  // ❌ Wrong role → redirect correctly
-  if (role && user.role !== role) {
+  // ✅ Already logged in → redirect
+  if (user) {
     if (user.role === "ADMIN") return <Navigate to="/admin" replace />;
     if (user.role === "DOCTOR") return <Navigate to="/doctor" replace />;
     if (user.role === "RECEPTIONIST") return <Navigate to="/reception" replace />;
@@ -27,4 +24,4 @@ const ProtectedRoute = ({ children, role }) => {
   return children;
 };
 
-export default ProtectedRoute;
+export default PublicRoute;

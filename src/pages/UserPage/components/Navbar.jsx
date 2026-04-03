@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import ThemeToggle from "../../../components/ThemeToggle";
 import { useState, useRef, useEffect } from "react";
 import { logout } from "../services/api";
+import { useDispatch } from "react-redux";
 
 const NAV_LINKS = [
   { name: "Home", path: "/user" },
@@ -18,6 +19,8 @@ const Navbar = ({ menuOpen, setMenuOpen, user = "Mohammed", onLogout }) => {
   const menuRef = useRef();
 
   const firstLetter = user?.charAt(0).toUpperCase();
+
+  const dispatch = useDispatch();
 
   // close dropdown on outside click
   useEffect(() => {
@@ -49,6 +52,7 @@ const Navbar = ({ menuOpen, setMenuOpen, user = "Mohammed", onLogout }) => {
   const logoutUser = async () => {
     try {
       await logout();
+      // dispatch(logout());
       navigate("/");
     } catch (err) {
       console.error("Logout failed:", err);
@@ -108,9 +112,9 @@ const Navbar = ({ menuOpen, setMenuOpen, user = "Mohammed", onLogout }) => {
                   {user}
                 </p>
 
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-violet-50 transition text-sm">
+                <span className="w-full text-left px-3 py-2 rounded-lg hover:bg-violet-50 transition text-sm">
                   <ThemeToggle />
-                </button>
+                </span>
 
                 <button
                   onClick={logoutUser}

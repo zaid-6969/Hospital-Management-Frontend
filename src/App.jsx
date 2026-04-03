@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 
 import AuthPage from "./pages/AuthPage/AuthPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import PublicRoute from "./routes/PublicRoute";
 
 // USER PAGES
 import UserMainLayout from "./pages/UserPage/layout/UserMainLayout";
@@ -59,11 +60,19 @@ function App() {
           },
         }}
       />
-      <Routes>
-        {/* AUTH */}
-        <Route path="/" element={<AuthPage />} />
 
-        {/* ADMIN */}
+      <Routes>
+        {/* 🔓 AUTH (BLOCK AFTER LOGIN) */}
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <AuthPage />
+            </PublicRoute>
+          }
+        />
+
+        {/* 🔒 ADMIN */}
         <Route
           path="/admin"
           element={
@@ -72,13 +81,13 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index path="admin" element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
           <Route path="list" element={<Doctors />} />
           <Route path="tools" element={<ToolsView />} />
-          <Route path="doctor-details/" element={<AdminDoctorDetails />} />
+          <Route path="doctor-details" element={<AdminDoctorDetails />} />
         </Route>
 
-        {/* DOCTOR */}
+        {/* 🔒 DOCTOR */}
         <Route
           path="/doctor"
           element={
@@ -92,16 +101,7 @@ function App() {
           <Route path="calendar" element={<DoctorCalendar />} />
         </Route>
 
-        <Route
-          path="/doctor/overview"
-          element={
-            <ProtectedRoute role="DOCTOR">
-              <DoctorOverview />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* RECEPTION */}
+        {/* 🔒 RECEPTION */}
         <Route
           path="/reception"
           element={
@@ -111,7 +111,7 @@ function App() {
           }
         />
 
-        {/* USER ROUTES*/}
+        {/* 🔒 USER */}
         <Route
           path="/user"
           element={
@@ -126,7 +126,7 @@ function App() {
           <Route path="contact" element={<ContactPage />} />
           <Route path="appointment" element={<AppointmentPage />} />
           <Route path="doctor/:id" element={<DoctorDetails />} />
-          <Route path="patient-details" element={<PatientDetailsPage />} />{" "}
+          <Route path="patient-details" element={<PatientDetailsPage />} />
           <Route path="booking-success" element={<BookingSuccessPage />} />
         </Route>
       </Routes>

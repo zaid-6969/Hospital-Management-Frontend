@@ -5,9 +5,12 @@ import {
   createDoctor,
   updateDoctor,
   deleteDoctor,
+  registerUser,
+  getUsers,
 } from "../service/api";
 import {
   UserPlus,
+  UserCheck,
   Edit3,
   Trash2,
   Stethoscope,
@@ -15,12 +18,107 @@ import {
   ChevronRight,
   Briefcase,
   Loader2,
+  Search,
 } from "lucide-react";
+
+// ── SEARCHABLE USER DROPDOWN ───────────────────────────────────
+const UserSearchDropdown = ({ users, value, onChange }) => {
+  const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const selected = users.find((u) => u._id === value);
+
+  const filtered = users.filter(
+    (u) =>
+      u.name?.toLowerCase().includes(query.toLowerCase()) ||
+      u.email?.toLowerCase().includes(query.toLowerCase()),
+  );
+
+  return (
+    <div className="relative">
+      {/* Input shows selected name or search query */}
+      <div className="relative">
+        <Search
+          size={15}
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+        />
+        <input
+          type="text"
+          placeholder={selected ? selected.name : "Search by name or email…"}
+          value={open ? query : selected ? selected.name : ""}
+          onFocus={() => {
+            setOpen(true);
+            setQuery("");
+          }}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setOpen(true);
+          }}
+          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          className="w-full pl-9 pr-4 p-3 rounded-xl bg-gray-100 dark:bg-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-purple-500/40 text-sm transition-all"
+        />
+        {value && (
+          <button
+            type="button"
+            onMouseDown={(e) => {
+              e.preventDefault();
+              onChange("");
+              setQuery("");
+            }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-500 transition-colors"
+          >
+            <X size={14} />
+          </button>
+        )}
+      </div>
+
+      {/* Dropdown list */}
+      {open && (
+        <div className="absolute z-50 mt-1 w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl max-h-52 overflow-y-auto">
+          {filtered.length === 0 ? (
+            <div className="px-4 py-3 text-sm text-slate-400 text-center">
+              No users found
+            </div>
+          ) : (
+            filtered.map((u) => (
+              <button
+                key={u._id}
+                type="button"
+                onMouseDown={() => {
+                  onChange(u._id);
+                  setQuery("");
+                  setOpen(false);
+                }}
+                className={`w-full text-left px-4 py-2.5 text-sm flex items-center gap-3 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors ${
+                  value === u._id
+                    ? "bg-purple-50 dark:bg-purple-900/20 text-purple-600 font-semibold"
+                    : "dark:text-white"
+                }`}
+              >
+                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                  {u.name?.[0]?.toUpperCase() || "?"}
+                </div>
+                <div>
+                  <div className="font-medium">{u.name}</div>
+                  <div className="text-xs text-slate-400">{u.email}</div>
+                </div>
+                {value === u._id && (
+                  <span className="ml-auto text-purple-600 text-xs">✓</span>
+                )}
+              </button>
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Doctors = () => {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [editId, setEditId] = useState(null);
   const navigate = useNavigate();
 
@@ -32,6 +130,19 @@ const Doctors = () => {
     image: null,
     role: "",
   });
+
+  const [registerForm, setRegisterForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "DOCTOR",
+  });
+
+  const [registerLoading, setRegisterLoading] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [usersLoading, setUsersLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [filterSpec, setFilterSpec] = useState("");
 
   const [availability, setAvailability] = useState([
     { day: "", slots: [{ start: "", end: "" }] },
@@ -57,6 +168,23 @@ const Doctors = () => {
   useEffect(() => {
     fetchDoctors();
   }, []);
+
+  // ── FETCH USERS (for userId dropdown) ─────────────────────────
+  const fetchUsers = async () => {
+    setUsersLoading(true);
+    try {
+      const res = await getUsers("DOCTOR");
+      const list = Array.isArray(res.data)
+        ? res.data
+        : (res.data?.users ?? res.data?.data ?? []);
+      setUsers(list);
+    } catch (err) {
+      console.error("Error fetching users:", err);
+      setUsers([]);
+    } finally {
+      setUsersLoading(false);
+    }
+  };
 
   // ── HELPERS ────────────────────────────────────────────────────
   const resetForm = () => {
@@ -94,6 +222,7 @@ const Doctors = () => {
         : [{ day: "", slots: [{ start: "", end: "" }] }],
     );
     setShowModal(true);
+    fetchUsers();
   };
 
   const handleDelete = async (id) => {
@@ -121,6 +250,32 @@ const Doctors = () => {
       fetchDoctors();
     } catch (err) {
       console.error("Save failed:", err);
+    }
+  };
+
+  // ── REGISTER USER ──────────────────────────────────────────────
+  const handleRegisterChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterForm((f) => ({ ...f, [name]: value }));
+  };
+
+  const handleRegisterSubmit = async () => {
+    if (!registerForm.name || !registerForm.email || !registerForm.password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    setRegisterLoading(true);
+    try {
+      await registerUser(registerForm);
+      alert(
+        `User "${registerForm.name}" registered successfully as ${registerForm.role}!`,
+      );
+      setRegisterForm({ name: "", email: "", password: "", role: "DOCTOR" });
+      setShowRegisterModal(false);
+    } catch (err) {
+      alert(err.response?.data?.message || "Registration failed.");
+    } finally {
+      setRegisterLoading(false);
     }
   };
 
@@ -163,126 +318,354 @@ const Doctors = () => {
       style={{ background: "var(--bg)", color: "var(--text)" }}
     >
       {/* HEADER */}
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
-          <h1 style={{ color: "var(--text)" }} className="text-3xl font-black  flex items-center gap-3">
+          <h1
+            style={{ color: "var(--text)" }}
+            className="text-3xl font-black  flex items-center gap-3"
+          >
             <Stethoscope className="text-purple-600" size={32} />
             Medical Staff
           </h1>
-          <p style={{ color: "var(--text)" }}  className=" mt-1">
+          <p style={{ color: "var(--text)" }} className=" mt-1">
             Manage specialist profiles and track clinical performance.
           </p>
         </div>
-        <button
-          onClick={() => {
-            resetForm();
-            setShowModal(true);
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setShowRegisterModal(true)}
+            className="bg-white hover:bg-gray-50 text-purple-600 border-2 border-purple-600 px-6 py-3 rounded-2xl font-bold flex items-center gap-2 shadow-lg shadow-purple-500/10 transition-all hover:scale-105 active:scale-95"
+          >
+            <UserCheck size={20} /> Create Member
+          </button>
+          <button
+            onClick={() => {
+              resetForm();
+              setShowModal(true);
+              fetchUsers();
+            }}
+            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 shadow-lg shadow-purple-500/20 transition-all hover:scale-105 active:scale-95"
+          >
+            <UserPlus size={20} /> Add Members
+          </button>
+        </div>
+      </div>
+
+      {/* FILTER BAR */}
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row gap-3 mb-8">
+        <div className="relative flex-1">
+          <Search
+            size={16}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+          />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by name…"
+            className="w-full pl-9 pr-4 py-2.5 rounded-xl border text-sm outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500 transition-all"
+            style={{
+              background: "var(--card)",
+              border: "1px solid var(--border)",
+              color: "var(--text)",
+            }}
+          />
+        </div>
+        <select
+          value={filterSpec}
+          onChange={(e) => setFilterSpec(e.target.value)}
+          className="sm:w-56 px-4 py-2.5 rounded-xl border text-sm outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500 transition-all"
+          style={{
+            background: "var(--card)",
+            border: "1px solid var(--border)",
+            color: "var(--text)",
           }}
-          className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 shadow-lg shadow-purple-500/20 transition-all hover:scale-105 active:scale-95"
         >
-          <UserPlus size={20} /> Add Members
-        </button>
+          <option value="">All Specializations</option>
+          {[...new Set(doctors.map((d) => d.specialization).filter(Boolean))]
+            .sort()
+            .map((spec) => (
+              <option key={spec} value={spec}>
+                {spec}
+              </option>
+            ))}
+        </select>
+        {(search || filterSpec) && (
+          <button
+            onClick={() => {
+              setSearch("");
+              setFilterSpec("");
+            }}
+            className="px-4 py-2.5 rounded-xl text-sm font-semibold text-purple-600 border-2 border-purple-200 hover:bg-purple-50 transition-colors whitespace-nowrap"
+          >
+            Clear filters
+          </button>
+        )}
       </div>
 
       {/* LOADING / EMPTY / GRID */}
       {loading ? (
         <div className="flex items-center justify-center min-h-[40vh]">
-          <div className="flex flex-col items-center gap-3 "  style={{ color: "var(--text)" }} >
+          <div
+            className="flex flex-col items-center gap-3 "
+            style={{ color: "var(--text)" }}
+          >
             <Loader2 size={32} className="animate-spin text-purple-500" />
             <p className="text-sm font-medium">Loading doctors…</p>
           </div>
         </div>
       ) : doctors.length === 0 ? (
-        <div className="flex flex-col items-center justify-center min-h-[40vh] gap-3" style={{ color: "var(--text)" }} >
+        <div
+          className="flex flex-col items-center justify-center min-h-[40vh] gap-3"
+          style={{ color: "var(--text)" }}
+        >
           <Stethoscope size={40} className="opacity-30" />
           <p className="text-sm font-medium">
             No doctors found. Add your first specialist.
           </p>
         </div>
       ) : (
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {doctors.map((doc) => (
+        (() => {
+          const filtered = doctors.filter((d) => {
+            const matchName = d.name
+              ?.toLowerCase()
+              .includes(search.toLowerCase());
+            const matchSpec = filterSpec
+              ? d.specialization === filterSpec
+              : true;
+            return matchName && matchSpec;
+          });
+          return filtered.length === 0 ? (
             <div
-              key={doc._id}
-              className="group relative rounded-3xl p-6 hover:shadow-2xl transition-all duration-300"
-              style={{
-                background: "var(--card)",
-                border: "1px solid var(--border)",
-              }}
+              className="flex flex-col items-center justify-center min-h-[30vh] gap-3"
+              style={{ color: "var(--text)" }}
             >
-              <div className="flex justify-between items-start">
-                <div className="flex items-center gap-4">
-                  <div className="relative">
-                    {doc.image?.url ? (
-                      <img
-                        src={doc.image.url}
-                        className="w-16 h-16 rounded-2xl object-cover ring-4 ring-slate-50 dark:ring-slate-700"
-                        alt={doc.name}
-                      />
-                    ) : (
-                      <div
-                      style={{ color: "var(--text)" }} 
-                        className=" w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-bold ring-4 ring-slate-50 dark:ring-slate-700"
-                        style={{
-                          background: " linear-gradient(135deg,#6a5acd,#8b5cf6)",
-                        }}
-                      >
-                        {doc.name
-                          ?.split(" ")
-                          .map((n) => n[0])
-                          .join("")
-                          .slice(0, 2) ?? "DR"}
+              <Stethoscope size={36} className="opacity-30" />
+              <p className="text-sm font-medium">
+                No doctors match your filters.
+              </p>
+            </div>
+          ) : (
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filtered.map((doc) => (
+                <div
+                  key={doc._id}
+                  className="group relative rounded-3xl p-6 hover:shadow-2xl transition-all duration-300"
+                  style={{
+                    background: "var(--card)",
+                    border: "1px solid var(--border)",
+                  }}
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="flex items-center gap-4">
+                      <div className="relative">
+                        {doc.image?.url ? (
+                          <img
+                            src={doc.image.url}
+                            className="w-16 h-16 rounded-2xl object-cover ring-4 ring-slate-50 dark:ring-slate-700"
+                            alt={doc.name}
+                          />
+                        ) : (
+                          <div
+                            style={{ color: "var(--text)" }}
+                            className=" w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-bold ring-4 ring-slate-50 dark:ring-slate-700"
+                            style={{
+                              background:
+                                " linear-gradient(135deg,#6a5acd,#8b5cf6)",
+                            }}
+                          >
+                            {doc.name
+                              ?.split(" ")
+                              .map((n) => n[0])
+                              .join("")
+                              .slice(0, 2) ?? "DR"}
+                          </div>
+                        )}
+                        <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-slate-800 rounded-full" />
                       </div>
-                    )}
-                    <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-slate-800 rounded-full" />
-                  </div>
-                  <div>
-                    <h2 className="font-bold text-lg truncate w-40" style={{ color: "var(--text)" }} >
-                      {doc.name}
-                    </h2>
-                    <span className="text-xs font-bold text-purple-600 bg-purple-50 dark:bg-purple-900/30 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                      {doc.specialization}
-                    </span>
-                  </div>
-                </div>
+                      <div>
+                        <h2
+                          className="font-bold text-lg truncate w-40"
+                          style={{ color: "var(--text)" }}
+                        >
+                          {doc.name}
+                        </h2>
+                        <span className="text-xs font-bold text-purple-600 bg-purple-50 dark:bg-purple-900/30 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                          {doc.specialization}
+                        </span>
+                      </div>
+                    </div>
 
-                <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={() => handleEdit(doc)}
-                    className="p-2 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-blue-600 rounded-xl transition-colors"
+                    <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => handleEdit(doc)}
+                        className="p-2 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-blue-600 rounded-xl transition-colors"
+                      >
+                        <Edit3 size={18} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(doc._id)}
+                        className="p-2 hover:bg-red-50 dark:hover:bg-red-900/30 text-red-500 rounded-xl transition-colors"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div
+                    style={{ background: "var(--bg)" }}
+                    className="mt-6 flex items-center justify-between  p-4 rounded-2xl"
                   >
-                    <Edit3 size={18} />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(doc._id)}
-                    className="p-2 hover:bg-red-50 dark:hover:bg-red-900/30 text-red-500 rounded-xl transition-colors"
-                  >
-                    <Trash2 size={18} />
-                  </button>
+                    <div className="space-y-1">
+                      <p className="text-xs text-slate-400 font-medium uppercase tracking-tighter">
+                        Experience
+                      </p>
+                      <p
+                        style={{ color: "var(--text)" }}
+                        className="font-bol flex items-center gap-1"
+                      >
+                        <Briefcase size={14} className="text-purple-500" />
+                        {doc.experience} Years
+                      </p>
+                    </div>
+                    {/* ✅ onClick passes doc._id via router state */}
+                    <button
+                      onClick={() => goToDetail(doc)}
+                      style={{ backgroundColor: "var(--border)" }}
+                      className="p-3 rounded-xl shadow-sm hover:text-purple-600 transition-colors"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  </div>
                 </div>
+              ))}
+            </div>
+          );
+        })()
+      )}
+
+      {/* CREATE MEMBER MODAL */}
+      {showRegisterModal && (
+        <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-slate-800 w-[480px] p-6 rounded-2xl shadow-2xl">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h2 className="text-xl font-bold dark:text-white flex items-center gap-2">
+                  <UserCheck size={22} className="text-purple-600" />
+                  Create Member
+                </h2>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                  Register a new user with a specific role
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  setShowRegisterModal(false);
+                  setRegisterForm({
+                    name: "",
+                    email: "",
+                    password: "",
+                    role: "DOCTOR",
+                  });
+                }}
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-colors"
+              >
+                <X className="dark:text-white" size={20} />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <div>
+                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block uppercase tracking-wider">
+                  Full Name
+                </label>
+                <input
+                  name="name"
+                  value={registerForm.name}
+                  onChange={handleRegisterChange}
+                  placeholder="e.g. Dr. John Smith"
+                  className="w-full p-3 rounded-xl bg-gray-100 dark:bg-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-purple-500/40 transition-all"
+                />
               </div>
 
-              <div style={{ background: "var(--bg)" }} className="mt-6 flex items-center justify-between  p-4 rounded-2xl">
-                <div className="space-y-1">
-                  <p className="text-xs text-slate-400 font-medium uppercase tracking-tighter">
-                    Experience
-                  </p>
-                  <p  style={{ color: "var(--text)" }}  className="font-bol flex items-center gap-1">
-                    <Briefcase size={14} className="text-purple-500" />
-                    {doc.experience} Years
-                  </p>
-                </div>
-                {/* ✅ onClick passes doc._id via router state */}
-                <button
-                  onClick={() => goToDetail(doc)}
-                  style={{backgroundColor:"var(--border)"}}
-                  className="p-3 rounded-xl shadow-sm hover:text-purple-600 transition-colors"
+              <div>
+                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block uppercase tracking-wider">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={registerForm.email}
+                  onChange={handleRegisterChange}
+                  placeholder="e.g. john@hospital.com"
+                  className="w-full p-3 rounded-xl bg-gray-100 dark:bg-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-purple-500/40 transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block uppercase tracking-wider">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  value={registerForm.password}
+                  onChange={handleRegisterChange}
+                  placeholder="Set a secure password"
+                  className="w-full p-3 rounded-xl bg-gray-100 dark:bg-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-purple-500/40 transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block uppercase tracking-wider">
+                  Role
+                </label>
+                <select
+                  name="role"
+                  value={registerForm.role}
+                  onChange={handleRegisterChange}
+                  className="w-full p-3 rounded-xl bg-gray-100 dark:bg-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-purple-500/40 transition-all"
                 >
-                  <ChevronRight size={20} />
+                  <option value="DOCTOR">Doctor</option>
+                  <option value="ADMIN">Admin</option>
+                  <option value="RECEPTIONIST">Receptionist</option>
+                  <option value="PATIENT">Patient</option>
+                </select>
+              </div>
+
+              <div className="flex gap-3 mt-2">
+                <button
+                  onClick={() => {
+                    setShowRegisterModal(false);
+                    setRegisterForm({
+                      name: "",
+                      email: "",
+                      password: "",
+                      role: "DOCTOR",
+                    });
+                  }}
+                  className="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleRegisterSubmit}
+                  disabled={registerLoading}
+                  className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
+                >
+                  {registerLoading ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />{" "}
+                      Registering…
+                    </>
+                  ) : (
+                    <>
+                      <UserCheck size={16} /> Register User
+                    </>
+                  )}
                 </button>
               </div>
             </div>
-          ))}
+          </div>
         </div>
       )}
 
@@ -305,13 +688,23 @@ const Doctors = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 mb-6">
-              <input
-                name="userId"
-                value={form.userId}
-                onChange={handleChange}
-                placeholder="Doctor User ID"
-                className="col-span-2 p-3 rounded-xl bg-gray-100 dark:bg-slate-900 dark:text-white outline-none"
-              />
+              <div className="col-span-2">
+                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block">
+                  Select Doctor User
+                </label>
+                {usersLoading ? (
+                  <div className="w-full p-3 rounded-xl bg-gray-100 dark:bg-slate-900 text-slate-400 text-sm flex items-center gap-2">
+                    <Loader2 size={14} className="animate-spin" /> Loading
+                    users…
+                  </div>
+                ) : (
+                  <UserSearchDropdown
+                    users={users}
+                    value={form.userId}
+                    onChange={(id) => setForm((f) => ({ ...f, userId: id }))}
+                  />
+                )}
+              </div>
               <input
                 name="name"
                 value={form.name}

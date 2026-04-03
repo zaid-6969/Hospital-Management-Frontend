@@ -33,3 +33,9 @@ export const updateDoctor = (id, data) =>
 
 export const deleteDoctor = (id) =>
   API.delete(`/doctors/${id}`);
+
+export const registerUser = (data) =>
+  API.post("/auth/register", data);
+
+export const getUsers = (role) =>
+  API.get("/auth/users", { params: role ? { role } : {} });
