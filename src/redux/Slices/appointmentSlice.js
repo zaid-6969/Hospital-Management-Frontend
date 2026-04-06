@@ -16,11 +16,13 @@ export const fetchMyAppointments = createAsyncThunk(
       const res = await API.get("/appointments/my/patient");
       return Array.isArray(res.data)
         ? res.data
-        : res.data?.appointments ?? res.data?.data ?? [];
+        : (res.data?.appointments ?? res.data?.data ?? []);
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || "Failed to load appointments");
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to load appointments",
+      );
     }
-  }
+  },
 );
 
 export const fetchDoctorAppointments = createAsyncThunk(
@@ -30,11 +32,13 @@ export const fetchDoctorAppointments = createAsyncThunk(
       const res = await API.get("/appointments/my");
       return Array.isArray(res.data)
         ? res.data
-        : res.data?.appointments ?? res.data?.data ?? [];
+        : (res.data?.appointments ?? res.data?.data ?? []);
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || "Failed to load appointments");
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to load appointments",
+      );
     }
-  }
+  },
 );
 
 export const fetchAllAppointments = createAsyncThunk(
@@ -44,27 +48,33 @@ export const fetchAllAppointments = createAsyncThunk(
       const res = await API.get(`/appointments?page=${page}&limit=${limit}`);
       return res.data;
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || "Failed to load appointments");
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to load appointments",
+      );
     }
-  }
+  },
 );
 
 export const createAppointmentThunk = createAsyncThunk(
   "appointments/create",
   async ({ doctorId, date, time }, { rejectWithValue }) => {
     try {
-      // ── Check if slot already booked ──────────────────────
       const all = await API.get(`/appointments/my/patient`);
-      const list = Array.isArray(all.data) ? all.data : all.data?.appointments ?? [];
+      const list = Array.isArray(all.data)
+        ? all.data
+        : (all.data?.appointments ?? []);
       const conflict = list.find(
         (a) =>
           a.doctorId?._id === doctorId &&
           a.date === date &&
           a.time === time &&
-          a.status !== "REJECTED"
+          a.status !== "REJECTED",
       );
+
       if (conflict) {
-        toast.error("This slot is already booked! Please choose a different time.");
+        toast.error(
+          "This slot is already booked! Please choose a different time.",
+        );
         return rejectWithValue("Slot already booked");
       }
 
@@ -75,14 +85,17 @@ export const createAppointmentThunk = createAsyncThunk(
       toast.error(msg);
       return rejectWithValue(msg);
     }
-  }
+  },
 );
 
 export const updateAppointmentStatusThunk = createAsyncThunk(
   "appointments/updateStatus",
   async ({ id, status, rejectionReason = "" }, { rejectWithValue }) => {
     try {
-      const res = await API.put(`/appointments/status/${id}`, { status, rejectionReason });
+      const res = await API.put(`/appointments/status/${id}`, {
+        status,
+        rejectionReason,
+      });
       if (status === "ACCEPTED") toast.success("Appointment accepted!");
       if (status === "REJECTED") toast.error("Appointment rejected.");
       return res.data;
@@ -91,7 +104,7 @@ export const updateAppointmentStatusThunk = createAsyncThunk(
       toast.error(msg);
       return rejectWithValue(msg);
     }
-  }
+  },
 );
 
 export const deleteMyAppointmentThunk = createAsyncThunk(
@@ -106,7 +119,7 @@ export const deleteMyAppointmentThunk = createAsyncThunk(
       toast.error(msg);
       return rejectWithValue(msg);
     }
-  }
+  },
 );
 
 export const deleteAppointmentThunk = createAsyncThunk(
@@ -121,7 +134,7 @@ export const deleteAppointmentThunk = createAsyncThunk(
       toast.error(msg);
       return rejectWithValue(msg);
     }
-  }
+  },
 );
 
 // ── Slice ──────────────────────────────────────────────────────
@@ -143,17 +156,38 @@ const appointmentSlice = createSlice({
   extraReducers: (builder) => {
     // fetch my (patient)
     builder
-      .addCase(fetchMyAppointments.pending, (s) => { s.loading = true; s.error = null; })
-      .addCase(fetchMyAppointments.fulfilled, (s, a) => { s.loading = false; s.list = a.payload; })
-      .addCase(fetchMyAppointments.rejected, (s, a) => { s.loading = false; s.error = a.payload; })
+      .addCase(fetchMyAppointments.pending, (s) => {
+        s.loading = true;
+        s.error = null;
+      })
+      .addCase(fetchMyAppointments.fulfilled, (s, a) => {
+        s.loading = false;
+        s.list = a.payload;
+      })
+      .addCase(fetchMyAppointments.rejected, (s, a) => {
+        s.loading = false;
+        s.error = a.payload;
+      })
 
-    // fetch doctor appointments
-      .addCase(fetchDoctorAppointments.pending, (s) => { s.loading = true; s.error = null; })
-      .addCase(fetchDoctorAppointments.fulfilled, (s, a) => { s.loading = false; s.list = a.payload; })
-      .addCase(fetchDoctorAppointments.rejected, (s, a) => { s.loading = false; s.error = a.payload; })
+      // fetch doctor appointments
+      .addCase(fetchDoctorAppointments.pending, (s) => {
+        s.loading = true;
+        s.error = null;
+      })
+      .addCase(fetchDoctorAppointments.fulfilled, (s, a) => {
+        s.loading = false;
+        s.list = a.payload;
+      })
+      .addCase(fetchDoctorAppointments.rejected, (s, a) => {
+        s.loading = false;
+        s.error = a.payload;
+      })
 
-    // fetch all (reception/admin)
-      .addCase(fetchAllAppointments.pending, (s) => { s.loading = true; s.error = null; })
+      // fetch all (reception/admin)
+      .addCase(fetchAllAppointments.pending, (s) => {
+        s.loading = true;
+        s.error = null;
+      })
       .addCase(fetchAllAppointments.fulfilled, (s, a) => {
         s.loading = false;
         s.list = a.payload.data ?? a.payload;
@@ -161,25 +195,28 @@ const appointmentSlice = createSlice({
         s.page = a.payload.page ?? 1;
         s.totalPages = a.payload.totalPages ?? 1;
       })
-      .addCase(fetchAllAppointments.rejected, (s, a) => { s.loading = false; s.error = a.payload; })
+      .addCase(fetchAllAppointments.rejected, (s, a) => {
+        s.loading = false;
+        s.error = a.payload;
+      })
 
-    // create
+      // create
       .addCase(createAppointmentThunk.fulfilled, (s, a) => {
         s.list.unshift(a.payload);
       })
 
-    // update status
+      // update status
       .addCase(updateAppointmentStatusThunk.fulfilled, (s, a) => {
         const idx = s.list.findIndex((x) => x._id === a.payload._id);
         if (idx !== -1) s.list[idx] = { ...s.list[idx], ...a.payload };
       })
 
-    // delete my
+      // delete my
       .addCase(deleteMyAppointmentThunk.fulfilled, (s, a) => {
         s.list = s.list.filter((x) => x._id !== a.payload);
       })
 
-    // delete (admin/reception)
+      // delete (admin/reception)
       .addCase(deleteAppointmentThunk.fulfilled, (s, a) => {
         s.list = s.list.filter((x) => x._id !== a.payload);
       });

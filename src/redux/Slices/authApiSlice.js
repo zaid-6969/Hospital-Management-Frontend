@@ -15,11 +15,9 @@ export const logoutUser = createAsyncThunk(
     try {
       await API.post("/auth/logout");
     } catch {
-      // even if request fails, clear local state
     }
     dispatch(logout());
     toast.success("Logged out successfully");
-    // redirect to login
     window.location.href = "/";
   }
 );

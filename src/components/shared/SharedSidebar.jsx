@@ -8,15 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../redux/Slices/themeSlice";
 import { logoutUser } from "../../redux/Slices/authApiSlice";
 
-/**
- * SharedSidebar — used by Admin, Doctor, and Reception.
- *
- * Props:
- *  - logo:        { icon: LucideIcon, label: string, sub: string }
- *  - mainNav:     [{ label, icon, path }]
- *  - systemNav:   [{ label, icon, path }]   (optional)
- *  - onClose:     fn (mobile close)
- */
+
 const SharedSidebar = ({ logo, mainNav = [], systemNav = [], onClose }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
@@ -38,7 +30,7 @@ const SharedSidebar = ({ logo, mainNav = [], systemNav = [], onClose }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Close profile popup on outside click
+  
   useEffect(() => {
     const handler = (e) => {
       if (profileRef.current && !profileRef.current.contains(e.target)) {
