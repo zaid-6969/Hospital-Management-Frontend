@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import DoctorCard from "../components/DoctorCard";
+import { getDoctors } from "../services/api";
 import {
-  getDoctors,
-  getMyAppointments,
-  deleteMyAppointment,
-} from "../services/api";
+  fetchMyAppointments as fetchMyAppointmentsThunk,
+  deleteMyAppointmentThunk,
+} from "../../../redux/Slices/appointmentSlice";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useNavigate } from "react-router-dom";
@@ -17,8 +19,6 @@ import {
   CheckCircle2,
   Loader2,
   CalendarCheck,
-  Bell,
-  CheckCircle,
   XCircle,
   Hourglass,
   RefreshCw,
@@ -72,7 +72,7 @@ const STATUS_CFG = {
     color: "#16a34a",
     bg: "rgba(34,197,94,0.10)",
     border: "rgba(34,197,94,0.25)",
-    icon: CheckCircle,
+    icon: CheckCircle2,
     alert: "✅ Your appointment has been accepted by the doctor!",
   },
   REJECTED: {
@@ -93,72 +93,23 @@ const STATUS_CFG = {
   },
 };
 
-// ── Toast component ───────────────────────────────────────────
-const Toast = ({ msg, type, onClose }) => {
-  useEffect(() => {
-    const t = setTimeout(onClose, 5000);
-    return () => clearTimeout(t);
-  }, [onClose]);
-
-  const isSuccess = type === "ACCEPTED";
-  return (
-    <div
-      className="fixed top-5 right-5 z-50 flex items-start gap-3 px-5 py-4 rounded-2xl shadow-2xl max-w-sm animate-slideIn"
-      style={{
-        background: isSuccess ? "rgba(34,197,94,0.12)" : "rgba(239,68,68,0.12)",
-        border: `1px solid ${isSuccess ? "rgba(34,197,94,0.35)" : "rgba(239,68,68,0.35)"}`,
-        backdropFilter: "blur(12px)",
-      }}
-    >
-      <div className="shrink-0 mt-0.5">
-        {isSuccess ? (
-          <CheckCircle size={18} style={{ color: "#16a34a" }} />
-        ) : (
-          <XCircle size={18} style={{ color: "#dc2626" }} />
-        )}
-      </div>
-      <div className="flex-1">
-        <p
-          className="text-sm font-bold"
-          style={{ color: isSuccess ? "#16a34a" : "#dc2626" }}
-        >
-          {isSuccess ? "Appointment Accepted!" : "Appointment Rejected"}
-        </p>
-        <p
-          className="text-xs mt-0.5"
-          style={{ color: "var(--text)", opacity: 0.7 }}
-        >
-          {isSuccess
-            ? "Your booking has been confirmed by the doctor."
-            : "The doctor has declined your request. Please rebook."}
-        </p>
-      </div>
-      <button
-        onClick={onClose}
-        className="shrink-0 text-lg leading-none opacity-40 hover:opacity-80"
-        style={{ color: "var(--text)" }}
-      >
-        ✕
-      </button>
-    </div>
-  );
-};
-
 const AppointmentPage = () => {
+  const dispatch = useDispatch();
+  const { list: myAppointments, loading: loadingAppts } = useSelector((s) => s.appointments);
+
   const [activeTab, setActiveTab] = useState("book");
   const [doctors, setDoctors] = useState([]);
-  const [myAppointments, setMyAppointments] = useState([]);
   const [loadingDoctors, setLoadingDoctors] = useState(true);
-  const [loadingAppts, setLoadingAppts] = useState(true);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [slots, setSlots] = useState([]);
-  const [toasts, setToasts] = useState([]);
-  const [newCount, setNewCount] = useState(0); // unread status changes
-  const prevStatuses = useRef({}); // track previous statuses
+  const [newCount, setNewCount] = useState(0);
+  const prevStatuses = useRef({});
 
   const navigate = useNavigate();
+
+  const fetchMyAppointments = () => dispatch(fetchMyAppointmentsThunk());
 
   useEffect(() => {
     if (!selectedDoctor || !selectedDate) return;
@@ -177,16 +128,69 @@ const AppointmentPage = () => {
       return;
     }
 
-    const generatedSlots = availability.slots.map(
-      (slot) => `${slot.start} - ${slot.end}`,
-    );
+    const dateISO = selectedDate.toISOString().split("T")[0];
 
-    setSlots(generatedSlots);
+    // Fetch already-booked slots for this doctor + date
+    axios
+      .get(`http://localhost:5000/api/v1/appointments/slots`, {
+        params: { doctorId: selectedDoctor._id, date: dateISO },
+        withCredentials: true,
+      })
+      .then((res) => {
+        const bookedTimes = new Set(
+          (res.data?.bookedSlots ?? []).map((s) => s.time)
+        );
+        const generatedSlots = availability.slots.map((slot) => {
+          const label = `${slot.start} - ${slot.end}`;
+          return { time: label, isBooked: bookedTimes.has(label) };
+        });
+        setSlots(generatedSlots);
+      })
+      .catch(() => {
+        // fallback: show all slots unbooked if endpoint unavailable
+        const generatedSlots = availability.slots.map((slot) => ({
+          time: `${slot.start} - ${slot.end}`,
+          isBooked: false,
+        }));
+        setSlots(generatedSlots);
+      });
   }, [selectedDoctor, selectedDate]);
 
   useEffect(() => {
     fetchDoctors();
     fetchMyAppointments();
+
+    // Poll every 30s to detect status changes (accept/reject by doctor)
+    const interval = setInterval(async () => {
+      const result = await dispatch(fetchMyAppointmentsThunk());
+      if (fetchMyAppointmentsThunk.fulfilled.match(result)) {
+        const fresh = result.payload;
+        fresh.forEach((appt) => {
+          const prev = prevStatuses.current[appt._id];
+          const current = appt.status;
+          if (prev && prev !== current) {
+            if (current === "ACCEPTED") {
+              toast.success(`✅ Dr. ${appt.doctorId?.name} accepted your appointment!`, {
+                style: { background: "var(--card)", color: "#16a34a", border: "1px solid rgba(34,197,94,0.3)" },
+                duration: 6000,
+              });
+              setNewCount((n) => n + 1);
+            }
+            if (current === "REJECTED") {
+              toast.error(`❌ Dr. ${appt.doctorId?.name} rejected your appointment.`, {
+                style: { background: "var(--card)", color: "#dc2626", border: "1px solid rgba(239,68,68,0.3)" },
+                duration: 6000,
+              });
+              setNewCount((n) => n + 1);
+            }
+          }
+          prevStatuses.current[appt._id] = current;
+        });
+      }
+    }, 30000);
+
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchDoctors = async () => {
@@ -198,65 +202,19 @@ const AppointmentPage = () => {
         : (res.data?.doctors ?? res.data?.data ?? []);
       setDoctors(list);
     } catch (err) {
+      toast.error("Failed to load doctors.");
       console.error(err);
     } finally {
       setLoadingDoctors(false);
     }
   };
 
-  const fetchMyAppointments = async () => {
-    setLoadingAppts(true);
-    try {
-      const res = await getMyAppointments();
-      const list = Array.isArray(res.data)
-        ? res.data
-        : (res.data?.appointments ?? res.data?.data ?? []);
-      list.forEach((appt) => {
-        const prev = prevStatuses.current[appt._id];
-        const current = appt.status;
-
-        if (prev && prev !== current) {
-          if (current === "ACCEPTED") {
-            toast.success(
-              `Dr. ${appt.doctorId?.name} accepted your appointment`,
-              {
-                icon: "✅",
-                style: {
-                  background: "var(--card)",
-                  color: "#16a34a",
-                  border: "1px solid rgba(34,197,94,0.3)",
-                },
-              },
-            );
-          }
-
-          if (current === "REJECTED") {
-            toast.error(
-              `Dr. ${appt.doctorId?.name} rejected your appointment`,
-              {
-                icon: "❌",
-                style: {
-                  background: "var(--card)",
-                  color: "#dc2626",
-                  border: "1px solid rgba(239,68,68,0.3)",
-                },
-              },
-            );
-          }
-        }
-
-        prevStatuses.current[appt._id] = current;
-      });
-
-      setMyAppointments(list);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoadingAppts(false);
+  // Initialize prevStatuses once appointments load
+  useEffect(() => {
+    if (myAppointments.length && Object.keys(prevStatuses.current).length === 0) {
+      myAppointments.forEach((a) => { prevStatuses.current[a._id] = a.status; });
     }
-  };
-
-  const dismissToast = (id) => setToasts((t) => t.filter((x) => x.id !== id));
+  }, [myAppointments]);
 
   const formattedDate = selectedDate
     ? selectedDate.toISOString().split("T")[0]
@@ -265,7 +223,7 @@ const AppointmentPage = () => {
 
   const handleNext = () => {
     if (!selectedDoctor || !selectedDate || !selectedSlot) {
-      alert("Please select a doctor, date and time slot.");
+      toast.error("Please select a doctor, date and time slot.");
       return;
     }
     navigate("/user/patient-details", {
@@ -293,14 +251,6 @@ const AppointmentPage = () => {
   return (
     <div className="min-h-screen" style={{ background: "var(--bg)" }}>
       <style>{calStyle}</style>
-      <style>{`@keyframes slideIn{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}.animate-slideIn{animation:slideIn .3s ease}`}</style>
-
-      {/* ── TOASTS ─────────────────────────────────────────── */}
-      <div className="fixed top-5 right-5 z-50 flex flex-col gap-3">
-        {toasts.map((t) => (
-          <Toast key={t.id} type={t.type} onClose={() => dismissToast(t.id)} />
-        ))}
-      </div>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-8 py-10 space-y-8">
         {/* ── HEADER ─────────────────────────────────────────── */}
@@ -924,15 +874,8 @@ const AppointmentPage = () => {
                           </div>
                           <button
                             onClick={async () => {
-                              if (!window.confirm("Delete this appointment?"))
-                                return;
-
-                              try {
-                                await deleteMyAppointment(appt._id);
-                                fetchMyAppointments(); // refresh list
-                              } catch (err) {
-                                alert("Failed to delete");
-                              }
+                              if (!window.confirm("Cancel this appointment?")) return;
+                              dispatch(deleteMyAppointmentThunk(appt._id));
                             }}
                             className="ml-3 px-3 py-1 text-xs rounded-lg font-semibold"
                             style={{

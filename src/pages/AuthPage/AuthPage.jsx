@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/Slices/authSlice";
 import { Eye, EyeOff } from "lucide-react";
+import toast from "react-hot-toast";
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -71,12 +72,12 @@ const AuthPage = () => {
           role: "PATIENT",
         });
 
-        alert("Registered Successfully");
+        toast.success("Registered successfully! Please login.");
         setIsLogin(true);
         setFormData({ username: "", email: "", password: "" });
       }
     } catch (err) {
-      alert(err.response?.data?.message || "Error");
+      toast.error(err.response?.data?.message || "Something went wrong. Please try again.");
     }
   };
 

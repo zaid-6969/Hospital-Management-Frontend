@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import {
   X, ChevronRight, ChevronLeft, Calendar, Clock,
   User, Phone, Activity, CheckCircle, ChevronDown, Stethoscope,
@@ -299,8 +300,9 @@ const Step3 = ({ data, onBack, onClose, onSuccess }) => {
         age: data.patient.age, gender: data.patient.gender, symptoms: data.patient.symptoms,
       });
       setDone(true);
+      toast.success("Appointment booked successfully!");
       setTimeout(() => { onSuccess?.(); onClose(); }, 1800);
-    } catch (err) { alert(err.response?.data?.message || "Booking failed. Please try again."); }
+    } catch (err) { toast.error(err.response?.data?.message || "Booking failed. Please try again."); }
     finally { setBooking(false); }
   };
 

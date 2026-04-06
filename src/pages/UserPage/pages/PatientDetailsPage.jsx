@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { createAppointment, savePatientDetails } from "../services/api";
+import { useDispatch } from "react-redux";
+import { savePatientDetails } from "../services/api";
+import { createAppointmentThunk } from "../../../redux/Slices/appointmentSlice";
+import toast from "react-hot-toast";
 
 const FIELDS = [
   {
@@ -9,10 +12,7 @@ const FIELDS = [
     fields: [
       { key: "patientName", label: "Full Name", type: "text", required: true, placeholder: "Enter patient's full name" },
       { key: "age", label: "Age", type: "number", required: true, placeholder: "e.g. 28", unit: "years" },
-      {
-        key: "gender", label: "Gender", type: "select", required: true,
-        options: ["Male", "Female", "Other"],
-      },
+      { key: "gender", label: "Gender", type: "select", required: true, options: ["Male", "Female", "Other"] },
       { key: "phone", label: "Phone Number", type: "tel", placeholder: "e.g. +91 98765 43210" },
       { key: "address", label: "Address", type: "textarea", placeholder: "Enter full address" },
     ],
@@ -44,6 +44,7 @@ const FIELDS = [
 const PatientDetailsPage = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { doctor, date, time } = state || {};
 
@@ -63,7 +64,7 @@ const PatientDetailsPage = () => {
         <p className="text-text/60">No appointment info found.</p>
         <button
           onClick={() => navigate("/user/appointment")}
-          className="bg-indigo-600 bg-card border-r border border-border border border-border px-6 py-2 rounded-lg"
+          className="bg-indigo-600 bg-card border-r border border-border px-6 py-2 rounded-lg"
         >
           Go back to Appointments
         </button>
@@ -86,21 +87,28 @@ const PatientDetailsPage = () => {
   };
 
   const handleSubmit = async () => {
-    if (!validate()) return;
+    if (!validate()) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
 
     try {
       setLoading(true);
 
-      // Step 1: Create the appointment
-      const apptRes = await createAppointment({
-        doctorId: doctor._id,
-        date,
-        time,
-      });
+      // Step 1: Create appointment via Redux thunk (includes slot conflict check)
+      const result = await dispatch(
+        createAppointmentThunk({ doctorId: doctor._id, date, time })
+      );
 
-      const appointmentId = apptRes.data._id;
+      if (createAppointmentThunk.rejected.match(result)) {
+        // Error toasts are shown inside the thunk
+        setLoading(false);
+        return;
+      }
 
-      // Step 2: Save patient details linked to this appointment
+      const appointmentId = result.payload._id;
+
+      // Step 2: Save patient details
       await savePatientDetails(appointmentId, {
         ...form,
         age: Number(form.age),
@@ -111,11 +119,13 @@ const PatientDetailsPage = () => {
         oxygenSaturation: form.oxygenSaturation ? Number(form.oxygenSaturation) : undefined,
       });
 
+      toast.success(`Appointment request sent to Dr. ${doctor.name}!`);
+
       navigate("/user/booking-success", {
         state: { doctor, date, time, patientName: form.patientName },
       });
     } catch (err) {
-      alert(err.response?.data?.message || "Something went wrong. Please try again.");
+      toast.error(err.response?.data?.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -128,19 +138,13 @@ const PatientDetailsPage = () => {
     const baseInputClass = `w-full px-4 py-2.5 rounded-xl border text-sm transition focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
       err
         ? "border-red-400 bg-red-50 dark:bg-red-900/10"
-        : "bg-card border border-border border border-border dark:border-gray-600 bg-card border border-border border border-border dark:bg-gray-700 text-gray-800 dark:text-gray-100"
+        : "bg-card border-border dark:border-gray-600 dark:bg-gray-700 text-gray-800 dark:text-gray-100"
     }`;
 
     if (field.type === "select") {
       return (
-        <select
-          value={val}
-          onChange={(e) => handleChange(field.key, e.target.value)}
-          className={baseInputClass}
-        >
-          {field.options.map((o) => (
-            <option key={o} value={o}>{o}</option>
-          ))}
+        <select value={val} onChange={(e) => handleChange(field.key, e.target.value)} className={baseInputClass}>
+          {field.options.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
       );
     }
@@ -177,34 +181,30 @@ const PatientDetailsPage = () => {
   };
 
   return (
-    <div className="bg-bg dark:bg-bg-bg min-h-screen">
+    <div className="bg-bg min-h-screen">
       <main className="max-w-3xl mx-auto px-6 py-10">
 
         {/* Header */}
         <div className="mb-6">
-          <button
-            onClick={() => navigate(-1)}
-            className="text-sm text-indigo-600 hover:underline mb-4 flex items-center gap-1"
-          >
+          <button onClick={() => navigate(-1)} className="text-sm text-indigo-600 hover:underline mb-4 flex items-center gap-1">
             ← Back
           </button>
-          <h1 className="text-2xl font-bold text-gray-800 dark:bg-card border-r border border-border border border-border">
-            Patient Details
-          </h1>
-          <p className="text-sm text-text/60 mt-1">
-            Please fill in the details before confirming your appointment
-          </p>
+          <h1 className="text-2xl font-bold" style={{ color: "var(--text)" }}>Patient Details</h1>
+          <p className="text-sm text-text/60 mt-1">Please fill in the details before confirming your appointment</p>
         </div>
 
         {/* Appointment Summary Card */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-500 bg-card border-r border border-border border border-border rounded-2xl p-5 mb-6 shadow-lg">
-          <p className="text-xs uppercase tracking-wider opacity-80 mb-2">Appointment Summary</p>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-            <img
-              src={doctor.image?.url}
-              alt={doctor.name}
-              className="w-12 h-12 rounded-full object-cover border-2 border-white/40"
-            />
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-500 rounded-2xl p-5 mb-6 shadow-lg">
+          <p className="text-xs uppercase tracking-wider text-white opacity-80 mb-2">Appointment Summary</p>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-white">
+            {doctor.image?.url ? (
+              <img src={doctor.image.url} alt={doctor.name} className="w-12 h-12 rounded-full object-cover border-2 border-white/40" />
+            ) : (
+              <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-extrabold text-lg border-2 border-white/40"
+                style={{ background: "rgba(255,255,255,0.2)" }}>
+                {doctor.name?.[0]}
+              </div>
+            )}
             <div>
               <p className="font-bold text-lg">{doctor.name}</p>
               <p className="text-sm opacity-80">{doctor.specialization}</p>
@@ -219,36 +219,24 @@ const PatientDetailsPage = () => {
         {/* Form Sections */}
         <div className="space-y-6">
           {FIELDS.map((section) => (
-            <div
-              key={section.section}
-              className="bg-card border border-border border border-border dark:bg-gray-800 rounded-2xl shadow p-6"
+            <div key={section.section}
+              className="rounded-2xl shadow p-6"
+              style={{ background: "var(--card)", border: "1px solid var(--border)" }}
             >
-              <h2 className="text-base font-semibold text-gray-700 dark:text-gray-200 mb-4 flex items-center gap-2">
+              <h2 className="text-base font-semibold mb-4 flex items-center gap-2" style={{ color: "var(--text)" }}>
                 <span>{section.icon}</span>
                 {section.section}
               </h2>
-
               <div className="grid sm:grid-cols-2 gap-4">
                 {section.fields.map((field) => (
-                  <div
-                    key={field.key}
-                    className={
-                      field.type === "textarea" || field.key === "address"
-                        ? "sm:col-span-2"
-                        : ""
-                    }
-                  >
-                    <label className="block text-xs font-medium text-text/60 dark:text-gray-400 mb-1">
+                  <div key={field.key} className={field.type === "textarea" || field.key === "address" ? "sm:col-span-2" : ""}>
+                    <label className="block text-xs font-medium text-text/60 mb-1">
                       {field.label}
-                      {field.required && (
-                        <span className="text-red-500 ml-0.5">*</span>
-                      )}
+                      {field.required && <span className="text-red-500 ml-0.5">*</span>}
                     </label>
                     {renderField(field)}
                     {errors[field.key] && (
-                      <p className="text-xs text-red-500 mt-1">
-                        {errors[field.key]}
-                      </p>
+                      <p className="text-xs text-red-500 mt-1">{errors[field.key]}</p>
                     )}
                   </div>
                 ))}
@@ -262,7 +250,7 @@ const PatientDetailsPage = () => {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="w-full bg-gradient-to-r from-indigo-600 to-purple-500 bg-card border-r border border-border border border-border py-4 rounded-2xl font-semibold text-base hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+            className="w-full bg-gradient-to-r from-indigo-600 to-purple-500 py-4 rounded-2xl font-semibold text-base text-white hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">

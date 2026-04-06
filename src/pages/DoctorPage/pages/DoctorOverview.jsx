@@ -1,29 +1,28 @@
 import { useEffect, useState } from "react";
-import { getMyDoctor, getMyDoctorStats } from "../utils/api";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMyDoctorProfile, toggleDoctorAvailability } from "../../../redux/Slices/doctorSlice";
+import { getMyDoctorStats } from "../utils/api";
 import {
-  Activity, Calendar, Users, Clock, Award, Star, Loader2,
+  Activity, Calendar, Users, Clock, Award, Star, Loader2, CheckCircle2, XCircle,
 } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
 const DoctorOverview = () => {
-  const [doctor,  setDoctor]  = useState(null);
+  const dispatch = useDispatch();
+  const { myProfile: doctor, loading: profileLoading } = useSelector((s) => s.doctors);
   const [stats,   setStats]   = useState({});
   const [loading, setLoading] = useState(true);
+  const [toggling, setToggling] = useState(false);
 
   useEffect(() => { fetchData(); }, []);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [docRes, statsRes] = await Promise.all([
-        getMyDoctor(),
+      const [, statsRes] = await Promise.all([
+        dispatch(fetchMyDoctorProfile()),
         getMyDoctorStats(),
       ]);
-
-      // unwrap common shapes: res.data / res.data.doctor / res.data.data
-      const raw = docRes?.data;
-      const doc = raw?.name ? raw : raw?.doctor ?? raw?.data ?? raw;
-      setDoctor(doc);
 
       const sRaw = statsRes?.data;
       const s    = (sRaw && ("accepted" in sRaw || "total" in sRaw))
@@ -35,6 +34,16 @@ const DoctorOverview = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleToggleAvailability = async () => {
+    if (!doctor?._id) return;
+    setToggling(true);
+    await dispatch(toggleDoctorAvailability({
+      doctorId: doctor._id,
+      isAvailable: !(doctor.isAvailable ?? true),
+    }));
+    setToggling(false);
   };
 
   const accepted = stats?.accepted ?? stats?.acceptedAppointments ?? 0;
@@ -56,7 +65,7 @@ const DoctorOverview = () => {
   ];
 
   // ── Loading ─────────────────────────────────────────────────
-  if (loading) return (
+  if (loading || profileLoading) return (
     <div className="flex items-center justify-center min-h-[60vh]">
       <div className="flex flex-col items-center gap-3" style={{ color: "var(--text)", opacity: 0.4 }}>
         <Loader2 size={30} className="animate-spin" style={{ color: "#6a5acd", opacity: 1 }} />
@@ -121,6 +130,28 @@ const DoctorOverview = () => {
                 stroke={i <= 4 ? "#f59e0b" : "#d1d5db"} />
             ))}
             <span className="text-xs ml-1 font-medium" style={{ color: "var(--text)", opacity: 0.4 }}>4.8</span>
+          </div>
+
+          {/* ── Availability Toggle ── */}
+          <div className="w-full mt-4">
+            <button
+              onClick={handleToggleAvailability}
+              disabled={toggling}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all disabled:opacity-60"
+              style={
+                (doctor?.isAvailable ?? true)
+                  ? { background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)", color: "#16a34a" }
+                  : { background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.3)", color: "#dc2626" }
+              }
+            >
+              {toggling ? (
+                <Loader2 size={14} className="animate-spin" />
+              ) : (doctor?.isAvailable ?? true) ? (
+                <><CheckCircle2 size={14} /> Available — Click to go Unavailable</>
+              ) : (
+                <><XCircle size={14} /> Unavailable — Click to go Available</>
+              )}
+            </button>
           </div>
 
           <div className="w-full my-4" style={{ borderTop: "1px solid var(--border)" }} />

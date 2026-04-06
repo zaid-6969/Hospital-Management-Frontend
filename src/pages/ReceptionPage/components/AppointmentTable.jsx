@@ -3,6 +3,7 @@ import {
   getAllAppointments, getDoctors, assignDoctor,
   updateAppointmentStatus, deleteAppointment,
 } from "../services/api";
+import toast from "react-hot-toast";
 import { Eye, Pencil, Trash2, ChevronsUpDown, Search, SlidersHorizontal, X, AlertTriangle } from "lucide-react";
 
 const STATUS_CFG = {
@@ -94,8 +95,11 @@ const EditModal = ({ data, doctors, onClose, onSave }) => {
         status: editData.status,
         rejectionReason: editData.status === "REJECTED" ? editData.rejectionReason : "",
       });
+      toast.success("Appointment updated!");
       onSave(); onClose();
-    } catch (err) { console.error(err); }
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to update appointment.");
+    }
     finally { setSaving(false); }
   };
 
@@ -156,8 +160,8 @@ const DeleteModal = ({ data, onClose, onConfirm }) => {
 
   const handleDelete = async () => {
     setDeleting(true);
-    try { await deleteAppointment(data._id); onConfirm(); onClose(); }
-    catch (err) { console.error(err); }
+    try { await deleteAppointment(data._id); toast.success("Appointment deleted."); onConfirm(); onClose(); }
+    catch (err) { toast.error(err.response?.data?.message || "Failed to delete appointment."); }
     finally { setDeleting(false); }
   };
 
@@ -217,29 +221,42 @@ const AppointmentTable = () => {
       setAppointments(res.data.data);
       setTotalPages(res.data.totalPages);
       setTotal(res.data.total);
-    } catch (err) { console.log(err); }
+    } catch (err) {
+      toast.error("Failed to load appointments.");
+      console.error(err);
+    }
   };
 
   const fetchDoctors = async () => {
-    try { const res = await getDoctors(); setDoctors(res.data); }
-    catch (err) { console.log(err); }
+    try {
+      const res = await getDoctors();
+      setDoctors(Array.isArray(res.data) ? res.data : res.data?.doctors ?? []);
+    } catch (err) { console.error(err); }
   };
 
   const handleStatusChange = async (id, status) => {
     try {
-      let rejectionReason = "";
       if (status === "REJECTED") {
-        rejectionReason = prompt("Enter rejection reason:");
-        if (!rejectionReason) return;
+        // Open edit modal for rejection reason instead of using prompt
+        const appt = appointments.find((a) => a._id === id);
+        if (appt) { setEditData(appt); return; }
       }
-      await updateAppointmentStatus(id, { status, rejectionReason });
+      await updateAppointmentStatus(id, { status, rejectionReason: "" });
+      toast.success(`Status updated to ${status}`);
       fetchAppointments();
-    } catch (err) { console.log(err); }
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to update status.");
+    }
   };
 
   const handleAssign = async (appointmentId, doctorId) => {
-    try { await assignDoctor(appointmentId, doctorId); fetchAppointments(); }
-    catch (err) { console.log(err); }
+    try {
+      await assignDoctor(appointmentId, doctorId);
+      toast.success("Doctor assigned!");
+      fetchAppointments();
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to assign doctor.");
+    }
   };
 
   const filtered = appointments.filter((a) => {

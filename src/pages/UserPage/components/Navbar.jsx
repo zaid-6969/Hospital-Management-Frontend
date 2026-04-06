@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import ThemeToggle from "../../../components/ThemeToggle";
 import { useState, useRef, useEffect } from "react";
-import { logout } from "../services/api";
+import { logoutUser } from "../../../redux/Slices/authApiSlice";
 import { useDispatch } from "react-redux";
 
 const NAV_LINKS = [
@@ -12,7 +12,7 @@ const NAV_LINKS = [
   { name: "Appointment", path: "/user/appointment" },
 ];
 
-const Navbar = ({ menuOpen, setMenuOpen, user = "Mohammed", onLogout }) => {
+const Navbar = ({ menuOpen, setMenuOpen, user = "Mohammed"}) => {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -49,14 +49,8 @@ const Navbar = ({ menuOpen, setMenuOpen, user = "Mohammed", onLogout }) => {
         : "text-text/70 hover:text-violet-600 hover:bg-violet-50"
     }`;
 
-  const logoutUser = async () => {
-    try {
-      await logout();
-      // dispatch(logout());
-      navigate("/");
-    } catch (err) {
-      console.error("Logout failed:", err);
-    }
+  const handleLogout = () => {
+    dispatch(logoutUser());
   };
 
   return (
@@ -117,8 +111,11 @@ const Navbar = ({ menuOpen, setMenuOpen, user = "Mohammed", onLogout }) => {
                 </span>
 
                 <button
-                  onClick={logoutUser}
-                  className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 text-red-500 transition text-sm mt-1"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLogout();
+                  }}
+                  className="py-2 rounded-lg bg-red-50 text-red-500 font-semibold"
                 >
                   🚪 Logout
                 </button>
@@ -174,7 +171,10 @@ const Navbar = ({ menuOpen, setMenuOpen, user = "Mohammed", onLogout }) => {
             </button>
 
             <button
-              onClick={logoutUser}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleLogout();
+              }}
               className="py-2 rounded-lg bg-red-50 text-red-500 font-semibold"
             >
               🚪 Logout
