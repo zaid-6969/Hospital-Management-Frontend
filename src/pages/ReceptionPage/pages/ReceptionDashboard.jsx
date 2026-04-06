@@ -3,12 +3,10 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import AppointmentTable from "../components/AppointmentTable";
-// import PatientModal from "../components/PatientModal";
 import RightPanel from "../components/RightPanel";
-import BookingModal from "../components/BookingModal";
+import BookingModal from "../components/Bookingmodal";
 
 const ReceptionDashboard = () => {
-  const [open, setOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -44,7 +42,6 @@ const ReceptionDashboard = () => {
       <div className="flex-1 flex flex-col min-w-0 w-full">
         <Navbar
           onMenuClick={() => setSidebarOpen(true)}
-          onOpen={() => setOpen(true)}
           onBookAppointment={() => setBookingOpen(true)}
         />
 
@@ -59,8 +56,6 @@ const ReceptionDashboard = () => {
           </div>
         </main>
       </div>
-
-      {open && <PatientModal onClose={() => setOpen(false)} />}
 
       {bookingOpen && (
         <BookingModal
