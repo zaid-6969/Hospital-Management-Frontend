@@ -26,6 +26,7 @@ import Doctors from "./pages/AdminPage/page/Doctors";
 import AdminDoctorDetails from "./pages/AdminPage/page/AdminDoctorDetails";
 
 // RECEPTION PAGE
+
 import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
 
 // DOCTOR PAGE
