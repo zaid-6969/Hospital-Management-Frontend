@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/Slices/authSlice";
 import { Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
-
+import { GoogleLogin } from "@react-oauth/google";
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 1024);
@@ -34,8 +34,8 @@ const AuthPage = () => {
       [e.target.placeholder.toLowerCase().includes("email")
         ? "email"
         : e.target.placeholder.toLowerCase().includes("user")
-        ? "username"
-        : "password"]: e.target.value,
+          ? "username"
+          : "password"]: e.target.value,
     });
   };
 
@@ -53,7 +53,7 @@ const AuthPage = () => {
             email: formData.email || formData.username,
             password: formData.password,
           },
-          { withCredentials: true }
+          { withCredentials: true },
         );
 
         const user = res.data.user;
@@ -77,13 +77,15 @@ const AuthPage = () => {
         setFormData({ username: "", email: "", password: "" });
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Something went wrong. Please try again.");
+      toast.error(
+        err.response?.data?.message ||
+          "Something went wrong. Please try again.",
+      );
     }
   };
 
   return (
     <div className="flex min-h-screen w-full bg-bg flex-col lg:flex-row">
-      
       {/* LEFT IMAGE */}
       <div className="hidden sm:flex lg:flex flex-col items-center justify-center p-6 flex-1">
         <div className="w-full max-w-[500px] text-center">
@@ -98,7 +100,6 @@ const AuthPage = () => {
       {/* RIGHT PANEL */}
       <div className="flex flex-1 items-center justify-center bg-card px-6 py-8">
         <div className="w-full max-w-[420px] flex flex-col">
-
           {/* LOGO */}
           <div className="flex justify-end mb-6">
             <img src={Logo} alt="Logo" className="h-20 object-contain" />
@@ -116,8 +117,7 @@ const AuthPage = () => {
                 !isLogin ? "translate-x-full" : ""
               }`}
               style={{
-                background:
-                  "linear-gradient(135deg,var(--primary),#8b5cf6)",
+                background: "linear-gradient(135deg,var(--primary),#8b5cf6)",
               }}
             />
 
@@ -147,13 +147,10 @@ const AuthPage = () => {
 
           {/* FORM */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
             {/* EMAIL */}
             {!isLogin && (
               <div>
-                <label className="text-sm text-text/60">
-                  Email Address
-                </label>
+                <label className="text-sm text-text/60">Email Address</label>
                 <input
                   type="email"
                   placeholder="Enter your Email Address"
@@ -166,9 +163,7 @@ const AuthPage = () => {
 
             {/* USERNAME */}
             <div>
-              <label className="text-sm text-text/60">
-                Username
-              </label>
+              <label className="text-sm text-text/60">Username</label>
               <input
                 type="text"
                 placeholder="Enter your Username"
@@ -180,9 +175,7 @@ const AuthPage = () => {
 
             {/* PASSWORD */}
             <div>
-              <label className="text-sm text-text/60">
-                Password
-              </label>
+              <label className="text-sm text-text/60">Password</label>
               <div className="relative mt-1">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -206,12 +199,44 @@ const AuthPage = () => {
               type="submit"
               className="mt-4 py-2 rounded-full text-white font-medium hover:opacity-90 transition"
               style={{
-                background:
-                  "linear-gradient(135deg,var(--primary),#8b5cf6)",
+                background: "linear-gradient(135deg,var(--primary),#8b5cf6)",
               }}
             >
               {isLogin ? "Login" : "Register"}
             </button>
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                try {
+                  const token = credentialResponse.credential;
+
+                  // 🔥 CALL BACKEND DIRECTLY
+                  const res = await axios.post(
+                    "http://localhost:5000/api/v1/auth/google",
+                    { token },
+                    { withCredentials: true },
+                  );
+
+                  const user = res.data.user;
+
+                  // SAVE USER IN REDUX
+                  
+                  dispatch(loginSuccess(user));
+
+                  toast.success("Google login successful");
+
+                  // ROLE BASED NAVIGATION
+                  if (user.role === "ADMIN") navigate("/admin");
+                  else if (user.role === "DOCTOR") navigate("/doctor");
+                  else if (user.role === "RECEPTIONIST") navigate("/reception");
+                  else navigate("/user");
+                } catch (error) {
+                  toast.error(
+                    error.response?.data?.message || "Google login failed",
+                  );
+                }
+              }}
+              onError={() => toast.error("Google login failed")}
+            />
           </form>
         </div>
       </div>

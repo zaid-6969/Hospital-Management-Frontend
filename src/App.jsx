@@ -26,7 +26,6 @@ import Doctors from "./pages/AdminPage/page/Doctors";
 import AdminDoctorDetails from "./pages/AdminPage/page/AdminDoctorDetails";
 
 // RECEPTION PAGE
-
 import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
 
 // DOCTOR PAGE
@@ -51,7 +50,7 @@ function App() {
   return (
     <div className="bg-bg text-text min-h-screen">
       <Toaster
-        position="top-right"
+        position="top-center"
         toastOptions={{
           style: {
             background: "var(--card)",

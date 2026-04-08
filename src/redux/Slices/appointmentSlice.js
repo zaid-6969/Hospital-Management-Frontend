@@ -7,8 +7,6 @@ const API = axios.create({
   withCredentials: true,
 });
 
-// ── Thunks ────────────────────────────────────────────────────
-
 export const fetchMyAppointments = createAsyncThunk(
   "appointments/fetchMy",
   async (_, { rejectWithValue }) => {
@@ -137,7 +135,6 @@ export const deleteAppointmentThunk = createAsyncThunk(
   },
 );
 
-// ── Slice ──────────────────────────────────────────────────────
 const appointmentSlice = createSlice({
   name: "appointments",
   initialState: {
@@ -154,7 +151,9 @@ const appointmentSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // fetch my (patient)
+   
+  //  patient data fetching
+
     builder
       .addCase(fetchMyAppointments.pending, (s) => {
         s.loading = true;
@@ -170,6 +169,7 @@ const appointmentSlice = createSlice({
       })
 
       // fetch doctor appointments
+
       .addCase(fetchDoctorAppointments.pending, (s) => {
         s.loading = true;
         s.error = null;
@@ -183,7 +183,8 @@ const appointmentSlice = createSlice({
         s.error = a.payload;
       })
 
-      // fetch all (reception/admin)
+      // fetch all reception and admin
+
       .addCase(fetchAllAppointments.pending, (s) => {
         s.loading = true;
         s.error = null;
