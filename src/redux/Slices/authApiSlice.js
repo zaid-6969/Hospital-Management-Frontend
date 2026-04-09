@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { GoogleLogin } from "@react-oauth/google";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api/v1",
+  baseURL: "https://hospital-management-backend-kohl.vercel.app/api/v1",
   withCredentials: true,
 });
 

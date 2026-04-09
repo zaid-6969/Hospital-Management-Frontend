@@ -48,7 +48,7 @@ const AuthPage = () => {
     try {
       if (isLogin) {
         const res = await axios.post(
-          "http://localhost:5000/api/v1/auth/login",
+          "https://hospital-management-backend-kohl.vercel.app/api/v1/auth/login",
           {
             email: formData.email || formData.username,
             password: formData.password,
@@ -65,7 +65,7 @@ const AuthPage = () => {
         else if (user.role === "RECEPTIONIST") navigate("/reception");
         else navigate("/user");
       } else {
-        await axios.post("http://localhost:5000/api/v1/auth/register", {
+        await axios.post("https://hospital-management-backend-kohl.vercel.app/api/v1/auth/register", {
           name: formData.username,
           email: formData.email,
           password: formData.password,
@@ -211,7 +211,7 @@ const AuthPage = () => {
 
                   // 🔥 CALL BACKEND DIRECTLY
                   const res = await axios.post(
-                    "http://localhost:5000/api/v1/auth/google",
+                    "https://hospital-management-backend-kohl.vercel.app/api/v1/auth/google",
                     { token },
                     { withCredentials: true },
                   );
@@ -219,7 +219,7 @@ const AuthPage = () => {
                   const user = res.data.user;
 
                   // SAVE USER IN REDUX
-                  
+
                   dispatch(loginSuccess(user));
 
                   toast.success("Google login successful");
