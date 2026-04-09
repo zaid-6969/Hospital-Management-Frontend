@@ -17,6 +17,8 @@ import AppointmentPage from "./pages/UserPage/pages/AppointmentPage";
 import DoctorDetails from "./pages/UserPage/components/DoctorDetails";
 import PatientDetailsPage from "./pages/UserPage/pages/PatientDetailsPage";
 import BookingSuccessPage from "./pages/UserPage/pages/BookingSuccessPage";
+import NotFoundPage from "./pages/NotfounPage/Notfoundpage";
+
 
 // ADMIN PAGE
 import AdminMainLayout from "./pages/AdminPage/Layout/AdminMainLayout";
@@ -33,8 +35,7 @@ import DoctorOverview from "./pages/DoctorPage/pages/DoctorOverview";
 import DoctorMainLayout from "./pages/DoctorPage/Layout/DoctorMainLayout";
 import DoctorCalendar from "./pages/DoctorPage/pages/DoctorCalendar";
 
-// NOT FOUND
-import NotFoundPage from "./pages/Notfoundpage";
+
 
 function App() {
   const mode = useSelector((state) => state.theme.mode);
