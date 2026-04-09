@@ -129,9 +129,6 @@ function App() {
           <Route path="patient-details" element={<PatientDetailsPage />} />
           <Route path="booking-success" element={<BookingSuccessPage />} />
         </Route>
-
-        {/* 🔒 NOT FOUND */}
-
       </Routes>
     </div>
   );
