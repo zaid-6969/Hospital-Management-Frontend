@@ -17,7 +17,7 @@ import AppointmentPage from "./pages/UserPage/pages/AppointmentPage";
 import DoctorDetails from "./pages/UserPage/components/DoctorDetails";
 import PatientDetailsPage from "./pages/UserPage/pages/PatientDetailsPage";
 import BookingSuccessPage from "./pages/UserPage/pages/BookingSuccessPage";
-import NotFoundPage from "./pages/NotfounPage/Notfoundpage";
+import NotFoundPage from "./pages/NotfounPage/NotFoundPage.jsx";
 
 
 // ADMIN PAGE
