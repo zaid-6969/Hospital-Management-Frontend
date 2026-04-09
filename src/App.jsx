@@ -34,6 +34,9 @@ import DoctorOverview from "./pages/DoctorPage/pages/DoctorOverview";
 import DoctorMainLayout from "./pages/DoctorPage/Layout/DoctorMainLayout";
 import DoctorCalendar from "./pages/DoctorPage/pages/DoctorCalendar";
 
+// NOT FOUND
+import NotFoundPage from "./pages/NotFoundPage";
+
 function App() {
   const mode = useSelector((state) => state.theme.mode);
 
@@ -129,6 +132,18 @@ function App() {
           <Route path="patient-details" element={<PatientDetailsPage />} />
           <Route path="booking-success" element={<BookingSuccessPage />} />
         </Route>
+
+        {/* 🔒 NOT FOUND */}
+        
+        <Route
+          path="/*"
+          element={
+            <ProtectedRoute>
+              <NotFoundPage />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
     </div>
   );
