@@ -19,7 +19,7 @@ import PatientDetailsPage from "./pages/UserPage/pages/PatientDetailsPage";
 import BookingSuccessPage from "./pages/UserPage/pages/BookingSuccessPage";
 
 // ADMIN PAGE
-import AdminMainLayout from "./pages/AdminPage/Layout/AdminMainLayout";
+import AdminMainLayout from "./pages/AdminPage/layout/AdminMainLayout";
 import Dashboard from "./pages/AdminPage/page/Dashboard";
 import Doctors from "./pages/AdminPage/page/Doctors";
 import AdminDoctorDetails from "./pages/AdminPage/page/AdminDoctorDetails";
@@ -30,7 +30,7 @@ import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
 // DOCTOR PAGE
 import DoctorSchedule from "./pages/DoctorPage/pages/DoctorSchedule";
 import DoctorOverview from "./pages/DoctorPage/pages/DoctorOverview";
-import DoctorMainLayout from "./pages/DoctorPage/Layout/DoctorMainLayout";
+import DoctorMainLayout from "./pages/DoctorPage/layout/DoctorMainLayout";
 import DoctorCalendar from "./pages/DoctorPage/pages/DoctorCalendar";
 
 
