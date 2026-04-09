@@ -35,7 +35,7 @@ import DoctorMainLayout from "./pages/DoctorPage/Layout/DoctorMainLayout";
 import DoctorCalendar from "./pages/DoctorPage/pages/DoctorCalendar";
 
 // NOT FOUND
-import NotFoundPage from "./pages/NotFoundPage";
+import NotFoundPage from "./pages/Notfoundpage";
 
 function App() {
   const mode = useSelector((state) => state.theme.mode);
