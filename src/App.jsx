@@ -21,7 +21,6 @@ import BookingSuccessPage from "./pages/UserPage/pages/BookingSuccessPage";
 // ADMIN PAGE
 import AdminMainLayout from "./pages/AdminPage/Layout/AdminMainLayout";
 import Dashboard from "./pages/AdminPage/page/Dashboard";
-import ToolsView from "./pages/AdminPage/page/Tools";
 import Doctors from "./pages/AdminPage/page/Doctors";
 import AdminDoctorDetails from "./pages/AdminPage/page/AdminDoctorDetails";
 
@@ -86,7 +85,6 @@ function App() {
         >
           <Route index element={<Dashboard />} />
           <Route path="list" element={<Doctors />} />
-          <Route path="tools" element={<ToolsView />} />
           <Route path="doctor-details" element={<AdminDoctorDetails />} />
         </Route>
 

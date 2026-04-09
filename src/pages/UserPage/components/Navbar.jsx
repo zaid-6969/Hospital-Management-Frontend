@@ -1,183 +1,256 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import ThemeToggle from "../../../components/ThemeToggle";
 import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Sun, Moon, LogOut, ChevronDown } from "lucide-react";
 import { logoutUser } from "../../../redux/Slices/authApiSlice";
-import { useDispatch } from "react-redux";
+import { toggleTheme } from "../../../redux/Slices/themeSlice";
 
 const NAV_LINKS = [
-  { name: "Home", path: "/user" },
-  { name: "About", path: "/user/about" },
-  { name: "Services", path: "/user/services" },
-  { name: "Contact", path: "/user/contact" },
+  { name: "Home",        path: "/user" },
+  { name: "About",       path: "/user/about" },
+  { name: "Services",    path: "/user/services" },
+  { name: "Contact",     path: "/user/contact" },
   { name: "Appointment", path: "/user/appointment" },
 ];
 
-const Navbar = ({ menuOpen, setMenuOpen, user = "Mohammed"}) => {
-  const navigate = useNavigate();
-
+const Navbar = ({ menuOpen, setMenuOpen, user = "User" }) => {
+  const navigate  = useNavigate();
+  const dispatch  = useDispatch();
+  const mode      = useSelector((s) => s.theme.mode);
   const [open, setOpen] = useState(false);
-  const menuRef = useRef();
+  const menuRef   = useRef();
 
-  const firstLetter = user?.charAt(0).toUpperCase();
+  const initials = user
+    ?.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "U";
 
-  const dispatch = useDispatch();
-
-  // close dropdown on outside click
   useEffect(() => {
     const handler = (e) => {
-      if (!menuRef.current?.contains(e.target)) {
-        setOpen(false);
-      }
+      if (!menuRef.current?.contains(e.target)) setOpen(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const baseClass = "text-sm font-medium pb-0.5 border-b-2 transition-colors";
+  const handleLogout = () => dispatch(logoutUser());
+  const handleTheme  = () => dispatch(toggleTheme());
 
-  const getClass = (isActive) =>
-    `${baseClass} ${
+  const desktopLink = (isActive) =>
+    `text-sm font-medium pb-0.5 border-b-2 transition-colors ${
       isActive
-        ? "text-violet-600 border-violet-600 font-bold"
-        : "text-text/60 border-transparent hover:text-violet-600"
+        ? "border-[#6a5acd] font-bold"
+        : "border-transparent hover:text-[#6a5acd]"
     }`;
 
-  const mobileClass = (isActive) =>
-    `text-left text-sm font-medium py-3 px-3 rounded-lg transition ${
+  const mobileLink = (isActive) =>
+    `text-left text-sm font-medium py-2.5 px-3 rounded-xl transition-all ${
       isActive
-        ? "text-violet-600 bg-violet-50 font-bold"
-        : "text-text/70 hover:text-violet-600 hover:bg-violet-50"
+        ? "font-bold"
+        : "hover:bg-[rgba(106,90,205,0.07)]"
     }`;
-
-  const handleLogout = () => {
-    dispatch(logoutUser());
-  };
 
   return (
     <nav
-      style={{ backgroundColor: "var(--bg)" }}
-      className="border-b border-border sticky top-0 z-50 backdrop-blur"
+      className="sticky top-0 z-50 border-b"
+      style={{ background: "var(--card)", borderColor: "var(--border)" }}
     >
+      {/* Purple top accent */}
+      <div
+        className="absolute top-0 left-0 right-0 h-0.5"
+        style={{ background: "linear-gradient(90deg,#6a5acd,#8b5cf6,transparent)" }}
+      />
+
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
         {/* LOGO */}
         <div
-          onClick={() => navigate("/")}
-          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => navigate("/user")}
+          className="flex items-center gap-2.5 cursor-pointer"
         >
-          <div className="w-9 h-9 rounded-xl bg-violet-600 flex items-center justify-center text-white font-bold">
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-extrabold text-sm shrink-0"
+            style={{ background: "linear-gradient(135deg,#6a5acd,#8b5cf6)", boxShadow: "0 4px 12px rgba(106,90,205,.30)" }}
+          >
             M
           </div>
-          <span className="font-extrabold text-lg text-text">
-            MedLab <span className="text-violet-600">Hospital</span>
+          <span className="font-extrabold text-lg" style={{ color: "var(--text)" }}>
+            MedLab <span style={{ color: "#6a5acd" }}>Hospital</span>
           </span>
         </div>
 
-        {/* DESKTOP NAV */}
+        {/* DESKTOP NAV LINKS */}
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map(({ name, path }) => (
             <NavLink
               key={name}
               to={path}
-              className={({ isActive }) => getClass(isActive)}
+              end={path === "/user"}
+              className={({ isActive }) => desktopLink(isActive)}
+              style={({ isActive }) => ({ color: isActive ? "#6a5acd" : "var(--text)", opacity: isActive ? 1 : 0.6 })}
             >
               {name}
             </NavLink>
           ))}
         </div>
 
-        {/* RIGHT SECTION */}
-        <div className="hidden md:flex items-center gap-4">
-          {/* USER AVATAR */}
+        {/* RIGHT — Avatar + Dropdown */}
+        <div className="hidden md:flex items-center gap-3">
           <div className="relative" ref={menuRef}>
-            <div
-              onClick={() => setOpen(!open)}
-              className="w-10 h-10 rounded-full bg-violet-600 text-white flex items-center justify-center font-bold cursor-pointer hover:scale-105 transition"
+
+            {/* Avatar button */}
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="flex items-center gap-2 px-2 py-1.5 rounded-xl transition-all"
+              style={{
+                background: open ? "rgba(106,90,205,0.10)" : "rgba(106,90,205,0.07)",
+                border: "1px solid rgba(106,90,205,0.15)",
+              }}
             >
-              {firstLetter}
-            </div>
+              <div
+                className="w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs font-bold shrink-0"
+                style={{ background: "linear-gradient(135deg,#6a5acd,#8b5cf6)" }}
+              >
+                {initials}
+              </div>
+              <span className="text-xs font-semibold max-w-[80px] truncate" style={{ color: "var(--text)" }}>
+                {user}
+              </span>
+              <ChevronDown
+                size={13}
+                style={{
+                  color: "var(--text)", opacity: 0.4,
+                  transform: open ? "rotate(180deg)" : "rotate(0deg)",
+                  transition: "transform 0.2s",
+                }}
+              />
+            </button>
 
             {/* DROPDOWN */}
             {open && (
               <div
-                style={{ backgroundColor: "var(--bg)" }}
-                className="absolute right-0 mt-3 w-52 bg-card border border-secondary rounded-xl shadow-xl p-3 z-50 animate-fadeIn"
+                className="absolute right-0 mt-2 w-52 rounded-2xl overflow-hidden z-50"
+                style={{
+                  background: "var(--card)",
+                  border: "1px solid var(--border)",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.10)",
+                }}
               >
-                <p className="text-sm font-semibold text-text mb-3 border-b pb-2">
-                  {user}
-                </p>
-
-                <span className="w-full text-left px-3 py-2 rounded-lg hover:bg-violet-50 transition text-sm">
-                  <ThemeToggle />
-                </span>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLogout();
-                  }}
-                  className="py-2 rounded-lg bg-red-50 text-red-500 font-semibold"
+                {/* User info header */}
+                <div
+                  className="px-4 py-3"
+                  style={{ borderBottom: "1px solid var(--border)" }}
                 >
-                  🚪 Logout
+                  <div className="flex items-center gap-2.5">
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold shrink-0"
+                      style={{ background: "linear-gradient(135deg,#6a5acd,#8b5cf6)" }}
+                    >
+                      {initials}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold truncate" style={{ color: "var(--text)" }}>{user}</p>
+                      <p className="text-[10px]" style={{ color: "var(--text)", opacity: 0.4 }}>Patient</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Theme toggle */}
+                <button
+                  onClick={handleTheme}
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all hover:bg-[rgba(106,90,205,0.07)]"
+                  style={{ color: "var(--text)", opacity: 0.8 }}
+                >
+                  {mode === "dark"
+                    ? <Sun size={15} className="shrink-0 text-amber-400" />
+                    : <Moon size={15} className="shrink-0" style={{ color: "#6a5acd" }} />
+                  }
+                  {mode === "dark" ? "Light mode" : "Dark mode"}
                 </button>
+
+                {/* Logout */}
+                <div style={{ borderTop: "1px solid var(--border)" }}>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all hover:bg-[rgba(239,68,68,0.07)]"
+                    style={{ color: "#dc2626" }}
+                  >
+                    <LogOut size={15} className="shrink-0" />
+                    Logout
+                  </button>
+                </div>
               </div>
             )}
           </div>
         </div>
 
-        {/* MOBILE BTN */}
+        {/* MOBILE hamburger */}
         <button
           onClick={() => setMenuOpen((o) => !o)}
-          className="md:hidden flex flex-col gap-1.5"
+          className="md:hidden flex flex-col gap-1.5 p-1"
         >
-          <span
-            className={`w-6 h-0.5 bg-text transition ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
-          />
-          <span
-            className={`w-6 h-0.5 bg-text transition ${menuOpen ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`w-6 h-0.5 bg-text transition ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
-          />
+          <span className={`w-6 h-0.5 transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`} style={{ background: "var(--text)" }} />
+          <span className={`w-6 h-0.5 transition-all ${menuOpen ? "opacity-0" : ""}`} style={{ background: "var(--text)" }} />
+          <span className={`w-6 h-0.5 transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} style={{ background: "var(--text)" }} />
         </button>
       </div>
 
       {/* MOBILE MENU */}
       {menuOpen && (
-        <div className="md:hidden bg-card border-t px-6 pb-4 pt-3 flex flex-col gap-2">
-          {/* USER */}
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-full bg-violet-600 text-white flex items-center justify-center font-bold">
-              {firstLetter}
+        <div
+          className="md:hidden px-4 pb-4 pt-2 flex flex-col gap-1"
+          style={{ borderTop: "1px solid var(--border)" }}
+        >
+          {/* User chip */}
+          <div
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl mb-2"
+            style={{ background: "rgba(106,90,205,0.08)", border: "1px solid rgba(106,90,205,0.15)" }}
+          >
+            <div
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold shrink-0"
+              style={{ background: "linear-gradient(135deg,#6a5acd,#8b5cf6)" }}
+            >
+              {initials}
             </div>
-            <span className="font-semibold text-text">{user}</span>
+            <div>
+              <p className="text-xs font-bold" style={{ color: "var(--text)" }}>{user}</p>
+              <p className="text-[10px]" style={{ color: "var(--text)", opacity: 0.4 }}>Patient</p>
+            </div>
           </div>
 
+          {/* Nav links */}
           {NAV_LINKS.map(({ name, path }) => (
             <NavLink
               key={name}
               to={path}
               end={path === "/user"}
               onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => mobileClass(isActive)}
+              className={({ isActive }) => mobileLink(isActive)}
+              style={({ isActive }) => ({ color: isActive ? "#6a5acd" : "var(--text)", opacity: isActive ? 1 : 0.65 })}
             >
               {name}
             </NavLink>
           ))}
 
-          {/* ACTIONS */}
-          <div className=" border-t mt-3 pt-3 flex flex-col gap-2">
-            <button className="py-2 rounded-lg bg-violet-100 text-violet-600 font-semibold">
-              <ThemeToggle />
+          {/* Actions */}
+          <div className="mt-2 flex flex-col gap-1.5" style={{ borderTop: "1px solid var(--border)", paddingTop: "10px" }}>
+            <button
+              onClick={handleTheme}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all hover:bg-[rgba(106,90,205,0.07)]"
+              style={{ color: "var(--text)", opacity: 0.8 }}
+            >
+              {mode === "dark"
+                ? <Sun size={15} className="text-amber-400" />
+                : <Moon size={15} style={{ color: "#6a5acd" }} />
+              }
+              {mode === "dark" ? "Light mode" : "Dark mode"}
             </button>
 
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleLogout();
-              }}
-              className="py-2 rounded-lg bg-red-50 text-red-500 font-semibold"
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all hover:bg-[rgba(239,68,68,0.07)]"
+              style={{ color: "#dc2626" }}
             >
-              🚪 Logout
+              <LogOut size={15} />
+              Logout
             </button>
           </div>
         </div>
