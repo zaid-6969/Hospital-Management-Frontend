@@ -17,7 +17,7 @@ import AppointmentPage from "./pages/UserPage/pages/AppointmentPage";
 import DoctorDetails from "./pages/UserPage/components/DoctorDetails";
 import PatientDetailsPage from "./pages/UserPage/pages/PatientDetailsPage";
 import BookingSuccessPage from "./pages/UserPage/pages/BookingSuccessPage";
-import NotFoundPage from "./pages/NotfounPage/NotFoundPage.jsx";
+// import NotFoundPage from "./pages/NotfounPage/NotFoundPage.jsx";
 
 
 // ADMIN PAGE
@@ -134,14 +134,14 @@ function App() {
 
         {/* 🔒 NOT FOUND */}
 
-        <Route
+        {/* <Route
           path="/*"
           element={
             <ProtectedRoute>
               <NotFoundPage />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
       </Routes>
     </div>
