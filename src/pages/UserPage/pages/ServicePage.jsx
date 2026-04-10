@@ -35,7 +35,7 @@ const ServiceHeroSVG = () => (
     <path d="M215 92 Q205 110 210 130 Q215 150 235 165" stroke="#7c3aed" strokeWidth="4" strokeLinecap="round" fill="none"/>
     <circle cx="218" cy="89" r="10" fill="#7c3aed" opacity="0.2" stroke="#7c3aed" strokeWidth="2"/>
     {/* Pills */}
-    <ellipse cx="310" cy="100" rx="28" ry="14" rx="14" fill="#fde68a" stroke="#d97706" strokeWidth="2" transform="rotate(-30 310 100)"/>
+    <ellipse cx="310" cy="100" ry="14" rx="14" fill="#fde68a" stroke="#d97706" strokeWidth="2" transform="rotate(-30 310 100)"/>
     <line x1="296" y1="107" x2="324" y2="93" stroke="#d97706" strokeWidth="2"/>
     <ellipse cx="340" cy="140" rx="22" ry="11" fill="#bbf7d0" stroke="#059669" strokeWidth="2" transform="rotate(20 340 140)"/>
     <line x1="328" y1="133" x2="352" y2="147" stroke="#059669" strokeWidth="2"/>
