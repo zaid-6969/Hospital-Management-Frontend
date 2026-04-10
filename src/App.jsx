@@ -33,9 +33,9 @@ import DoctorOverview from "./pages/DoctorPage/pages/DoctorOverview";
 import DoctorMainLayout from "./pages/DoctorPage/layout/DoctorMainLayout";
 import DoctorCalendar from "./pages/DoctorPage/pages/DoctorCalendar";
 
+import React from "react";
 
-
-function App() {
+const App = () => {
   const mode = useSelector((state) => state.theme.mode);
 
   useEffect(() => {
@@ -132,6 +132,6 @@ function App() {
       </Routes>
     </div>
   );
-}
+};
 
 export default App;
