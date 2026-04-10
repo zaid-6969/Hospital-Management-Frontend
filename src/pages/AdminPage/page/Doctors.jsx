@@ -321,13 +321,12 @@ const Doctors = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
           <h1
-            style={{ color: "var(--text)" }}
             className="text-3xl font-black  flex items-center gap-3"
           >
             <Stethoscope className="text-purple-600" size={32} />
             Medical Staff
           </h1>
-          <p style={{ color: "var(--text)" }} className=" mt-1">
+          <p className=" mt-1">
             Manage specialist profiles and track clinical performance.
           </p>
         </div>
@@ -407,7 +406,6 @@ const Doctors = () => {
         <div className="flex items-center justify-center min-h-[40vh]">
           <div
             className="flex flex-col items-center gap-3 "
-            style={{ color: "var(--text)" }}
           >
             <Loader2 size={32} className="animate-spin text-purple-500" />
             <p className="text-sm font-medium">Loading doctors…</p>
@@ -416,7 +414,6 @@ const Doctors = () => {
       ) : doctors.length === 0 ? (
         <div
           className="flex flex-col items-center justify-center min-h-[40vh] gap-3"
-          style={{ color: "var(--text)" }}
         >
           <Stethoscope size={40} className="opacity-30" />
           <p className="text-sm font-medium">
@@ -436,8 +433,7 @@ const Doctors = () => {
           });
           return filtered.length === 0 ? (
             <div
-              className="flex flex-col items-center justify-center min-h-[30vh] gap-3"
-              style={{ color: "var(--text)" }}
+              className="flex flex-col items-center justify-center min-h-[30vh] gap-3" 
             >
               <Stethoscope size={36} className="opacity-30" />
               <p className="text-sm font-medium">
@@ -466,7 +462,6 @@ const Doctors = () => {
                           />
                         ) : (
                           <div
-                            style={{ color: "var(--text)" }}
                             className=" w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-bold ring-4 ring-slate-50 dark:ring-slate-700"
                             style={{
                               background:
@@ -485,7 +480,6 @@ const Doctors = () => {
                       <div>
                         <h2
                           className="font-bold text-lg truncate w-40"
-                          style={{ color: "var(--text)" }}
                         >
                           {doc.name}
                         </h2>
@@ -520,7 +514,6 @@ const Doctors = () => {
                         Experience
                       </p>
                       <p
-                        style={{ color: "var(--text)" }}
                         className="font-bol flex items-center gap-1"
                       >
                         <Briefcase size={14} className="text-purple-500" />

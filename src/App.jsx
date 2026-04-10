@@ -19,7 +19,7 @@ import PatientDetailsPage from "./pages/UserPage/pages/PatientDetailsPage";
 import BookingSuccessPage from "./pages/UserPage/pages/BookingSuccessPage";
 
 // ADMIN PAGE
-import AdminMainLayout from "./pages/AdminPage/layout/AdminMainLayout";
+import AdminMainLayout from "./pages/AdminPage/Layout/AdminMainLayout";
 import Dashboard from "./pages/AdminPage/page/Dashboard";
 import Doctors from "./pages/AdminPage/page/Doctors";
 import AdminDoctorDetails from "./pages/AdminPage/page/AdminDoctorDetails";
