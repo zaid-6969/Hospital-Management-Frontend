@@ -132,7 +132,7 @@ const AppointmentPage = () => {
 
     // Fetch already-booked slots for this doctor + date
     axios
-      .get(`https://hospital-management-backend-kohl.vercel.app/api/v1/appointments/slots`, {
+      .get(`https://hospital-management-backend-bg8yivi7s.vercel.app/api/v1/appointments/slots`, {
         params: { doctorId: selectedDoctor._id, date: dateISO },
         withCredentials: true,
       })

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://hospital-management-backend-kohl.vercel.app/api/v1",
+  baseURL: "https://hospital-management-backend-bg8yivi7s.vercel.app/api/v1",
   withCredentials: true,
 });
 
