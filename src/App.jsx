@@ -30,7 +30,7 @@ import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
 // DOCTOR PAGE
 import DoctorSchedule from "./pages/DoctorPage/pages/DoctorSchedule";
 import DoctorOverview from "./pages/DoctorPage/pages/DoctorOverview";
-import DoctorMainLayout from "./pages/DoctorPage/layout/DoctorMainLayout";
+import DoctorMainLayout from "./pages/DoctorPage/Layout/DoctorMainLayout";
 import DoctorCalendar from "./pages/DoctorPage/pages/DoctorCalendar";
 
 import React from "react";
