@@ -206,6 +206,7 @@ const AppointmentTable = () => {
   const [total, setTotal]               = useState(0);
   const [search, setSearch]             = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
+  const [doctorFilter, setDoctorFilter] = useState("");
 
   const [viewData, setViewData]     = useState(null);
   const [editData, setEditData]     = useState(null);
@@ -264,7 +265,8 @@ const AppointmentTable = () => {
       (a.patientId?.name || "").toLowerCase().includes(search.toLowerCase()) ||
       (a.date || "").includes(search);
     const matchStatus = statusFilter === "All" || a.status === statusFilter;
-    return matchSearch && matchStatus;
+    const matchDoctor = !doctorFilter || a.doctorId?._id === doctorFilter;
+    return matchSearch && matchStatus && matchDoctor;
   });
 
   const start = (page - 1) * limit + 1;
@@ -298,16 +300,29 @@ const AppointmentTable = () => {
             <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}
               className="rounded px-3 py-1.5 text-xs font-semibold outline-none"
               style={{ background: "var(--bg)", border: "1px solid var(--border)", color: "#6a5acd" }}>
-              <option value="All">All</option>
+              <option value="All">All Status</option>
               <option value="REQUESTED">Requested</option>
               <option value="ACCEPTED">Accepted</option>
               <option value="REJECTED">Rejected</option>
             </select>
 
-            <button className="rounded p-1.5 transition"
-              style={{ background: "var(--bg)", border: "1px solid var(--border)", color: "var(--text)", opacity: .5 }}>
-              <SlidersHorizontal size={15} />
-            </button>
+            <select value={doctorFilter} onChange={(e) => setDoctorFilter(e.target.value)}
+              className="rounded px-3 py-1.5 text-xs font-semibold outline-none"
+              style={{ background: "var(--bg)", border: "1px solid var(--border)", color: "#6a5acd" }}>
+              <option value="">All Doctors</option>
+              {doctors.map((doc) => (
+                <option key={doc._id} value={doc._id}>{doc.name}</option>
+              ))}
+            </select>
+
+            {(search || statusFilter !== "All" || doctorFilter) && (
+              <button
+                onClick={() => { setSearch(""); setStatusFilter("All"); setDoctorFilter(""); }}
+                className="rounded px-2.5 py-1.5 text-xs font-semibold flex items-center gap-1 transition"
+                style={{ background: "rgba(239,68,68,0.1)", color: "#dc2626", border: "1px solid rgba(239,68,68,0.2)" }}>
+                <X size={11} /> Clear
+              </button>
+            )}
           </div>
         </div>
 
