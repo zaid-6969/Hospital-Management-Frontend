@@ -13,12 +13,13 @@ const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 1024);
   const [showPassword, setShowPassword] = useState(false);
-
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
+
+  
 
   useEffect(() => {
     const handleResize = () => {
