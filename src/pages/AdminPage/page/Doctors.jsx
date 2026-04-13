@@ -147,6 +147,13 @@ const Doctors = () => {
   const [availability, setAvailability] = useState([
     { day: "", slots: [{ start: "", end: "" }] },
   ]);
+  const [deletingId, setDeletingId] = useState(null);
+  const [toast, setToast] = useState(null); // { type: "success"|"error", msg }
+
+  const showToast = (type, msg) => {
+    setToast({ type, msg });
+    setTimeout(() => setToast(null), 3500);
+  };
 
   // ── FETCH ──────────────────────────────────────────────────────
   const fetchDoctors = async () => {
@@ -227,11 +234,23 @@ const Doctors = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Remove this doctor?")) return;
+    setDeletingId(id);
     try {
       await deleteDoctor(id);
+      showToast("success", "Doctor removed successfully.");
       fetchDoctors();
     } catch (err) {
+      const msg =
+        err?.response?.data?.message ||
+        (err?.response?.status === 403
+          ? "Access denied — make sure you are logged in as ADMIN."
+          : err?.response?.status === 401
+          ? "Session expired. Please log in again."
+          : "Failed to delete doctor. Please try again.");
+      showToast("error", msg);
       console.error("Delete failed:", err);
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -336,6 +355,24 @@ const Doctors = () => {
       className=" p-4 md:p-8 transition-colors duration-300"
       style={{ background: "var(--bg)", color: "var(--text)" }}
     >
+      {/* TOAST */}
+      {toast && (
+        <div
+          className={`fixed top-5 right-5 z-[999] flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl text-sm font-semibold transition-all animate-fade-in ${
+            toast.type === "success"
+              ? "bg-green-500 text-white"
+              : "bg-red-500 text-white"
+          }`}
+        >
+          {toast.type === "success" ? (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
+          )}
+          {toast.msg}
+        </div>
+      )}
+
       {/* HEADER */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
@@ -517,9 +554,14 @@ const Doctors = () => {
                       </button>
                       <button
                         onClick={() => handleDelete(doc._id)}
-                        className="p-2 hover:bg-red-50 dark:hover:bg-red-900/30 text-red-500 rounded-xl transition-colors"
+                        disabled={deletingId === doc._id}
+                        className="p-2 hover:bg-red-50 dark:hover:bg-red-900/30 text-red-500 rounded-xl transition-colors disabled:opacity-50"
                       >
-                        <Trash2 size={18} />
+                        {deletingId === doc._id ? (
+                          <Loader2 size={18} className="animate-spin" />
+                        ) : (
+                          <Trash2 size={18} />
+                        )}
                       </button>
                     </div>
                   </div>
