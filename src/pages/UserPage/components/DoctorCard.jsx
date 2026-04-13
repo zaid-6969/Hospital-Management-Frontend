@@ -21,7 +21,7 @@ const DoctorCard = ({ doctor, onBook }) => {
           </p>
 
           <div className="text-xs mt-2 text-text/60">
-            {doctor.experience}
+           <p>Experience</p> {doctor.experience}
           </div>
         </div>
 
