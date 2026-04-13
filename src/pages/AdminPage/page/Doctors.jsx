@@ -286,6 +286,25 @@ const Doctors = () => {
       { day: "", slots: [{ start: "", end: "" }] },
     ]);
 
+  const removeDay = (dIdx) =>
+    setAvailability((p) => p.filter((_, i) => i !== dIdx));
+
+  const addSlot = (dIdx) =>
+    setAvailability((p) =>
+      p.map((d, i) =>
+        i !== dIdx ? d : { ...d, slots: [...d.slots, { start: "", end: "" }] },
+      ),
+    );
+
+  const removeSlot = (dIdx, sIdx) =>
+    setAvailability((p) =>
+      p.map((d, i) =>
+        i !== dIdx
+          ? d
+          : { ...d, slots: d.slots.filter((_, j) => j !== sIdx) },
+      ),
+    );
+
   const handleAvailabilityChange = (dIdx, sIdx, field, val) => {
     setAvailability((prev) =>
       prev.map((d, i) =>
@@ -732,89 +751,140 @@ const Doctors = () => {
                 className="p-3 rounded-xl bg-gray-100 dark:bg-slate-900 dark:text-white outline-none"
               />
               <div className="col-span-2">
-                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block">
+                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 block">
                   Profile Image
                 </label>
-                <input
-                  type="file"
-                  name="image"
-                  accept="image/*"
-                  onChange={handleChange}
-                  className="text-sm dark:text-slate-300"
-                />
+                <label className="group flex flex-col items-center justify-center gap-3 w-full h-36 rounded-xl border-2 border-dashed border-purple-300 dark:border-purple-700 bg-purple-50/50 dark:bg-purple-900/10 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:border-purple-500 transition-all cursor-pointer overflow-hidden relative">
+                  {form.image ? (
+                    <>
+                      <img
+                        src={URL.createObjectURL(form.image)}
+                        alt="preview"
+                        className="w-full h-full object-cover absolute inset-0"
+                      />
+                      <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span className="text-white text-xs font-semibold">Click to change</span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm font-semibold text-purple-600 dark:text-purple-400">Click to upload photo</p>
+                        <p className="text-xs text-slate-400 mt-0.5">PNG, JPG, WEBP</p>
+                      </div>
+                    </>
+                  )}
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleChange}
+                    className="sr-only"
+                  />
+                </label>
+                {form.image && (
+                  <button
+                    type="button"
+                    onClick={() => setForm((f) => ({ ...f, image: null }))}
+                    className="mt-2 text-xs text-red-500 hover:text-red-700 font-medium flex items-center gap-1"
+                  >
+                    <X size={12} /> Remove image
+                  </button>
+                )}
               </div>
             </div>
 
             <div className="space-y-4 mb-6">
-              <h3 className="font-bold dark:text-white">Availability</h3>
+              <div className="flex items-center justify-between">
+                <h3 className="font-bold dark:text-white">Availability</h3>
+                <button
+                  type="button"
+                  onClick={addDay}
+                  className="flex items-center gap-1.5 text-xs font-semibold text-purple-600 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 px-3 py-1.5 rounded-lg transition-colors"
+                >
+                  + Add Day
+                </button>
+              </div>
               {availability.map((dayItem, dIdx) => (
                 <div
                   key={dIdx}
-                  className="bg-gray-100 dark:bg-slate-900 p-4 rounded-xl space-y-3"
+                  className="bg-gray-100 dark:bg-slate-900 p-4 rounded-xl space-y-3 border border-transparent hover:border-purple-200 dark:hover:border-purple-800 transition-colors"
                 >
-                  <select
-                    value={dayItem.day}
-                    onChange={(e) =>
-                      handleAvailabilityChange(
-                        dIdx,
-                        null,
-                        "day",
-                        e.target.value,
-                      )
-                    }
-                    className="w-full p-2 rounded dark:bg-slate-800 dark:text-white outline-none"
-                  >
-                    <option value="">Select Day</option>
-                    {[
-                      "Monday",
-                      "Tuesday",
-                      "Wednesday",
-                      "Thursday",
-                      "Friday",
-                      "Saturday",
-                      "Sunday",
-                    ].map((d) => (
-                      <option key={d}>{d}</option>
+                  <div className="flex items-center gap-2">
+                    <select
+                      value={dayItem.day}
+                      onChange={(e) =>
+                        handleAvailabilityChange(dIdx, null, "day", e.target.value)
+                      }
+                      className="flex-1 p-2 rounded-lg dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500/40 text-sm"
+                    >
+                      <option value="">Select Day</option>
+                      {["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"].map((d) => (
+                        <option key={d}>{d}</option>
+                      ))}
+                    </select>
+                    <button
+                      type="button"
+                      onClick={() => removeDay(dIdx)}
+                      className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors shrink-0"
+                      title="Remove day"
+                    >
+                      <X size={15} />
+                    </button>
+                  </div>
+
+                  <div className="space-y-2">
+                    {dayItem.slots.map((slot, sIdx) => (
+                      <div key={sIdx} className="flex items-center gap-2">
+                        <div className="flex-1 flex items-center gap-2 bg-white dark:bg-slate-800 rounded-lg px-3 py-2 border border-slate-200 dark:border-slate-700">
+                          <span className="text-xs text-slate-400 font-medium w-8 shrink-0">From</span>
+                          <input
+                            type="time"
+                            value={slot.start}
+                            onChange={(e) =>
+                              handleAvailabilityChange(dIdx, sIdx, "start", e.target.value)
+                            }
+                            className="flex-1 text-sm dark:bg-slate-800 dark:text-white outline-none"
+                          />
+                          <span className="text-xs text-slate-300">—</span>
+                          <span className="text-xs text-slate-400 font-medium w-5 shrink-0">To</span>
+                          <input
+                            type="time"
+                            value={slot.end}
+                            onChange={(e) =>
+                              handleAvailabilityChange(dIdx, sIdx, "end", e.target.value)
+                            }
+                            className="flex-1 text-sm dark:bg-slate-800 dark:text-white outline-none"
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeSlot(dIdx, sIdx)}
+                          disabled={dayItem.slots.length === 1}
+                          className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors shrink-0 disabled:opacity-30 disabled:cursor-not-allowed"
+                          title="Remove slot"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
                     ))}
-                  </select>
-                  {dayItem.slots.map((slot, sIdx) => (
-                    <div key={sIdx} className="flex gap-2">
-                      <input
-                        type="time"
-                        value={slot.start}
-                        onChange={(e) =>
-                          handleAvailabilityChange(
-                            dIdx,
-                            sIdx,
-                            "start",
-                            e.target.value,
-                          )
-                        }
-                        className="w-full p-2 rounded dark:bg-slate-800 dark:text-white outline-none"
-                      />
-                      <input
-                        type="time"
-                        value={slot.end}
-                        onChange={(e) =>
-                          handleAvailabilityChange(
-                            dIdx,
-                            sIdx,
-                            "end",
-                            e.target.value,
-                          )
-                        }
-                        className="w-full p-2 rounded dark:bg-slate-800 dark:text-white outline-none"
-                      />
-                    </div>
-                  ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => addSlot(dIdx)}
+                    className="flex items-center gap-1.5 text-xs font-semibold text-purple-500 hover:text-purple-700 mt-1 transition-colors"
+                  >
+                    + Add time slot
+                  </button>
                 </div>
               ))}
-              <button
-                onClick={addDay}
-                className="text-purple-600 font-semibold text-sm"
-              >
-                + Add Day
-              </button>
+              {availability.length === 0 && (
+                <p className="text-xs text-slate-400 text-center py-4">No days added yet. Click "Add Day" to start.</p>
+              )}
             </div>
 
             <div className="flex justify-end gap-3">
