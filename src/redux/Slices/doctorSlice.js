@@ -3,7 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const API = axios.create({
-  baseURL: "https://hospital-management-backend-ag6n6wmhd.vercel.app/api/v1",
+  baseURL: "https://hospital-management-backend-eosin.vercel.app/api/v1",
   withCredentials: true,
 });
 
