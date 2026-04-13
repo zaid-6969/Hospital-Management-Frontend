@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import AppointmentTable from "../components/AppointmentTable";
@@ -9,6 +9,8 @@ import BookingModal from "../components/Bookingmodal";
 const ReceptionDashboard = () => {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+  const isDashboard = location.pathname === "/reception";
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,14 +48,18 @@ const ReceptionDashboard = () => {
         />
 
         <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
-          <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 sm:gap-6">
-            <div className="xl:col-span-9">
-              <AppointmentTable />
+          {isDashboard ? (
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 sm:gap-6">
+              <div className="xl:col-span-9">
+                <AppointmentTable />
+              </div>
+              <div className="xl:col-span-3">
+                <RightPanel />
+              </div>
             </div>
-            <div className="xl:col-span-3">
-              <RightPanel />
-            </div>
-          </div>
+          ) : (
+            <Outlet />
+          )}
         </main>
       </div>
 

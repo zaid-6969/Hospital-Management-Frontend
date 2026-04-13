@@ -1,10 +1,9 @@
 import SharedSidebar from "../../../components/shared/SharedSidebar";
-import { LayoutDashboard, Users, BedDouble, CalendarCheck, ClipboardList } from "lucide-react";
+import { LayoutDashboard, Users, BedDouble, CalendarCheck, ClipboardList, Stethoscope } from "lucide-react";
 
 const mainNav = [
-  { label: "Dashboard",    icon: LayoutDashboard, path: "/reception",              exact: true },
-  // { label: "Appointments", icon: CalendarCheck,   path: "/reception/appointments"              },
-  // { label: "Patients",     icon: Users,           path: "/reception/patients"                  },
+  { label: "Dashboard",   icon: LayoutDashboard, path: "/reception",          exact: true },
+  { label: "Doctors",     icon: Stethoscope,     path: "/reception/doctors"               },
 ];
 
 // const systemNav = [

@@ -26,6 +26,7 @@ import AdminDoctorDetails from "./pages/AdminPage/page/AdminDoctorDetails";
 
 // RECEPTION PAGE
 import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
+import DoctorAvailability from "./pages/ReceptionPage/pages/DoctorAvailability";
 
 // DOCTOR PAGE
 import DoctorSchedule from "./pages/DoctorPage/pages/DoctorSchedule";
@@ -109,7 +110,9 @@ const App = () => {
               <ReceptionPage />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route path="doctors" element={<DoctorAvailability />} />
+        </Route>
 
         {/* 🔒 USER */}
         <Route
