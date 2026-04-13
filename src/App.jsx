@@ -26,7 +26,8 @@ import AdminDoctorDetails from "./pages/AdminPage/page/AdminDoctorDetails";
 
 // RECEPTION PAGE
 import ReceptionPage from "./pages/ReceptionPage/pages/ReceptionDashboard";
-import DoctorAvailability from "./pages/ReceptionPage/pages/ReceptionDashboard";
+import ReceptionIndex from "./pages/ReceptionPage/pages/Receptionindex";
+import DoctorAvailability from "./pages/ReceptionPage/pages/Doctoravailability";
 
 // DOCTOR PAGE
 import DoctorSchedule from "./pages/DoctorPage/pages/DoctorSchedule";
@@ -111,6 +112,7 @@ const App = () => {
             </ProtectedRoute>
           }
         >
+          <Route index element={<ReceptionIndex />} />
           <Route path="doctors" element={<DoctorAvailability />} />
         </Route>
 

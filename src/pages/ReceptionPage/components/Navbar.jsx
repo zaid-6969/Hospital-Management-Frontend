@@ -3,11 +3,12 @@ import { CalendarPlus } from "lucide-react";
 import SharedTopbar from "../../../components/shared/SharedTopbar";
 
 const PAGE_TITLES = {
-  "/reception":              { title: "Dashboard",    sub: "Manage appointments & patients" },
-  "/reception/appointments": { title: "Appointments", sub: "View and manage all appointments" },
-  "/reception/patients":     { title: "Patients",     sub: "Patient records & details" },
-  "/reception/rooms":        { title: "Rooms",        sub: "Room availability & assignment" },
-  "/reception/queue":        { title: "Queue",        sub: "Today's patient queue" },
+  "/reception":              { title: "Dashboard",          sub: "Manage appointments & patients" },
+  "/reception/doctors":      { title: "Doctor Availability", sub: "Live availability for all doctors" },
+  "/reception/appointments": { title: "Appointments",       sub: "View and manage all appointments" },
+  "/reception/patients":     { title: "Patients",           sub: "Patient records & details" },
+  "/reception/rooms":        { title: "Rooms",              sub: "Room availability & assignment" },
+  "/reception/queue":        { title: "Queue",              sub: "Today's patient queue" },
 };
 
 const Navbar = ({ onMenuClick, onBookAppointment }) => {
