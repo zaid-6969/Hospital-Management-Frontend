@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Sun, Moon, LogOut, ChevronDown } from "lucide-react";
 import { logoutUser } from "../../../redux/Slices/authApiSlice";
 import { toggleTheme } from "../../../redux/Slices/themeSlice";
-import Image1 from "../../../assets/logo.png";
+import Image1 from "../../../assets/Logo.png";
 
 const NAV_LINKS = [
   { name: "Home", path: "/user" },
