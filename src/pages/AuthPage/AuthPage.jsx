@@ -146,7 +146,6 @@ const AuthPage = () => {
       try {
         const res = await axios.post(
           "https://hospital-management-backend-eosin.vercel.app/api/v1/auth/google",
-          { token: tokenResponse.access_token },
           { withCredentials: true }
         );
         const user = res.data.user;

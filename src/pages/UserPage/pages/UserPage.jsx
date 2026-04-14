@@ -1,22 +1,25 @@
-import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { ArrowRight, Star, Shield, Clock, Award } from "lucide-react";
 
 const SERVICES = [
   {
-    icon: "🩺",
+    img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80",
     title: "General Checkup",
     desc: "Comprehensive health assessments by experienced physicians with personalised care plans.",
+    color: "#7c3aed",
   },
   {
-    icon: "🧬",
+    img: "https://images.unsplash.com/photo-1579154204601-01588f351e67?w=400&q=80",
     title: "Lab Diagnostics",
     desc: "Advanced laboratory testing and imaging with fast, precise results delivered online.",
+    color: "#0891b2",
   },
   {
-    icon: "💊",
+    img: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80",
     title: "Pharmacy",
     desc: "In-house pharmacy stocked with all prescribed medications, open 7 days a week.",
+    color: "#059669",
   },
 ];
 
@@ -24,36 +27,42 @@ const DOCTORS = [
   {
     name: "Dr. Priya Sharma",
     specialty: "Cardiologist",
-    exp: "12 yrs experience",
-    icon: "👩‍⚕️",
+    exp: "12 yrs",
+    img: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80",
+    color: "#7c3aed",
   },
   {
     name: "Dr. Arjun Mehta",
     specialty: "Neurologist",
-    exp: "9 yrs experience",
-    icon: "👨‍⚕️",
+    exp: "9 yrs",
+    img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80",
+    color: "#0891b2",
   },
   {
     name: "Dr. Lakshmi Nair",
     specialty: "Pediatrician",
-    exp: "15 yrs experience",
-    icon: "👩‍⚕️",
+    exp: "15 yrs",
+    img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80",
+    color: "#059669",
   },
 ];
 
 const TESTIMONIALS = [
   {
     name: "Ravi Kumar",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80",
     text: "The online booking was so easy and the doctor was incredibly thorough. Highly recommend MedLab Hospital!",
     rating: 5,
   },
   {
     name: "Sneha Patel",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80",
     text: "Got my lab results online within hours. The staff was professional and the facilities are world-class.",
     rating: 5,
   },
   {
     name: "Mohammed Farhan",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=80",
     text: "My kids love coming here. The pediatrics team is amazing — patient, kind, and extremely knowledgeable.",
     rating: 5,
   },
@@ -62,66 +71,52 @@ const TESTIMONIALS = [
 export default function HomePage() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-
-  // Profile image
-  const [profileImage, setProfileImage] = useState(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const fileInputRef = useRef(null);
-
   const displayName = user?.name || user?.email?.split("@")[0] || "Patient";
-  const firstLetter = displayName.charAt(0).toUpperCase();
-
-  const handleImageFile = (file) => {
-    if (!file || !file.type.startsWith("image/")) return;
-    const reader = new FileReader();
-    reader.onload = (e) => setProfileImage(e.target.result);
-    reader.readAsDataURL(file);
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setIsDragging(false);
-    handleImageFile(e.dataTransfer.files[0]);
-  };
 
   return (
-    <div className="font-sans bg-bg min-h-screen">
+    <div className="font-sans min-h-screen" style={{ background: "var(--bg)" }}>
 
       {/* ── HERO ── */}
-      <section className="bg-bg py-10 px-6">
+      <section className="py-14 px-6" style={{ background: "var(--bg)" }}>
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-14">
           {/* Text */}
           <div className="flex-1 text-center lg:text-left">
-            <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
-              ✦ Trusted Healthcare
+            <span
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5"
+              style={{ background: "rgba(124,58,237,0.1)", color: "#7c3aed" }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
+              Trusted Healthcare · Chennai
             </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-text leading-tight mb-6">
-              We help people to{" "}
-              <span className="text-violet-600">get appointment</span> in online
+            <h1
+              className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-5"
+              style={{ color: "var(--text)" }}
+            >
+              Hi {displayName.split(" ")[0]}, your{" "}
+              <span style={{ color: "#7c3aed" }}>health</span> matters.
             </h1>
-            <p className="text-text/70 text-base lg:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
-              MedLab Hospital is a full-service healthcare provider offering
-              innovative solutions that deliver the right level of care. We
-              strive to build a trusted community around your health, refining
-              your treatment plan and improving your long-term wellbeing.
+            <p className="text-base lg:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8" style={{ color: "var(--text)", opacity: 0.65 }}>
+              MedLab Hospital delivers compassionate, world-class care. Book appointments with top specialists, track your health records, and get results — all online.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+            <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
               <button
                 onClick={() => navigate("/user/appointment")}
-                className="bg-violet-600 hover:bg-violet-700 text-white font-bold px-7 py-3.5 rounded-full shadow-lg shadow-violet-300 transition-all hover:-translate-y-0.5"
+                className="flex items-center gap-2 font-bold px-7 py-3.5 rounded-xl text-white transition-all hover:opacity-90 hover:-translate-y-0.5 active:scale-95"
+                style={{ background: "linear-gradient(135deg,#7c3aed,#8b5cf6)", boxShadow: "0 8px 24px rgba(124,58,237,0.35)" }}
               >
-                Book Appointment
+                Book Appointment <ArrowRight size={16} />
               </button>
               <button
                 onClick={() => navigate("/user/services")}
-                className="border-2 border-violet-300 text-violet-600 font-bold px-7 py-3.5 rounded-full hover:bg-violet-50 transition-colors"
+                className="flex items-center gap-2 font-bold px-7 py-3.5 rounded-xl transition-all hover:-translate-y-0.5"
+                style={{ border: "1.5px solid rgba(124,58,237,0.3)", color: "#7c3aed", background: "rgba(124,58,237,0.06)" }}
               >
                 Our Services
               </button>
             </div>
 
             {/* Stats */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-8 mt-10 pt-8 border-t border-secondary">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-8 mt-10 pt-8" style={{ borderTop: "1px solid var(--border)" }}>
               {[
                 { v: "12K+", l: "Happy Patients" },
                 { v: "95%", l: "Success Rate" },
@@ -129,89 +124,117 @@ export default function HomePage() {
                 { v: "15yrs", l: "Experience" },
               ].map((s) => (
                 <div key={s.l}>
-                  <div className="text-2xl font-black text-violet-600">{s.v}</div>
-                  <div className="text-xs text-text/50 mt-0.5">{s.l}</div>
+                  <div className="text-2xl font-black" style={{ color: "#7c3aed" }}>{s.v}</div>
+                  <div className="text-xs font-medium mt-0.5" style={{ color: "var(--text)", opacity: 0.5 }}>{s.l}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Image placeholder */}
+          {/* Hero image */}
           <div className="flex-1 flex justify-center w-full">
-            <div className="w-full max-w-sm lg:max-w-md h-80 lg:h-96 bg-gradient-to-br from-violet-100 to-purple-100 border-2 border-dashed border-violet-300 rounded-3xl flex flex-col items-center justify-center">
-              <span className="text-7xl mb-3">🏥</span>
-              <span className="text-violet-500 font-semibold text-sm">
-                Hero Illustration
-              </span>
-              <span className="text-violet-300 text-xs mt-1">
-                Replace with your image
-              </span>
+            <div className="relative w-full max-w-sm lg:max-w-md">
+              <img
+                src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80"
+                alt="Hospital"
+                className="w-full h-80 lg:h-96 object-cover rounded-3xl"
+                style={{ boxShadow: "0 24px 64px rgba(0,0,0,0.18)" }}
+              />
+              {/* Floating badge */}
+              <div
+                className="absolute -bottom-4 -left-4 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-xl"
+                style={{ background: "var(--card)", border: "1px solid var(--border)" }}
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "rgba(124,58,237,0.12)" }}>
+                  <Shield size={18} style={{ color: "#7c3aed" }} />
+                </div>
+                <div>
+                  <p className="text-xs font-bold" style={{ color: "var(--text)" }}>NABH Accredited</p>
+                  <p className="text-[10px]" style={{ color: "var(--text)", opacity: 0.45 }}>ISO 9001:2015</p>
+                </div>
+              </div>
+              <div
+                className="absolute -top-4 -right-4 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-xl"
+                style={{ background: "var(--card)", border: "1px solid var(--border)" }}
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "rgba(16,185,129,0.12)" }}>
+                  <Clock size={18} style={{ color: "#059669" }} />
+                </div>
+                <div>
+                  <p className="text-xs font-bold" style={{ color: "var(--text)" }}>24/7 Emergency</p>
+                  <p className="text-[10px]" style={{ color: "var(--text)", opacity: 0.45 }}>Always available</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── NAVIGATE TO APPOINTMENT BANNER (replaces old booking section) ── */}
-      <section className="bg-gradient-to-r from-violet-600 to-purple-600 py-12 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-white/80 text-sm font-semibold uppercase tracking-wider mb-3">
-            ✦ Ready to See a Doctor?
-          </p>
-          <h2 className="text-2xl sm:text-3xl font-black text-white mb-4">
-            Book Your Appointment Online
-          </h2>
-          <p className="text-violet-100 text-sm max-w-md mx-auto mb-6">
-            Choose your doctor, pick a date and time slot, and confirm your visit — all in minutes.
-          </p>
+      {/* ── APPOINTMENT CTA BANNER ── */}
+      <section
+        className="py-14 px-6"
+        style={{ background: "linear-gradient(135deg,#7c3aed,#8b5cf6)" }}
+      >
+        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div>
+            <p className="text-violet-200 text-xs font-bold uppercase tracking-widest mb-2">Ready to see a doctor?</p>
+            <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">Book Your Appointment Online</h2>
+            <p className="text-violet-200 text-sm max-w-md">
+              Choose your specialist, pick a date, confirm your slot — all in under 2 minutes.
+            </p>
+          </div>
           <button
             onClick={() => navigate("/user/appointment")}
-            className="bg-white text-violet-600 font-bold px-8 py-4 rounded-full text-base shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-0.5"
+            className="shrink-0 flex items-center gap-2 bg-white font-bold px-8 py-4 rounded-xl text-base transition-all hover:shadow-2xl hover:-translate-y-0.5"
+            style={{ color: "#7c3aed", boxShadow: "0 8px 24px rgba(0,0,0,0.15)" }}
           >
-            Go to Appointment Booking →
+            Book Now <ArrowRight size={18} />
           </button>
         </div>
       </section>
 
       {/* ── SERVICES ── */}
-      <section className="py-20 px-6 bg-card">
+      <section className="py-20 px-6" style={{ background: "var(--card)" }}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
+            <span className="inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3" style={{ background: "rgba(124,58,237,0.1)", color: "#7c3aed" }}>
               What We Offer
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-text">
-              Our Core Services
-            </h2>
-            <p className="text-text/50 mt-3 max-w-md mx-auto text-sm">
-              From diagnostics to surgery, we cover all your healthcare needs
-              under one roof.
+            <h2 className="text-3xl sm:text-4xl font-black" style={{ color: "var(--text)" }}>Our Core Services</h2>
+            <p className="mt-3 max-w-md mx-auto text-sm" style={{ color: "var(--text)", opacity: 0.5 }}>
+              From diagnostics to surgery, we cover all your healthcare needs under one roof.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {SERVICES.map((s) => (
               <div
                 key={s.title}
-                className="bg-card border border-secondary rounded-2xl p-7 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-100 transition-all hover:-translate-y-1 group"
+                className="rounded-2xl overflow-hidden hover:-translate-y-1 transition-all group"
+                style={{ border: "1px solid var(--border)", background: "var(--bg)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = s.color + "50"; e.currentTarget.style.boxShadow = `0 16px 40px ${s.color}15`; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.boxShadow = "none"; }}
               >
-                <div className="w-14 h-14 bg-violet-100 rounded-2xl flex items-center justify-center text-2xl mb-5">
-                  {s.icon}
+                <div className="h-44 overflow-hidden">
+                  <img src={s.img} alt={s.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
-                <h3 className="text-lg font-extrabold text-text mb-2">
-                  {s.title}
-                </h3>
-                <p className="text-text/70 text-sm leading-relaxed mb-5">
-                  {s.desc}
-                </p>
-                <button className="text-violet-600 font-bold text-sm group-hover:underline">
-                  Learn more →
-                </button>
+                <div className="p-6">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: s.color + "15" }}>
+                    <Award size={18} style={{ color: s.color }} />
+                  </div>
+                  <h3 className="text-lg font-extrabold mb-2" style={{ color: "var(--text)" }}>{s.title}</h3>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text)", opacity: 0.65 }}>{s.desc}</p>
+                  <button className="text-sm font-bold group-hover:underline" style={{ color: s.color }}>
+                    Learn more →
+                  </button>
+                </div>
               </div>
             ))}
           </div>
           <div className="text-center mt-10">
             <button
               onClick={() => navigate("/user/services")}
-              className="border-2 border-violet-300 text-violet-600 font-bold px-7 py-3 rounded-full hover:bg-violet-50 transition-colors text-sm"
+              className="text-sm font-bold px-7 py-3 rounded-xl transition-all hover:-translate-y-0.5"
+              style={{ border: "1.5px solid rgba(124,58,237,0.3)", color: "#7c3aed", background: "rgba(124,58,237,0.06)" }}
             >
               View All 9 Services →
             </button>
@@ -220,50 +243,38 @@ export default function HomePage() {
       </section>
 
       {/* ── WHO WE ARE ── */}
-      <section className="py-20 px-6 bg-bg">
+      <section className="py-20 px-6" style={{ background: "var(--bg)" }}>
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
-          {/* Image grid */}
+          {/* Images grid */}
           <div className="w-full lg:flex-1 grid grid-cols-2 gap-4">
-            <div className="bg-gradient-to-br from-violet-100 to-purple-100 border-2 border-dashed border-violet-300 rounded-2xl h-52 flex flex-col items-center justify-center">
-              <span className="text-4xl">👨‍⚕️</span>
-              <span className="text-xs text-violet-400 mt-2">Doctor Image</span>
-            </div>
-            <div className="bg-gradient-to-br from-violet-100 to-purple-100 border-2 border-dashed border-violet-300 rounded-2xl h-52 flex flex-col items-center justify-center mt-7">
-              <span className="text-4xl">🏨</span>
-              <span className="text-xs text-violet-400 mt-2">Hospital Image</span>
-            </div>
-            <div className="bg-gradient-to-br from-violet-100 to-purple-100 border-2 border-dashed border-violet-300 rounded-2xl h-36 flex flex-col items-center justify-center col-span-2">
-              <span className="text-4xl">💉</span>
-              <span className="text-xs text-violet-400 mt-2">Medical Illustration</span>
-            </div>
+            <img
+              src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=600&q=80"
+              alt="Doctors"
+              className="rounded-2xl h-52 w-full object-cover shadow-lg"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=600&q=80"
+              alt="Hospital"
+              className="rounded-2xl h-52 w-full object-cover shadow-lg mt-7"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=800&q=80"
+              alt="Medical Team"
+              className="rounded-2xl h-36 w-full object-cover shadow-lg col-span-2"
+            />
           </div>
 
           {/* Text */}
           <div className="w-full lg:flex-1">
-            <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
+            <span className="inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3" style={{ background: "rgba(124,58,237,0.1)", color: "#7c3aed" }}>
               Biography
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-text mb-5">
-              Who We Are
-            </h2>
-            <p className="text-text/70 text-sm leading-relaxed mb-4">
-              MedLab Hospital is a full-service healthcare provider offering
-              innovative medical solutions that deliver the right level of care.
-              We strive to build a caring community around your health,
-              polishing your treatment plan and improving your long-term
-              wellbeing.
+            <h2 className="text-3xl sm:text-4xl font-black mb-5" style={{ color: "var(--text)" }}>Who We Are</h2>
+            <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text)", opacity: 0.7 }}>
+              MedLab Hospital is a full-service healthcare provider offering innovative medical solutions. Since 2010 we've served 12,000+ patients across Tamil Nadu, combining compassionate care with cutting-edge technology.
             </p>
-            <p className="text-text/70 text-sm leading-relaxed mb-4">
-              Our hospital is one of the most trusted healthcare institutions in
-              the region, with the ability to connect patients with top
-              specialists in real time.
-            </p>
-            <p className="text-violet-600 font-bold text-sm mb-1">
-              Since 2010: time to heal and thrive.
-            </p>
-            <p className="text-text/50 text-xs italic mb-8">
-              We are your Social Healthcare Partner.
-            </p>
+            <p className="text-sm font-bold mb-1" style={{ color: "#7c3aed" }}>Since 2010 — time to heal and thrive.</p>
+            <p className="text-xs italic mb-8" style={{ color: "var(--text)", opacity: 0.5 }}>We are your Social Healthcare Partner.</p>
             <div className="flex flex-wrap gap-3">
               {[
                 { i: "🏅", l: "ISO Certified" },
@@ -272,7 +283,8 @@ export default function HomePage() {
               ].map((b) => (
                 <div
                   key={b.l}
-                  className="flex items-center gap-2 bg-violet-100 text-violet-700 font-semibold text-sm px-4 py-2 rounded-full"
+                  className="flex items-center gap-2 font-semibold text-sm px-4 py-2 rounded-full"
+                  style={{ background: "rgba(124,58,237,0.1)", color: "#7c3aed" }}
                 >
                   <span>{b.i}</span>
                   <span>{b.l}</span>
@@ -284,33 +296,40 @@ export default function HomePage() {
       </section>
 
       {/* ── DOCTORS ── */}
-      <section id="doctors-section" className="py-20 px-6 bg-card">
+      <section className="py-20 px-6" style={{ background: "var(--card)" }}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
+            <span className="inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3" style={{ background: "rgba(124,58,237,0.1)", color: "#7c3aed" }}>
               Meet the Team
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-text">
-              Our Specialist Doctors
-            </h2>
+            <h2 className="text-3xl sm:text-4xl font-black" style={{ color: "var(--text)" }}>Our Specialist Doctors</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {DOCTORS.map((doc) => (
               <div
                 key={doc.name}
-                className="border border-secondary rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-violet-100 hover:-translate-y-1 transition-all"
+                className="rounded-2xl overflow-hidden hover:-translate-y-1 transition-all"
+                style={{ border: "1px solid var(--border)", background: "var(--bg)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = doc.color + "50"; e.currentTarget.style.boxShadow = `0 16px 40px ${doc.color}15`; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.boxShadow = "none"; }}
               >
-                <div className="bg-gradient-to-br from-violet-100 to-purple-100 border-b-2 border-dashed border-violet-200 h-52 flex flex-col items-center justify-center">
-                  <span className="text-5xl">{doc.icon}</span>
-                  <span className="text-xs text-violet-400 mt-2">Doctor Photo</span>
+                <div className="h-56 overflow-hidden relative">
+                  <img src={doc.img} alt={doc.name} className="w-full h-full object-cover object-top" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 60%)" }} />
                 </div>
                 <div className="p-6">
-                  <h3 className="font-extrabold text-text text-lg">{doc.name}</h3>
-                  <p className="text-violet-600 font-semibold text-sm mt-0.5">{doc.specialty}</p>
-                  <p className="text-text/50 text-xs mt-1 mb-5">{doc.exp}</p>
+                  <h3 className="font-extrabold text-lg" style={{ color: "var(--text)" }}>{doc.name}</h3>
+                  <p className="font-semibold text-sm mt-0.5" style={{ color: doc.color }}>{doc.specialty}</p>
+                  <div className="flex items-center gap-1 mt-2 mb-5">
+                    {[1,2,3,4,5].map(i => (
+                      <Star key={i} size={11} fill="#f59e0b" stroke="#f59e0b" />
+                    ))}
+                    <span className="text-xs ml-1 font-medium" style={{ color: "var(--text)", opacity: 0.5 }}>{doc.exp} experience</span>
+                  </div>
                   <button
                     onClick={() => navigate("/user/appointment")}
-                    className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-2.5 rounded-xl text-sm transition-all"
+                    className="w-full font-bold py-2.5 rounded-xl text-sm text-white transition-all hover:opacity-90"
+                    style={{ background: `linear-gradient(135deg,${doc.color},${doc.color}cc)` }}
                   >
                     Book Appointment
                   </button>
@@ -318,47 +337,47 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-
-          {/* Bottom CTA button */}
           <div className="text-center mt-10">
             <button
               onClick={() => navigate("/user/appointment")}
-              className="bg-violet-600 hover:bg-violet-700 text-white font-bold px-8 py-3.5 rounded-full text-sm shadow-lg shadow-violet-200 transition-all hover:-translate-y-0.5"
+              className="flex items-center gap-2 mx-auto font-bold px-8 py-3.5 rounded-xl text-sm text-white transition-all hover:-translate-y-0.5"
+              style={{ background: "linear-gradient(135deg,#7c3aed,#8b5cf6)", boxShadow: "0 8px 24px rgba(124,58,237,0.3)" }}
             >
-              📅 Book an Appointment with Any Doctor →
+              Book an Appointment with Any Doctor <ArrowRight size={15} />
             </button>
           </div>
         </div>
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="py-20 px-6 bg-bg">
+      <section className="py-20 px-6" style={{ background: "var(--bg)" }}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <span className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
+            <span className="inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3" style={{ background: "rgba(124,58,237,0.1)", color: "#7c3aed" }}>
               Patient Stories
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-text">
-              What Our Patients Say
-            </h2>
+            <h2 className="text-3xl sm:text-4xl font-black" style={{ color: "var(--text)" }}>What Our Patients Say</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t) => (
               <div
                 key={t.name}
-                className="bg-card border border-secondary rounded-2xl p-7 hover:shadow-lg hover:shadow-violet-50 transition-all"
+                className="rounded-2xl p-7 transition-all hover:-translate-y-1"
+                style={{ background: "var(--card)", border: "1px solid var(--border)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 12px 32px rgba(124,58,237,0.12)"; e.currentTarget.style.borderColor = "rgba(124,58,237,0.25)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "var(--border)"; }}
               >
-                <div className="text-yellow-400 text-sm mb-3">
-                  {"★".repeat(t.rating)}
+                <div className="flex items-center gap-0.5 mb-4">
+                  {[...Array(t.rating)].map((_, i) => (
+                    <Star key={i} size={14} fill="#f59e0b" stroke="#f59e0b" />
+                  ))}
                 </div>
-                <p className="text-text/70 text-sm leading-relaxed italic mb-5">
+                <p className="text-sm leading-relaxed italic mb-6" style={{ color: "var(--text)", opacity: 0.7 }}>
                   "{t.text}"
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-violet-100 flex items-center justify-center text-lg">
-                    👤
-                  </div>
-                  <span className="font-bold text-gray-800 text-sm">{t.name}</span>
+                  <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
+                  <span className="font-bold text-sm" style={{ color: "var(--text)" }}>{t.name}</span>
                 </div>
               </div>
             ))}
@@ -367,21 +386,24 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA BANNER ── */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-violet-600 to-purple-600 py-20 px-6">
-        <div className="absolute inset-0 bg-black/10"></div>
+      <section
+        className="relative overflow-hidden py-20 px-6"
+        style={{ background: "linear-gradient(135deg,#7c3aed,#6d28d9)" }}
+      >
+        <div className="absolute inset-0 bg-black/10" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
             Ready to Book Your Appointment?
           </h2>
-          <p className="text-violet-100 text-base mb-8 max-w-md mx-auto">
-            Join over 12,000 patients who trust MedLab Hospital for their
-            healthcare needs.
+          <p className="text-violet-200 text-base mb-8 max-w-md mx-auto">
+            Join over 12,000 patients who trust MedLab Hospital for their healthcare needs.
           </p>
           <button
             onClick={() => navigate("/user/appointment")}
-            className="bg-white text-violet-600 font-bold px-8 py-4 rounded-full text-base shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-0.5"
+            className="flex items-center gap-2 mx-auto bg-white font-bold px-8 py-4 rounded-xl text-base transition-all hover:-translate-y-0.5 hover:shadow-2xl"
+            style={{ color: "#7c3aed" }}
           >
-            Get Started Today →
+            Get Started Today <ArrowRight size={18} />
           </button>
         </div>
       </section>
