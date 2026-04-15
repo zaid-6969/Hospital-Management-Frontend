@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/Slices/authSlice";
 import { Eye, EyeOff, Mail, User, Lock, ArrowRight } from "lucide-react";
 import toast from "react-hot-toast";
-import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 
 /* ─── Google SVG Icon ─── */
 const GoogleIcon = () => (
@@ -140,29 +140,27 @@ const AuthPage = () => {
     }
   };
 
-  const googleLogin = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      setIsLoading(true);
-      try {
-        const res = await axios.post(
-          "https://hospital-management-backend-eosin.vercel.app/api/v1/auth/google",
-          { withCredentials: true }
-        );
-        const user = res.data.user;
-        dispatch(loginSuccess(user));
-        toast.success("Google login successful");
-        if (user.role === "ADMIN") navigate("/admin");
-        else if (user.role === "DOCTOR") navigate("/doctor");
-        else if (user.role === "RECEPTIONIST") navigate("/reception");
-        else navigate("/user");
-      } catch (error) {
-        toast.error(error.response?.data?.message || "Google login failed");
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    onError: () => toast.error("Google login failed"),
-  });
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setIsLoading(true);
+    try {
+      const res = await axios.post(
+        "https://hospital-management-backend-eosin.vercel.app/api/v1/auth/google",
+        { token: credentialResponse.credential },
+        { withCredentials: true }
+      );
+      const user = res.data.user;
+      dispatch(loginSuccess(user));
+      toast.success("Google login successful");
+      if (user.role === "ADMIN") navigate("/admin");
+      else if (user.role === "DOCTOR") navigate("/doctor");
+      else if (user.role === "RECEPTIONIST") navigate("/reception");
+      else navigate("/user");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Google login failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const switchTab = (login) => {
     setIsLogin(login);
@@ -379,30 +377,18 @@ const AuthPage = () => {
               <div className="flex-1 h-px" style={{ background: "var(--border)" }} />
             </div>
 
-            {/* Custom Google Button */}
-            <button
-              type="button"
-              onClick={() => googleLogin()}
-              disabled={isLoading}
-              className="flex items-center justify-center gap-3 w-full py-3 rounded-xl text-sm font-semibold transition-all duration-200 active:scale-[0.98] disabled:opacity-60"
-              style={{
-                background: "var(--card)",
-                border: "1.5px solid var(--border)",
-                color: "var(--text)",
-                boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "var(--primary)";
-                e.currentTarget.style.boxShadow = "0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "var(--border)";
-                e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.06)";
-              }}
-            >
-              <GoogleIcon />
-              Continue with Google
-            </button>
+            {/* Google Login Button */}
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => toast.error("Google login failed")}
+                useOneTap={false}
+                width="368"
+                text="continue_with"
+                shape="rectangular"
+                theme="outline"
+              />
+            </div>
           </form>
 
           {/* Footer */}
