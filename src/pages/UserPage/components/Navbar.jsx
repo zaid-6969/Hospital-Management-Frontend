@@ -14,12 +14,13 @@ const NAV_LINKS = [
   { name: "Appointment", path: "/user/appointment" },
 ];
 
-const Navbar = ({ menuOpen, setMenuOpen }) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const mode = useSelector((s) => s.theme.mode);
   const [open, setOpen] = useState(false);
   const menuRef = useRef();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const user = useSelector((state) => state.auth.user);
   const displayName = user?.name || user?.email?.split("@")[0] || "Patient";

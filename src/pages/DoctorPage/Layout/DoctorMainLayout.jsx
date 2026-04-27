@@ -15,7 +15,7 @@ const DoctorMainLayout = () => {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-bg">
+    <div className="flex h-screen overflow-hidden bg-bg">
 
       {/* Mobile backdrop overlay */}
       {sidebarOpen && (
@@ -27,7 +27,7 @@ const DoctorMainLayout = () => {
 
       {/* Sidebar — always visible on desktop, drawer on mobile */}
       <div className={`
-        fixed inset-y-0 left-0 z-40 lg:relative lg:z-auto
+        fixed inset-y-0 left-0 z-40 lg:relative lg:z-auto h-full
         transition-transform duration-300 ease-in-out
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
       `}>
